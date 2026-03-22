@@ -8,6 +8,8 @@ Secrets needed:
 
 import streamlit as st
 import requests
+import hashlib
+import time
 import plotly.graph_objects as go
 from datetime import datetime
 
@@ -187,9 +189,14 @@ def ai_summary(pat_hash, data_hash, prompt):
         if not key:
             return "Add GEMINI_API_KEY to Streamlit secrets to enable AI summaries."
         url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={key}"
-        resp = requests.post(url, json={"contents": [{"parts": [{"text": prompt}]}]})
-        resp.raise_for_status()
-        return resp.json()["candidates"][0]["content"]["parts"][0]["text"]
+        for attempt in range(3):
+            resp = requests.post(url, json={"contents": [{"parts": [{"text": prompt}]}]}, timeout=30)
+            if resp.status_code == 429:
+                time.sleep(2 ** attempt)
+                continue
+            resp.raise_for_status()
+            return resp.json()["candidates"][0]["content"]["parts"][0]["text"]
+        return "Gemini rate limit hit — summary will appear on next refresh."
     except Exception as e:
         return f"Gemini API error: {str(e)}"
 def status_badge(status):
@@ -298,8 +305,8 @@ Paragraph 1                                                                     
 Paragraph 2                                                                                                  CONSTRAINT: What happens if T&S sign-offs don't move this week.
 Paragraph 3                                                                                                  NEXT 7 DAYS: Three specific actions with implied owners."""
 
-    data_hash = str(hash(str([(k, len(v)) for k, v in sorted(data.items())])))
-    pat_hash = str(hash(pat[:8]))
+    data_hash = hashlib.md5(str([(k, len(v)) for k, v in sorted(data.items())]).encode()).hexdigest()
+    pat_hash = hashlib.md5(pat[:8].encode()).hexdigest()
     _, btn_col = st.columns([10, 1])
     with btn_col:
         if st.button("                                                                                                ", help="Regenerate"):
