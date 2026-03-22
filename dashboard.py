@@ -3,12 +3,11 @@ OneSignal eHawk Phase 3                                                         
 Run: streamlit run dashboard.py
 Secrets needed:
   AIRTABLE_PAT = "patXXX"
-  ANTHROPIC_API_KEY = "sk-ant-XXX"
+  GEMINI_API_KEY = "AIza..."
 """
 
 import streamlit as st
 import requests
-import anthropic
 import plotly.graph_objects as go
 from datetime import datetime
 
@@ -184,40 +183,15 @@ def completion_bar():
 @st.cache_data(ttl=600, show_spinner=False)
 def ai_summary(pat_hash, data_hash, prompt):
     try:
-        key = st.secrets.get("ANTHROPIC_API_KEY", "")
+        key = st.secrets.get("GEMINI_API_KEY", "")
         if not key:
-            return "Add ANTHROPIC_API_KEY to Streamlit secrets to enable AI summaries."
-        client = anthropic.Anthropic(api_key=key)
-        msg = client.messages.create(
-            model="claude-sonnet-4-20250514", max_tokens=600,
-            messages=[{"role": "user", "content": prompt}],
-        )
-        return msg.content[0].text
+            return "Add GEMINI_API_KEY to Streamlit secrets to enable AI summaries."
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={key}"
+        resp = requests.post(url, json={"contents": [{"parts": [{"text": prompt}]}]})
+        resp.raise_for_status()
+        return resp.json()["candidates"][0]["content"]["parts"][0]["text"]
     except Exception as e:
-        err_str = str(e)
-        if "credit balance" in err_str or "billing" in err_str.lower() or "402" in err_str or "insufficient" in err_str.lower():
-            return "                                                                                                 Anthropic API credits needed. Add credits at console.anthropic.com/settings/billing to enable AI summaries."
-        err_str = str(e)
-        if "credit balance" in err_str or "billing" in err_str.lower() or "402" in err_str or "insufficient" in err_str.lower():
-            return "                                                 Anthropic API credits needed. Add credits at console.anthropic.com/settings/billing to enable AI summaries."
-        err_str = str(e)
-        if "credit balance" in err_str or "402" in err_str:
-            return "                         Add credits at console.anthropic.com/settings/billing to enable AI summaries."
-        return f"AI summary unavailable: {e}"
-
-#                                                                                                                                                                                                  BADGES                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-
-STATUS_BADGE = {
-    "Completed":   ("DONE",        "badge-green"),
-    "In Progress": ("IN PROGRESS", "badge-amber"),
-    "In Review":   ("IN REVIEW",   "badge-blue"),
-    "Blocked":     ("BLOCKED",     "badge-red"),
-    "Not Started": ("NOT STARTED", "badge-gray"),
-    "Made":        ("MADE",        "badge-green"),
-    "Pending":     ("PENDING",     "badge-amber"),
-    "Needed":      ("NEEDED",      "badge-red"),
-}
-
+        return f"Gemini API error: {str(e)}"
 def status_badge(status):
     label, cls = STATUS_BADGE.get(status, (status.upper(), "badge-gray"))
     return f'<span class="detail-badge {cls}">{label}</span>'
@@ -309,7 +283,7 @@ def main():
         st.plotly_chart(completion_bar(), use_container_width=True, config={"displayModeBar": False})
 
     # AI Summary
-    st.markdown('<div class="section-header">AI Executive Summary <span style="font-size:9px;background:rgba(59,130,246,0.15);color:#3b82f6;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">CLAUDE SONNET</span></div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-header">AI Executive Summary <span style="font-size:9px;background:rgba(59,130,246,0.15);color:#3b82f6;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">GEMINI 2.0 FLASH</span></div>', unsafe_allow_html=True)
     prompt = f"""Write a 3-paragraph executive status brief for the OneSignal eHawk Phase 3 auto-approval pipeline. Date: {datetime.now().strftime('%B %d, %Y')}. Prose only. No bullets. No hedging. Be direct.
 
 LIVE DATA:
