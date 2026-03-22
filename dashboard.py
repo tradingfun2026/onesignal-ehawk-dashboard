@@ -1,5 +1,5 @@
 """
-OneSignal eHawk Phase 3 Ã¢ÂÂ Executive Launch Readiness Dashboard
+OneSignal eHawk Phase 3 — Executive Launch Readiness Dashboard
 Run: streamlit run dashboard.py
 Secrets needed:
   AIRTABLE_PAT = "patXXX"
@@ -13,8 +13,8 @@ import plotly.graph_objects as go
 from datetime import datetime
 
 st.set_page_config(
-    page_title="eHawk Phase 3 Ã¢ÂÂ Launch Readiness",
-    page_icon="Ã°ÂÂÂ",
+    page_title="eHawk Phase 3 — Launch Readiness",
+    page_icon="🚀",
     layout="wide",
     initial_sidebar_state="collapsed",
 )
@@ -58,7 +58,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Ã¢ÂÂÃ¢ÂÂ CONFIG Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+# ── CONFIG ──────────────────────────────────────────────────────────────────
 
 BASE_ID = "appUJlBFPnTUFJmOx"
 
@@ -76,7 +76,7 @@ VIEWS = {
     "open_risks":         ("tbl6GWnx6Oz18kbyi", "viwzV39ZM3CcNWbkE"),
 }
 
-# Ã¢ÂÂÃ¢ÂÂ DATA FETCHING Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+# ── DATA FETCHING ────────────────────────────────────────────────────────────
 
 @st.cache_data(ttl=300, show_spinner=False)
 def fetch_view(pat, table_id, view_id):
@@ -109,7 +109,7 @@ def fetch_all(pat):
         result[key] = [r["fields"] for r in records]
     return result
 
-# Ã¢ÂÂÃ¢ÂÂ CHARTS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+# ── CHARTS ───────────────────────────────────────────────────────────────────
 
 DARK = dict(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
             font=dict(family="Inter, sans-serif", color="#94a3b8", size=12),
@@ -179,7 +179,7 @@ def completion_bar():
                       yaxis=dict(range=[0,115], ticksuffix="%", showgrid=True, gridcolor="#1e293b"))
     return fig
 
-# Ã¢ÂÂÃ¢ÂÂ AI SUMMARY Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+# ── AI SUMMARY ───────────────────────────────────────────────────────────────
 
 @st.cache_data(ttl=600, show_spinner=False)
 def ai_summary(pat_hash, data_hash, prompt):
@@ -196,7 +196,7 @@ def ai_summary(pat_hash, data_hash, prompt):
     except Exception as e:
         return f"AI summary unavailable: {e}"
 
-# Ã¢ÂÂÃ¢ÂÂ BADGES Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+# ── BADGES ───────────────────────────────────────────────────────────────────
 
 STATUS_BADGE = {
     "Completed":   ("DONE",        "badge-green"),
@@ -217,7 +217,7 @@ def priority_badge(priority):
     cls = {"High": "badge-red", "Medium": "badge-amber", "Low": "badge-gray"}.get(priority, "badge-gray")
     return f'<span class="detail-badge {cls}">{priority.upper()}</span>'
 
-# Ã¢ÂÂÃ¢ÂÂ MAIN Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+# ── MAIN ─────────────────────────────────────────────────────────────────────
 
 def main():
     pat = st.secrets.get("AIRTABLE_PAT", "")
@@ -250,9 +250,9 @@ def main():
     st.markdown(f"""
     <div class="masthead">
       <div>
-        <div class="masthead-eyebrow">OneSignal ÃÂ· Trust &amp; Safety Operations ÃÂ· eHawk Phase 3</div>
+        <div class="masthead-eyebrow">OneSignal · Trust &amp; Safety Operations · eHawk Phase 3</div>
         <div class="masthead-title">Launch Readiness Dashboard</div>
-        <div class="masthead-sub">{datetime.now().strftime('%A, %B %d, %Y')} ÃÂ· Live data from Airtable ÃÂ· Refreshes every 5 min</div>
+        <div class="masthead-sub">{datetime.now().strftime('%A, %B %d, %Y')} · Live data from Airtable · Refreshes every 5 min</div>
       </div>
       <div style="text-align:right">
         <div class="masthead-big">{blockers_rem}</div>
@@ -311,15 +311,15 @@ LIVE DATA:
 - Decisions: {decisions_made}/17 made. {decisions_needed} critical decisions blocking downstream engineering.
 - Open risks: {len(data.get('open_risks', []))} tracked.
 
-Paragraph 1 Ã¢ÂÂ STATE: Engineering momentum vs T&S readiness gap.
-Paragraph 2 Ã¢ÂÂ CONSTRAINT: What happens if T&S sign-offs don't move this week.
-Paragraph 3 Ã¢ÂÂ NEXT 7 DAYS: Three specific actions with implied owners."""
+Paragraph 1 — STATE: Engineering momentum vs T&S readiness gap.
+Paragraph 2 — CONSTRAINT: What happens if T&S sign-offs don't move this week.
+Paragraph 3 — NEXT 7 DAYS: Three specific actions with implied owners."""
 
     data_hash = str(hash(str([(k, len(v)) for k, v in sorted(data.items())])))
     pat_hash = str(hash(pat[:8]))
     _, btn_col = st.columns([10, 1])
     with btn_col:
-        if st.button("Ã¢ÂÂº", help="Regenerate"):
+        if st.button("↺", help="Regenerate"):
             st.cache_data.clear(); st.rerun()
     with st.spinner("Generating AI analysis..."):
         summary = ai_summary(pat_hash, data_hash, prompt)
@@ -340,20 +340,20 @@ Paragraph 3 Ã¢ÂÂ NEXT 7 DAYS: Three specific actions with implied owners
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown('<div class="section-header">Drill-Down Detail</div>', unsafe_allow_html=True)
     tab1, tab2, tab3, tab4, tab5 = st.tabs([
-        f"Ã°ÂÂÂ§ Blockers ({blockers_rem})",
-        f"Ã¢ÂÂ Ã¯Â¸Â Sign-offs ({signoffs_rem})",
-        f"Ã°ÂÂÂ´ Decisions Needed ({decisions_needed})",
-        f"Ã°ÂÂÂ Gap Tickets ({gaps_rem})",
-        "Ã¢ÂÂ Recently Completed",
+        f"🚧 Blockers ({blockers_rem})",
+        f"⚠️ Sign-offs ({signoffs_rem})",
+        f"🔴 Decisions Needed ({decisions_needed})",
+        f"📋 Gap Tickets ({gaps_rem})",
+        "✅ Recently Completed",
     ])
     with tab1:
-        st.markdown("**Pre-launch blockers Ã¢ÂÂ must clear before launch**")
+        st.markdown("**Pre-launch blockers — must clear before launch**")
         for item in data.get("blockers_remaining", []):
             name = item.get("Task Name", "Untitled")
             p = priority_badge(item.get("Priority", "")) if item.get("Priority") else ""
             st.markdown(f'<div class="detail-item">{status_badge(item.get("Status","Not Started"))}{p}<span style="color:#e2e8f0">{name}</span></div>', unsafe_allow_html=True)
     with tab2:
-        st.markdown("**T&S sign-offs outstanding Ã¢ÂÂ T&S owns all of these**")
+        st.markdown("**T&S sign-offs outstanding — T&S owns all of these**")
         for item in data.get("signoffs", []):
             name = item.get("Task Name", "Untitled")
             st.markdown(f'<div class="detail-item">{status_badge(item.get("Status","Not Started"))}<span style="color:#e2e8f0">{name}</span></div>', unsafe_allow_html=True)
@@ -365,13 +365,13 @@ Paragraph 3 Ã¢ÂÂ NEXT 7 DAYS: Three specific actions with implied owners
             notes_html = f'<div style="font-size:11px;color:#64748b;margin-top:3px">{notes}</div>' if notes else ""
             st.markdown(f'<div class="detail-item"><span class="detail-badge badge-red">NEEDED</span><div><div style="color:#e2e8f0">{title}</div>{notes_html}</div></div>', unsafe_allow_html=True)
     with tab4:
-        st.markdown("**Gap tickets Ã¢ÂÂ all 7 must close before launch**")
+        st.markdown("**Gap tickets — all 7 must close before launch**")
         for item in data.get("gaps", []):
             name = item.get("Task Name", "Untitled")
             p = priority_badge(item.get("Priority", "")) if item.get("Priority") else ""
             st.markdown(f'<div class="detail-item">{status_badge(item.get("Status","Not Started"))}{p}<span style="color:#e2e8f0">{name}</span></div>', unsafe_allow_html=True)
     with tab5:
-        st.markdown("**What's been completed Ã¢ÂÂ engineering foundation is solid**")
+        st.markdown("**What's been completed — engineering foundation is solid**")
         for item in data.get("completed", []):
             name = item.get("Task Name", "Untitled")
             section = item.get("Section", "")
@@ -380,8 +380,8 @@ Paragraph 3 Ã¢ÂÂ NEXT 7 DAYS: Three specific actions with implied owners
 
     # Footer
     st.markdown(f"""<div style="margin-top:32px;padding-top:16px;border-top:1px solid #1e293b;font-size:11px;color:#334155;text-align:center">
-      OneSignal eHawk Phase 3 Auto-Approval Pipeline ÃÂ· Confidential ÃÂ·
-      {datetime.now().strftime('%B %d, %Y %H:%M')} ÃÂ· Data cached 5 min ÃÂ· Streamlit + Airtable + Claude
+      OneSignal eHawk Phase 3 Auto-Approval Pipeline · Confidential ·
+      {datetime.now().strftime('%B %d, %Y %H:%M')} · Data cached 5 min · Streamlit + Airtable + Claude
     </div>""", unsafe_allow_html=True)
 
 
