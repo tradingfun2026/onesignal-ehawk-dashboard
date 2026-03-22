@@ -1,12 +1,12 @@
 """
-OneSignal eHawk Phase 3 â Executive Launch Readiness Dashboard
+OneSignal eHawk Phase 3 Ã¢ÂÂ Executive Launch Readiness Dashboard
 ============================================================
 Run locally:   streamlit run dashboard.py
-Deploy:        Push to GitHub â connect to share.streamlit.io (free)
+Deploy:        Push to GitHub Ã¢ÂÂ connect to share.streamlit.io (free)
 
 Requirements:  pip install streamlit plotly requests anthropic python-dotenv
 
-Config:  Set secrets in .streamlit/secrets.toml  OR  Streamlit Cloud â App Settings â Secrets
+Config:  Set secrets in .streamlit/secrets.toml  OR  Streamlit Cloud Ã¢ÂÂ App Settings Ã¢ÂÂ Secrets
     AIRTABLE_PAT = "patXXXXXXXX"
     ANTHROPIC_API_KEY = "sk-ant-..."
 """
@@ -18,16 +18,16 @@ import plotly.graph_objects as go
 import plotly.express as px
 from datetime import datetime
 import pandas as pd
-# âââ PAGE CONFIG âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ PAGE CONFIG Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 
 st.set_page_config(
-    page_title="eHawk Phase 3 â Launch Readiness",
-    page_icon="ð",
+    page_title="eHawk Phase 3 Ã¢ÂÂ Launch Readiness",
+    page_icon="Ã°ÂÂÂ",
     layout="wide",
     initial_sidebar_state="collapsed",
 )
 
-# âââ CUSTOM CSS ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ CUSTOM CSS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 
 st.markdown("""
 <style>
@@ -133,11 +133,11 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# âââ CONFIG ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ CONFIG Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 
 BASE_ID = "appUJlBFPnTUFJmOx"
 TASKS_TABLE = "tblHIDvz3UahqWf1h"
-DECISIONS_TABLE = "tblIbxPFGdXLÓI3rE"
+DECISIONS_TABLE = "tblIbxPFGdXNSI3rE"
 RISKS_TABLE = "tbl6GWnx6Oz18kbyi"
 
 VIEWS = {
@@ -145,16 +145,16 @@ VIEWS = {
     "blockers_complete":  ("tblHIDvz3UahqWf1h", "viwI45OS0OTda4w3C"),
     "signoffs":           ("tblHIDvz3UahqWf1h", "viwcRZQfywN0cyvFl"),
     "gaps":               ("tblHIDvz3UahqWf1h", "viwlueN7Fe0ahlfpM"),
-    "completed":          ("tblHIDvz3UahqWf1h", "viwiijGCRkwN62KSI"),
+    "completed":          ("tblHIDvz3UahqWf1h", "viwiijG1RkwN62KSI"),
     "eng_remaining":      ("tblHIDvz3UahqWf1h", "viw0XBjg0kfksT06T"),
     "phase3_all":         ("tblHIDvz3UahqWf1h", "viwAT3pgxpCeApJsM"),
-    "decisions_made":     ("tblIbxPFGdXLÓI3rE", "viwT6Mn7zCm0df5ul"),
+    "decisions_made":     ("tblIbxPFGdXNSI3rE", "viwT6Mn7zCm0df5ul"),
     "decisions_pending":  ("tblIbxPFGdXNSI3rE", "viwe6OkcS1mqHNnNo"),
     "decisions_needed":   ("tblIbxPFGdXNSI3rE", "viwZjwMjP7UmUitbZ"),
-    "decisions_open":     ("tblIbxPFGdXLÓI3rE", "viwZA3HsTO3DWU6Jm"),
+    "decisions_open":     ("tblIbxPFGdXNSI3rE", "viwZA3HsTO3DWU6Jm"),
     "open_risks":         ("tbl6GWnx6Oz18kbyi", "viwzV39ZM3CcNWbkE"),
 }
-# âââ DATA FETCHING âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ DATA FETCHING Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 
 @st.cache_data(ttl=300, show_spinner=False)
 def fetch_view(pat, table_id, view_id):
@@ -187,7 +187,7 @@ def fetch_all_data(pat):
         result[key] = [r["fields"] for r in records]
     return result
 
-# âââ CHART HELPERS âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ CHART HELPERS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 
 PLOTLY_DARK = dict(
     paper_bgcolor="rgba(0,0,0,0)",
@@ -256,7 +256,7 @@ def make_burndown(data):
         yaxis=dict(range=[0,115], ticksuffix="%"))
     return fig
 
-# âââ AI SUMMARY ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ AI SUMMARY Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 
 def build_prompt(data):
     eng_done = 11 - len(data.get("eng_remaining", []))
@@ -299,7 +299,7 @@ def status_badge(status):
 def priority_badge(priority):
     cls = {"High":"badge-red","Medium":"badge-amber","Low":"badge-gray"}.get(priority, "badge-gray")
     return f'<span class="detail-badge {cls}">{priority.upper()}</span>'
-# âââ MAIN APP âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+# Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ MAIN APP Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 
 def main():
     pat = st.secrets.get("AIRTABLE_PAT", "")
@@ -331,9 +331,9 @@ def main():
     st.markdown(f"""
     <div class="masthead">
       <div class="masthead-left">
-        <div class="masthead-eyebrow">OneSignal Â· Trust &amp; Safety Operations Â· eHawk Phase 3</div>
+        <div class="masthead-eyebrow">OneSignal ÃÂ· Trust &amp; Safety Operations ÃÂ· eHawk Phase 3</div>
         <div class="masthead-title">Launch Readiness Dashboard</div>
-        <div class="masthead-sub">{datetime.now().strftime('%A, %B %d, %Y')} Â· Live data from Airtable Â· Refreshes every 5 minutes</div>
+        <div class="masthead-sub">{datetime.now().strftime('%A, %B %d, %Y')} ÃÂ· Live data from Airtable ÃÂ· Refreshes every 5 minutes</div>
       </div>
       <div class="masthead-right">
         <div class="masthead-big">{blockers_remaining}</div>
@@ -375,7 +375,7 @@ def main():
     pat_hash = str(hash(pat[:8]))
     _, col_btn = st.columns([10,1])
     with col_btn:
-        if st.button("âº", help="Regenerate"):
+        if st.button("Ã¢ÂÂº", help="Regenerate"):
             st.cache_data.clear(); st.rerun()
     with st.spinner("Generating AI analysis..."):
         summary = generate_summary(pat_hash, data_hash, prompt)
@@ -394,11 +394,11 @@ def main():
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown('<div class="section-header">Drill-Down Detail</div>', unsafe_allow_html=True)
     tab1,tab2,tab3,tab4,tab5 = st.tabs([
-        f"ð§ Blockers ({blockers_remaining})",
-        f"âï¸ Sign-offs ({signoffs_remaining})",
-        f"ð´ Decisions Needed ({decisions_needed})",
-        f"ð Gap Tickets ({gaps_remaining})",
-        f"â Recently Completed"])
+        f"Ã°ÂÂÂ§ Blockers ({blockers_remaining})",
+        f"Ã¢ÂÂÃ¯Â¸Â Sign-offs ({signoffs_remaining})",
+        f"Ã°ÂÂÂ´ Decisions Needed ({decisions_needed})",
+        f"Ã°ÂÂÂ Gap Tickets ({gaps_remaining})",
+        f"Ã¢ÂÂ Recently Completed"])
     with tab1:
         for item in data.get("blockers_remaining",[]):
             name = item.get("Task Name","Untitled")
@@ -415,15 +415,15 @@ def main():
     with tab4:
         for item in data.get("gaps",[]):
             name = item.get("Task Name","Untitled")
-            st.markdown(f'<div class="detail-item">{all_badges(item)}<span style="color:#e2e8f0">{name}</span></div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="detail-item">{status_badge(item.get("Status","Not Started"))}<span style="color:#e2e8f0">{name}</span></div>', unsafe_allow_html=True)
     with tab5:
         for item in data.get("completed",[]):
             name = item.get("Task Name","Untitled")
             st.markdown(f'<div class="detail-item"><span class="detail-badge badge-green">DONE</span><span style="color:#e2e8f0">{name}</span></div>', unsafe_allow_html=True)
     st.markdown(f"""
     <div style="margin-top:32px;padding-top:16px;border-top:1px solid #1e293b;font-size:11px;color:#334155;text-align:center">
-      OneSignal eHawk Phase 3 Auto-Approval Pipeline Â· Confidential Â·
-      {datetime.now().strftime('%B %d, %Y %H:%M')} Â· Data cached 5 min Â· Streamlit + Airtable + Claude
+      OneSignal eHawk Phase 3 Auto-Approval Pipeline ÃÂ· Confidential ÃÂ·
+      {datetime.now().strftime('%B %d, %Y %H:%M')} ÃÂ· Data cached 5 min ÃÂ· Streamlit + Airtable + Claude
     </div>""", unsafe_allow_html=True)
 
 if __name__ == "__main__":
