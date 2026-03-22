@@ -196,9 +196,20 @@ def ai_summary(pat_hash, data_hash, prompt):
                 continue
             resp.raise_for_status()
             return resp.json()["candidates"][0]["content"]["parts"][0]["text"]
-        return "Gemini rate limit hit — summary will appear on next refresh."
+        return "Gemini rate limit hit â summary will appear on next refresh."
     except Exception as e:
         return f"Gemini API error: {str(e)}"
+STATUS_BADGE = {
+    "Completed":   ("DONE",        "badge-green"),
+    "In Progress": ("IN PROGRESS", "badge-amber"),
+    "In Review":   ("IN REVIEW",   "badge-blue"),
+    "Blocked":     ("BLOCKED",     "badge-red"),
+    "Not Started": ("NOT STARTED", "badge-gray"),
+    "Made":        ("MADE",        "badge-green"),
+    "Pending":     ("PENDING",     "badge-amber"),
+    "Needed":      ("NEEDED",      "badge-red"),
+}
+
 def status_badge(status):
     label, cls = STATUS_BADGE.get(status, (status.upper(), "badge-gray"))
     return f'<span class="detail-badge {cls}">{label}</span>'
