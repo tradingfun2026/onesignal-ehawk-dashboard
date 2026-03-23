@@ -1026,19 +1026,65 @@ def main():
         st.markdown("**Open risks being tracked**")
         if not data.get("open_risks"):
             st.markdown('<div style="color:#16a34a;padding:12px;font-size:14px">No open risks!</div>', unsafe_allow_html=True)
-        for idx, item in enumerate(data.get("open_risks", []), 1):
-            name = item.get("Risk", item.get("Title", item.get("Name", "Untitled")))
-            desc = item.get("Description", "")
-            severity = item.get("Severity", item.get("Priority", ""))
-            sev_badge = priority_badge(severity) if severity else ""
-            risk_status = item.get("Select", "Open Risk")
-            status_cls = {"Open Risk": "badge-red", "Mitigated Risk": "badge-green", "Deferred": "badge-gray"}.get(risk_status, "badge-amber")
-            status_label = {"Open Risk": "OPEN", "Mitigated Risk": "MITIGATED", "Deferred": "DEFERRED"}.get(risk_status, risk_status.upper())
-            status_html = f'<span class="detail-badge {status_cls}">{status_label}</span>'
-            risk_num = f'<span style="font-size:11px;font-weight:700;color:#6b7280;margin-right:6px;white-space:nowrap">RISK-{idx:02d}</span>'
-            short_desc = (desc[:200] + "...") if len(desc) > 200 else desc
-            desc_html = f'<div style="font-size:12px;color:#374151;margin-top:4px;line-height:1.5">{short_desc}</div>' if short_desc else ""
-            st.markdown(f'<div class="detail-item">{status_html}{sev_badge}<div style="flex:1"><div style="color:#111827;font-weight:500">{risk_num}{name}</div>{desc_html}</div></div>', unsafe_allow_html=True)
+        else:
+            # Group risks by Category
+            CATEGORY_COLORS = {
+                "Reporting & Analytics": "#3b82f6",
+                "Signal Architecture": "#a855f7",
+                "Integration & Pipeline": "#06b6d4",
+                "Process & Governance": "#f97316",
+                "Threat Intelligence": "#ef4444",
+                "Incident Response": "#eab308",
+                "Compliance & Legal": "#14b8a6",
+            }
+            CATEGORY_ICONS = {
+                "Reporting & Analytics": "📊",
+                "Signal Architecture": "🏗️",
+                "Integration & Pipeline": "🔗",
+                "Process & Governance": "📋",
+                "Threat Intelligence": "🛡️",
+                "Incident Response": "🚨",
+                "Compliance & Legal": "⚖️",
+            }
+            from collections import defaultdict
+            risks_by_cat = defaultdict(list)
+            for item in data.get("open_risks", []):
+                cat = item.get("Category", "Uncategorized")
+                risks_by_cat[cat].append(item)
+
+            # Sort categories by count descending
+            sorted_cats = sorted(risks_by_cat.items(), key=lambda x: -len(x[1]))
+
+            risk_counter = 0
+            for cat_name, cat_risks in sorted_cats:
+                cat_color = CATEGORY_COLORS.get(cat_name, "#6b7280")
+                cat_icon = CATEGORY_ICONS.get(cat_name, "📌")
+                st.markdown(
+                    f'<div style="margin-top:18px;margin-bottom:8px;padding:8px 14px;'
+                    f'background:rgba(0,0,0,0.03);border-radius:8px;border-left:3px solid {cat_color};'
+                    f'display:flex;align-items:center;justify-content:space-between">'
+                    f'<span style="font-size:13px;font-weight:700;color:#111827">'
+                    f'{cat_icon} {cat_name}</span>'
+                    f'<span style="font-size:11px;font-weight:600;color:{cat_color};'
+                    f'background:rgba(0,0,0,0.05);padding:2px 8px;border-radius:4px">'
+                    f'{len(cat_risks)} risk{"s" if len(cat_risks) != 1 else ""}</span>'
+                    f'</div>',
+                    unsafe_allow_html=True,
+                )
+                for item in cat_risks:
+                    risk_counter += 1
+                    name = item.get("Risk", item.get("Title", item.get("Name", "Untitled")))
+                    desc = item.get("Description", "")
+                    severity = item.get("Severity", item.get("Priority", ""))
+                    sev_badge = priority_badge(severity) if severity else ""
+                    risk_status = item.get("Status", item.get("Select", "Open Risk"))
+                    status_cls = {"Open Risk": "badge-red", "Mitigated Risk": "badge-green", "Mitigation in Progress": "badge-amber", "Deferred": "badge-gray"}.get(risk_status, "badge-amber")
+                    status_label = {"Open Risk": "OPEN", "Mitigated Risk": "MITIGATED", "Mitigation in Progress": "IN PROGRESS", "Deferred": "DEFERRED"}.get(risk_status, risk_status.upper())
+                    status_html = f'<span class="detail-badge {status_cls}">{status_label}</span>'
+                    risk_num = f'<span style="font-size:11px;font-weight:700;color:#6b7280;margin-right:6px;white-space:nowrap">RISK-{risk_counter:02d}</span>'
+                    short_desc = (desc[:200] + "...") if len(desc) > 200 else desc
+                    desc_html = f'<div style="font-size:12px;color:#374151;margin-top:4px;line-height:1.5">{short_desc}</div>' if short_desc else ""
+                    st.markdown(f'<div class="detail-item">{status_html}{sev_badge}<div style="flex:1"><div style="color:#111827;font-weight:500">{risk_num}{name}</div>{desc_html}</div></div>', unsafe_allow_html=True)
     with tab5:
         st.markdown("**What's been completed -- engineering foundation is solid**")
         if not data.get("completed"):
