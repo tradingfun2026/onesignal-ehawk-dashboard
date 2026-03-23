@@ -77,7 +77,7 @@ st.markdown("""
   /* Detail Items */
   .detail-item {
     display: flex; align-items: flex-start; gap: 10px; padding: 10px 0;
-    border-bottom: 1px solid #1a2744; font-size: 14px;
+    border-bottom: 1px solid #1a2744; font-size: 14px; color: #f0f4f8;
   }
   .detail-badge {
     font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px;
@@ -99,7 +99,7 @@ st.markdown("""
   .baseline-label { font-size: 12px; color: #9db4ce; margin-top: 4px; }
   .baseline-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #1a2744; }
   .baseline-row:last-child { border-bottom: none; }
-  .baseline-metric { font-size: 13px; color: #c8d6e5; }
+  .baseline-metric { font-size: 13px; color: #f0f4f8; }
   .baseline-val { font-size: 13px; font-weight: 600; }
   .val-good { color: #4ade80; }
   .val-warn { color: #fbbf24; }
@@ -269,41 +269,47 @@ def completion_bar(eng_pct, blockers_pct, signoffs_pct, gaps_pct, decisions_pct)
     return fig
 
 def enablement_time_chart():
-    """Email sender enablement time distribution - March 9 vs March 20 comparison."""
-    buckets = ["< 1 hr", "1-4 hrs", "4-12 hrs", "12-24 hrs", "> 24 hrs"]
-    mar9 = [25, 28, 13, 7, 75]     # 148 qualifying apps
-    mar20 = [8, 16, 12, 11, 38]    # 85 qualifying apps
+    """Email sender enablement time - monthly median trend Oct 2025 to Mar 2026."""
+    from plotly.subplots import make_subplots
+    months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 9", "Mar 20"]
+    median_hrs = [72.5, 246.3, 144.3, 47.8, 31.8, 24.3, 18.0]
+    apps_count = [274, 256, 150, 156, 139, 148, 85]
 
-    fig = go.Figure()
+    fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(go.Bar(
-        name="Mar 9 (148 apps)", x=buckets, y=[v/148*100 for v in mar9],
-        marker_color="#3b82f6", marker_line_width=0, opacity=0.7,
-        text=[f"{v/148*100:.0f}%" for v in mar9], textposition="outside",
-        textfont=dict(size=11, color="#60a5fa"),
-    ))
-    fig.add_trace(go.Bar(
-        name="Mar 20 (85 apps)", x=buckets, y=[v/85*100 for v in mar20],
-        marker_color="#f97316", marker_line_width=0, opacity=0.7,
-        text=[f"{v/85*100:.0f}%" for v in mar20], textposition="outside",
+        x=months, y=apps_count, name="Apps Enabled",
+        marker_color="#1e40af", opacity=0.6,
+    ), secondary_y=False)
+    fig.add_trace(go.Scatter(
+        x=months, y=median_hrs, name="Median Enablement (hrs)",
+        mode="lines+markers+text", line=dict(color="#f97316", width=3),
+        marker=dict(size=8, color="#f97316"),
+        text=[f"{v:.0f}h" for v in median_hrs], textposition="top center",
         textfont=dict(size=11, color="#fb923c"),
-    ))
+    ), secondary_y=True)
     fig.update_layout(
-        **DARK, height=280, barmode="group", bargap=0.3,
-        xaxis=dict(tickfont=dict(size=12, color="#c8d6e5")),
-        yaxis=dict(title="% of Apps", ticksuffix="%", showgrid=True, gridcolor="#1a2744",
-                   title_font=dict(size=11, color="#9db4ce"),
-                   tickfont=dict(color="#9db4ce")),
+        paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(family="Inter, sans-serif", color="#afc5db", size=13),
+        margin=dict(l=0, r=0, t=10, b=0),
+        height=280, showlegend=True,
         legend=dict(orientation="h", y=1.12, x=0, font=dict(size=11, color="#afc5db"),
                     bgcolor="rgba(0,0,0,0)"),
+        xaxis=dict(tickfont=dict(size=12, color="#c8d6e5")),
     )
+    fig.update_yaxes(title_text="Apps", showgrid=True, gridcolor="#1a2744",
+                     title_font=dict(size=11, color="#9db4ce"),
+                     tickfont=dict(color="#9db4ce"), secondary_y=False)
+    fig.update_yaxes(title_text="Median Hours", showgrid=False,
+                     title_font=dict(size=11, color="#fb923c"),
+                     tickfont=dict(color="#fb923c"), secondary_y=True)
     return fig
 
 def fnr_trend_chart():
     """False Negative Rate trend from baseline analysis."""
     from plotly.subplots import make_subplots
-    months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026"]
-    fnr = [48.9, 61.3, 6.7, 9.6, 0.0]
-    apps = [435, 374, 327, 344, 296]
+    months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026"]
+    fnr = [48.9, 61.3, 6.7, 9.6, 0.0, 0.0]
+    apps = [435, 374, 327, 344, 296, 160]
 
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(go.Bar(
@@ -572,7 +578,7 @@ def main():
             </div>
             <div style="text-align:right">
               <div class="baseline-value val-good" style="font-size:20px">0.0%</div>
-              <div class="baseline-label">Feb 2026 (latest)</div>
+              <div class="baseline-label">Mar 2026 MTD (latest)</div>
             </div>
           </div>
           <div class="baseline-row">
@@ -682,7 +688,37 @@ def main():
     # =====================================================
     st.markdown('<div class="section-header">Email Sender Enablement Time <span style="font-size:9px;background:rgba(249,115,22,0.15);color:#fb923c;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">LIVE TRACKING</span></div>', unsafe_allow_html=True)
 
-    et1, et2, et3 = st.columns([2, 2, 3])
+    et0, et1, et2, et3 = st.columns([2, 2, 2, 3])
+    with et0:
+        st.markdown("""<div class="baseline-card">
+          <div class="baseline-title">Baseline Oct-Feb (Median hrs)</div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px">
+            <div>
+              <div class="baseline-value" style="color:#c8d6e5">72.5h</div>
+              <div class="baseline-label">Oct 2025 (274 apps)</div>
+            </div>
+            <div style="text-align:right">
+              <div class="baseline-value val-good" style="font-size:20px">31.8h</div>
+              <div class="baseline-label">Feb 2026 (139 apps)</div>
+            </div>
+          </div>
+          <div class="baseline-row">
+            <span class="baseline-metric">Nov 2025 (256 apps)</span>
+            <span class="baseline-val val-bad">246.3h (~10.3d)</span>
+          </div>
+          <div class="baseline-row">
+            <span class="baseline-metric">Dec 2025 (150 apps)</span>
+            <span class="baseline-val val-warn">144.3h (~6.0d)</span>
+          </div>
+          <div class="baseline-row">
+            <span class="baseline-metric">Jan 2026 (156 apps)</span>
+            <span class="baseline-val val-warn">47.8h (~2.0d)</span>
+          </div>
+          <div class="baseline-row">
+            <span class="baseline-metric">Trend</span>
+            <span class="baseline-val val-good">-56% Oct&rarr;Feb</span>
+          </div>
+        </div>""", unsafe_allow_html=True)
     with et1:
         st.markdown("""<div class="baseline-card">
           <div class="baseline-title">Mar 9 Snapshot (148 apps)</div>
@@ -740,7 +776,7 @@ def main():
           </div>
         </div>""", unsafe_allow_html=True)
     with et3:
-        st.markdown("**Enablement Time Distribution (Mar 9 vs Mar 20)**")
+        st.markdown("**Median Enablement Time Trend (Oct 2025 - Mar 2026)**")
         st.plotly_chart(enablement_time_chart(), use_container_width=True, config={"displayModeBar": False})
 
     # Recommendations from baseline
