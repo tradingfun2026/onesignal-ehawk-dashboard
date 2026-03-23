@@ -571,14 +571,23 @@ def main():
         f"{len(mitigated_risks)} risks have been mitigated through SDAT implementation and process improvements."
     )
 
-    next_para = (
-        f"Priority actions for the next 7 days: "
-        f"(1) Close the remaining {decisions_needed} critical decisions to unblock engineering on dependent tickets. "
-        f"(2) Drive Ops/Program action items from {signoffs_pct}% to at least 75% completion "
-        f"-- {signoffs_rem} items remain outstanding. "
-        f"(3) Clear the {blockers_rem} pre-launch blockers, focusing on any that gate "
-        f"engineering completion or leadership sign-off for go/no-go."
-    )
+    next_items = []
+    item_num = 1
+    if decisions_needed > 0:
+        next_items.append(f"({item_num}) Close the remaining {decisions_needed} critical decisions to unblock engineering on dependent tickets.")
+        item_num += 1
+    if signoffs_rem > 0:
+        next_items.append(f"({item_num}) Drive Ops/Program action items from {signoffs_pct}% to at least 75% completion -- {signoffs_rem} items remain outstanding.")
+        item_num += 1
+    if blockers_rem > 0:
+        next_items.append(f"({item_num}) Clear the {blockers_rem} pre-launch blockers, focusing on any that gate engineering completion or leadership sign-off for go/no-go.")
+        item_num += 1
+    if tickets_rem > 0:
+        next_items.append(f"({item_num}) Create the {tickets_rem} remaining engineering tickets.")
+        item_num += 1
+    if not next_items:
+        next_items.append("All workstreams on track. Continue engineering execution on T9 and T11.")
+    next_para = "Priority actions for the next 7 days: " + " ".join(next_items)
 
     summary_data = [
         ("State", state_color, state_para),
