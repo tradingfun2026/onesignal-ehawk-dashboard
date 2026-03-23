@@ -404,6 +404,27 @@ def priority_badge(priority):
     cls = {"High": "badge-red", "Medium": "badge-amber", "Low": "badge-gray"}.get(priority, "badge-gray")
     return f'<span class="detail-badge {cls}">{priority.upper()}</span>'
 
+def date_tag(item, field="Due Date"):
+    d = item.get(field, "")
+    if not d:
+        return '<span style="font-size:11px;color:#9ca3af;white-space:nowrap;margin-left:auto;padding-left:12px">No ETA</span>'
+    try:
+        dt = datetime.strptime(d[:10], "%Y-%m-%d")
+        label = dt.strftime("%b %d")
+        days_away = (dt - datetime.now()).days
+        if days_away < 0:
+            color = "#ef4444"
+            suffix = f" ({abs(days_away)}d overdue)"
+        elif days_away <= 7:
+            color = "#f59e0b"
+            suffix = f" ({days_away}d)"
+        else:
+            color = "#6b7280"
+            suffix = ""
+        return f'<span style="font-size:11px;color:{color};white-space:nowrap;margin-left:auto;padding-left:12px;font-weight:600">{label}{suffix}</span>'
+    except:
+        return ""
+
 # -- MAIN --
 
 def main():
@@ -976,14 +997,14 @@ def main():
         for item in data.get("blockers_remaining", []):
             name = item.get("Task Name", "Untitled")
             p = priority_badge(item.get("Priority", "")) if item.get("Priority") else ""
-            st.markdown(f'<div class="detail-item">{status_badge(item.get("Status","Not Started"))}{p}<span style="color:#111827">{name}</span></div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="detail-item">{status_badge(item.get("Status","Not Started"))}{p}<span style="color:#111827;flex:1">{name}</span>{date_tag(item)}</div>', unsafe_allow_html=True)
     with tab2:
         st.markdown("**Ops/Program action items outstanding -- Ops/Program owns all of these**")
         if not data.get("signoffs"):
             st.markdown('<div style="color:#16a34a;padding:12px;font-size:14px">All action items confirmed!</div>', unsafe_allow_html=True)
         for item in data.get("signoffs", []):
             name = item.get("Task Name", "Untitled")
-            st.markdown(f'<div class="detail-item">{status_badge(item.get("Status","Not Started"))}<span style="color:#111827">{name}</span></div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="detail-item">{status_badge(item.get("Status","Not Started"))}<span style="color:#111827;flex:1">{name}</span>{date_tag(item)}</div>', unsafe_allow_html=True)
     with tab3:
         st.markdown("**Critical decisions blocking downstream engineering**")
         if not data.get("decisions_needed"):
@@ -991,8 +1012,9 @@ def main():
         for item in data.get("decisions_needed", []):
             title = item.get("Title", "Untitled")
             notes = item.get("Unblocks / Notes", "")[:120]
+            due = date_tag(item)
             notes_html = f'<div style="font-size:12px;color:#374151;margin-top:4px">{notes}</div>' if notes else ""
-            st.markdown(f'<div class="detail-item"><span class="detail-badge badge-red">NEEDED</span><div><div style="color:#111827">{title}</div>{notes_html}</div></div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="detail-item"><span class="detail-badge badge-red">NEEDED</span><div style="flex:1"><div style="color:#111827">{title}</div>{notes_html}</div>{due}</div>', unsafe_allow_html=True)
     with tab4:
         st.markdown("**Open risks being tracked**")
         if not data.get("open_risks"):
