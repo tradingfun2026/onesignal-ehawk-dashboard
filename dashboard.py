@@ -291,7 +291,7 @@ def enablement_time_chart():
         **DARK, height=280, barmode="group", bargap=0.3,
         xaxis=dict(tickfont=dict(size=12, color="#c8d6e5")),
         yaxis=dict(title="% of Apps", ticksuffix="%", showgrid=True, gridcolor="#1a2744",
-                   titlefont=dict(size=11, color="#7b93b3"),
+                   title_font=dict(size=11, color="#7b93b3"),
                    tickfont=dict(color="#7b93b3")),
         legend=dict(orientation="h", y=1.12, x=0, font=dict(size=11, color="#8ba3c4"),
                     bgcolor="rgba(0,0,0,0)"),
@@ -330,10 +330,10 @@ def fnr_trend_chart():
         xaxis=dict(tickfont=dict(size=12, color="#c8d6e5")),
     )
     fig.update_yaxes(title_text="Apps", showgrid=True, gridcolor="#1a2744",
-                     titlefont=dict(size=11, color="#7b93b3"),
+                     title_font=dict(size=11, color="#7b93b3"),
                      tickfont=dict(color="#7b93b3"), secondary_y=False)
     fig.update_yaxes(title_text="FNR %", range=[0, 70], showgrid=False,
-                     titlefont=dict(size=11, color="#f87171"),
+                     title_font=dict(size=11, color="#f87171"),
                      tickfont=dict(color="#f87171"), secondary_y=True)
     return fig
 
@@ -353,7 +353,7 @@ def tld_risk_chart():
     fig.update_layout(
         **DARK, height=280, showlegend=False,
         xaxis=dict(title="Bypass Rate %", showgrid=True, gridcolor="#1a2744",
-                   titlefont=dict(size=11, color="#7b93b3"),
+                   title_font=dict(size=11, color="#7b93b3"),
                    tickfont=dict(color="#7b93b3")),
         yaxis=dict(tickfont=dict(size=13, color="#c8d6e5")),
     )
