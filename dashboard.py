@@ -478,7 +478,7 @@ def main():
           <div class="phase-desc">
             Auto-approval pipeline for email domain verification. Replaces manual review with
             eHawk scoring to automatically verify low-risk email app provisioning requests,
-            reducing Operations/Product workload while maintaining fraud detection coverage.
+            reducing Ops/Program workload while maintaining fraud detection coverage.
           </div>
         </div>""", unsafe_allow_html=True)
     with ov2:
@@ -486,7 +486,7 @@ def main():
           <div class="phase-title">Current Status</div>
           <div class="phase-desc">
             <span class="owner-tag">ENG</span> {eng_pct}% complete &nbsp;
-            <span class="owner-tag">Operations/Product</span> {signoffs_pct}% action items complete<br><br>
+            <span class="owner-tag">Ops/Program</span> {signoffs_pct}% action items complete<br><br>
             {open_risks} open risks tracked &nbsp;|&nbsp; {decisions_needed} critical decisions pending<br>
             {blockers_rem} pre-launch dependencies remaining
           </div>
@@ -513,7 +513,7 @@ def main():
          f"T9 &amp; T11 in progress", f"{eng_pct}% complete"),
         (k2, blockers_done, blockers_total, "amber" if blockers_pct >= 30 else "red", "Pre-launch Dependencies",
          f"{blockers_done} cleared", f"{blockers_pct}% cleared"),
-        (k3, signoffs_done, signoffs_total, "green" if signoffs_pct >= 60 else "red", "Operations/Product Action Items",
+        (k3, signoffs_done, signoffs_total, "green" if signoffs_pct >= 60 else "red", "Ops/Program Action Items",
          f"{signoffs_rem} outstanding", f"{signoffs_pct}% confirmed"),
         (k4, gaps_done, gaps_total, "green" if gaps_pct >= 60 else "red", "Gap Tickets",
          f"{gaps_rem} open", f"{gaps_pct}% closed"),
@@ -917,7 +917,7 @@ def main():
 LIVE DATA:
 - Engineering: {eng_done}/{eng_total} done ({eng_pct}%). T9 and T11 in progress. T3 blocked.
 - Pre-launch dependencies: {blockers_done}/{blockers_total} cleared, {blockers_rem} remaining.
-- Operations/Product action items: {signoffs_done}/{signoffs_total} confirmed ({signoffs_pct}%). Critical bottleneck.
+- Ops/Program action items: {signoffs_done}/{signoffs_total} confirmed ({signoffs_pct}%). Critical bottleneck.
 - Gap tickets: {gaps_done}/{gaps_total} closed. {gaps_rem} open.
 - Decisions: {decisions_made}/{decisions_total} made. {decisions_needed} critical decisions blocking downstream engineering.
 - Open risks: {open_risks} tracked.
@@ -940,8 +940,8 @@ EMAIL SENDER ENABLEMENT TIME:
 - Mar 9: 148 apps, median 24.3h, 50.7% over 24h.
 - Mar 20: 85 apps, median 18.0h, 44.7% over 24h. 46.2% never enabled.
 
-Paragraph 1 -- STATE: Engineering momentum vs Operations/Product readiness gap.
-Paragraph 2 -- CONSTRAINT: What happens if Operations/Product action items don't move this week.
+Paragraph 1 -- STATE: Engineering momentum vs Ops/Program readiness gap.
+Paragraph 2 -- CONSTRAINT: What happens if Ops/Program action items don't move this week.
 Paragraph 3 -- NEXT 7 DAYS: Three specific actions with implied owners."""
 
     data_hash = hashlib.md5(str([(k, len(v)) for k, v in sorted(data.items())]).encode()).hexdigest()
@@ -988,7 +988,7 @@ Paragraph 3 -- NEXT 7 DAYS: Three specific actions with implied owners."""
             p = priority_badge(item.get("Priority", "")) if item.get("Priority") else ""
             st.markdown(f'<div class="detail-item">{status_badge(item.get("Status","Not Started"))}{p}<span style="color:#111827">{name}</span></div>', unsafe_allow_html=True)
     with tab2:
-        st.markdown("**Operations/Product action items outstanding -- Operations/Product owns all of these**")
+        st.markdown("**Ops/Program action items outstanding -- Ops/Program owns all of these**")
         if not data.get("signoffs"):
             st.markdown('<div style="color:#16a34a;padding:12px;font-size:14px">All action items confirmed!</div>', unsafe_allow_html=True)
         for item in data.get("signoffs", []):
