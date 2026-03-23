@@ -91,15 +91,15 @@ st.markdown("""
 
   /* Baseline Metric Cards */
   .baseline-card {
-    background: #141e30; border-radius: 12px; padding: 18px 20px;
-    border: 1px solid #1e3050;
+    background: #f8fafc; border-radius: 12px; padding: 18px 20px;
+    border: 1px solid #d1d5db;
   }
-  .baseline-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #cbd5e1; margin-bottom: 12px; }
+  .baseline-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #374151; margin-bottom: 12px; }
   .baseline-value { font-size: 28px; font-weight: 700; line-height: 1; }
-  .baseline-label { font-size: 12px; color: #cbd5e1; margin-top: 4px; }
-  .baseline-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #1a2744; }
+  .baseline-label { font-size: 12px; color: #374151; margin-top: 4px; }
+  .baseline-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #e5e7eb; }
   .baseline-row:last-child { border-bottom: none; }
-  .baseline-metric { font-size: 13px; color: #f1f5f9; }
+  .baseline-metric { font-size: 13px; color: #111827; }
   .baseline-val { font-size: 13px; font-weight: 600; }
   .val-good { color: #4ade80; }
   .val-warn { color: #fbbf24; }
@@ -545,8 +545,9 @@ def main():
         f"Engineering is at {eng_pct}% completion with {eng_done} of {eng_total} tickets closed. "
         f"The pipeline has {blockers_rem} pre-launch blockers remaining out of {blockers_total} total, "
         f"with {blockers_pct}% cleared so far. "
-        f"Ops/Program action items stand at {signoffs_done}/{signoffs_total} ({signoffs_pct}% complete), "
-        f"Gap tickets have been resolved and merged into engineering. "
+        f"Ops/Program action items stand at {signoffs_done}/{signoffs_total} ({signoffs_pct}% complete). "
+        f"Engineering tickets for the appeal process have not yet been created and are pending "
+        f"a decision on which appeal option to implement. "
         f"The false negative rate has dropped to 0.0% for both Feb and Mar 2026, "
         f"down from the 61.3% peak in Nov 2025."
     )
@@ -578,7 +579,7 @@ def main():
         with col:
             st.markdown(f"""<div style="background:#0f172a;border-radius:10px;padding:18px 20px;border-top:2px solid {color};border:1px solid #1e3050;border-top:3px solid {color}">
               <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:{color};margin-bottom:12px">{label}</div>
-              <div style="font-size:14px;line-height:1.75;color:#e2e8f0">{para}</div>
+              <div style="font-size:14px;line-height:1.75;color:#111827">{para}</div>
             </div>""", unsafe_allow_html=True)
 
     # =====================================================
@@ -684,7 +685,7 @@ def main():
     # =====================================================
     # FRAUD BASELINE METRICS
     # =====================================================
-    st.markdown('<div class="section-header">Fraud Baseline Metrics <span style="font-size:9px;background:rgba(139,163,196,0.15);color:#e2e8f0;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">FIXED SNAPSHOT &bull; OCT 2025 - FEB 2026</span></div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-header">Fraud Baseline Metrics <span style="font-size:9px;background:rgba(139,163,196,0.15);color:#374151;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">FIXED SNAPSHOT &bull; OCT 2025 - FEB 2026</span></div>', unsafe_allow_html=True)
 
     b1, b2, b3, b4 = st.columns(4)
     with b1:
@@ -744,11 +745,11 @@ def main():
           <div class="baseline-title">App Population</div>
           <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px">
             <div>
-              <div class="baseline-value" style="color:#e2e8f0">2,333</div>
+              <div class="baseline-value" style="color:#111827">2,333</div>
               <div class="baseline-label">Non-Enterprise apps</div>
             </div>
             <div style="text-align:right">
-              <div class="baseline-value" style="color:#e2e8f0;font-size:20px">163</div>
+              <div class="baseline-value" style="color:#111827;font-size:20px">163</div>
               <div class="baseline-label">Enterprise apps</div>
             </div>
           </div>
@@ -774,7 +775,7 @@ def main():
               <div class="baseline-label">100K+ enforced rate</div>
             </div>
             <div style="text-align:right">
-              <div class="baseline-value" style="color:#e2e8f0;font-size:20px">12M</div>
+              <div class="baseline-value" style="color:#111827;font-size:20px">12M</div>
               <div class="baseline-label">Spam ring emails</div>
             </div>
           </div>
@@ -805,7 +806,7 @@ def main():
     # =====================================================
     # EMAIL SENDER ENABLEMENT TIME
     # =====================================================
-    st.markdown('<div class="section-header">Email Sender Enablement Time <span style="font-size:9px;background:rgba(139,163,196,0.15);color:#e2e8f0;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">FIXED SNAPSHOT &bull; OCT 2025 - MAR 2026</span></div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-header">Email Sender Enablement Time <span style="font-size:9px;background:rgba(139,163,196,0.15);color:#374151;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">FIXED SNAPSHOT &bull; OCT 2025 - MAR 2026</span></div>', unsafe_allow_html=True)
 
     et0, et1, et2, et3 = st.columns([2, 2, 2, 3])
     with et0:
@@ -817,13 +818,13 @@ def main():
               <div class="baseline-label">Median enablement</div>
             </div>
             <div style="text-align:right">
-              <div class="baseline-value" style="color:#e2e8f0;font-size:20px">2,333</div>
+              <div class="baseline-value" style="color:#111827;font-size:20px">2,333</div>
               <div class="baseline-label">Non-Ent apps total</div>
             </div>
           </div>
           <div class="baseline-row">
             <span class="baseline-metric">Verified apps</span>
-            <span class="baseline-val" style="color:#e2e8f0">58.9% (1,375)</span>
+            <span class="baseline-val" style="color:#111827">58.9% (1,375)</span>
           </div>
           <div class="baseline-row">
             <span class="baseline-metric">Never enabled</span>
@@ -847,7 +848,7 @@ def main():
               <div class="baseline-label">Median enablement</div>
             </div>
             <div style="text-align:right">
-              <div class="baseline-value" style="color:#e2e8f0;font-size:20px">75.9h</div>
+              <div class="baseline-value" style="color:#111827;font-size:20px">75.9h</div>
               <div class="baseline-label">Average (~3.2 days)</div>
             </div>
           </div>
@@ -873,7 +874,7 @@ def main():
               <div class="baseline-label">Median enablement</div>
             </div>
             <div style="text-align:right">
-              <div class="baseline-value" style="color:#e2e8f0;font-size:20px">83.7h</div>
+              <div class="baseline-value" style="color:#111827;font-size:20px">83.7h</div>
               <div class="baseline-label">Average (~3.5 days)</div>
             </div>
           </div>
@@ -927,7 +928,7 @@ def main():
           <div class="baseline-title">Email Verification Inbox</div>
           <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px">
             <div>
-              <div class="baseline-value" style="color:#e2e8f0">596</div>
+              <div class="baseline-value" style="color:#111827">596</div>
               <div class="baseline-label">Total tickets (excl. AUP)</div>
             </div>
             <div style="text-align:right">
@@ -945,7 +946,7 @@ def main():
           </div>
           <div class="baseline-row">
             <span class="baseline-metric">Admin-replied tickets</span>
-            <span class="baseline-val" style="color:#e2e8f0">254 of 596</span>
+            <span class="baseline-val" style="color:#111827">254 of 596</span>
           </div>
         </div>""", unsafe_allow_html=True)
     with ic2:
@@ -957,7 +958,7 @@ def main():
               <div class="baseline-label">Median first response</div>
             </div>
             <div style="text-align:right">
-              <div class="baseline-value" style="color:#e2e8f0;font-size:20px">1.9h</div>
+              <div class="baseline-value" style="color:#111827;font-size:20px">1.9h</div>
               <div class="baseline-label">Average (mean)</div>
             </div>
           </div>
@@ -979,11 +980,11 @@ def main():
           <div class="baseline-title">Resolution Time (Approved)</div>
           <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px">
             <div>
-              <div class="baseline-value" style="color:#60a5fa">2.6h</div>
+              <div class="baseline-value" style="color:#3b82f6">2.6h</div>
               <div class="baseline-label">Median resolution</div>
             </div>
             <div style="text-align:right">
-              <div class="baseline-value" style="color:#e2e8f0;font-size:20px">2.0d</div>
+              <div class="baseline-value" style="color:#111827;font-size:20px">2.0d</div>
               <div class="baseline-label">Average (mean)</div>
             </div>
           </div>
