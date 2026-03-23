@@ -448,7 +448,10 @@ def main():
             st.stop()
 
     # -- Compute metrics from live data --
-    eng_rem = len(data.get("eng_remaining", []))
+    eng_all_remaining = data.get("eng_remaining", [])
+    eng_active = [r for r in eng_all_remaining if r.get("Status") != "Deferred"]
+    eng_deferred = [r for r in eng_all_remaining if r.get("Status") == "Deferred"]
+    eng_rem = len(eng_active)
     eng_done = len([r for r in data.get("completed", []) if r.get("Section") == "Engineering Ticket"])
     eng_total = eng_done + eng_rem
     blockers_done = len(data.get("blockers_complete", []))
@@ -481,7 +484,7 @@ def main():
     st.markdown(f"""
     <div class="masthead">
       <div>
-        <div class="masthead-eyebrow">OneSignal &nbsp;|&nbsp; Trust &amp; Safety Operations &nbsp;|&nbsp; eHawk Phase 3</div>
+        <div class="masthead-eyebrow">OneSignal &nbsp;|&nbsp; Ops/Program &nbsp;|&nbsp; eHawk Phase 3</div>
         <div class="masthead-title">Launch Readiness Dashboard</div>
         <div class="masthead-sub">{datetime.now().strftime('%A, %B %d, %Y')} &nbsp;|&nbsp; Live data from Airtable &nbsp;|&nbsp; Refreshes every 5 min</div>
       </div>
@@ -549,11 +552,8 @@ def main():
         f"There are {decisions_needed} critical decisions still needed that block downstream engineering work, "
         f"with only {decisions_pct}% of all decisions resolved. "
         f"{open_risks} open risks are being tracked. "
-        f"Email sender enablement time has improved significantly from a baseline median of 8.1 days "
-        f"to 24.3 hours (Mar 9) and 18.0 hours (Mar 20), but 44.7% of apps still take over 24 hours "
-        f"and 46.2% never get enabled at all. "
-        f"Intercom verification resolution sits at a median of 2.6 hours, "
-        f"though P90 cases stretch to 6.1 days."
+        f"{tickets_rem} engineering tickets still need to be created. "
+        f"{len(mitigated_risks)} risks have been mitigated through SDAT implementation and process improvements."
     )
 
     next_para = (
@@ -582,7 +582,7 @@ def main():
     # KPI ROW
     # =====================================================
     st.markdown('<div class="section-header">Launch Readiness KPIs</div>', unsafe_allow_html=True)
-    k1, k2, k3, k4 = st.columns(4)
+    k1, k2, k3, k4, k5 = st.columns(5)
     color_map = {"green": "#22c55e", "amber": "#f59e0b", "red": "#ef4444", "blue": "#3b82f6"}
     kpi_data = [
         (k1, eng_done, eng_total, "green", "Engineering Tickets",
@@ -593,6 +593,8 @@ def main():
          f"{signoffs_rem} outstanding", f"{signoffs_pct}% confirmed"),
         (k4, decisions_made, decisions_total, "blue", "Decisions",
          f"{decisions_needed} critical needed", f"{decisions_pct}% decided"),
+        (k5, tickets_done, tickets_total, "amber" if tickets_rem > 0 else "green", "Tickets to Create",
+         f"{tickets_rem} remaining", f"{tickets_pct}% created"),
     ]
     for col, val, tot, color, label, ctx, pct in kpi_data:
         with col:
@@ -615,7 +617,7 @@ def main():
     # PIPELINE PROGRESS CHARTS
     # =====================================================
     st.markdown('<div class="section-header">Pipeline Progress</div>', unsafe_allow_html=True)
-    c1, c2, c3 = st.columns([5, 3, 3])
+    c1, c2 = st.columns([5, 3])
     with c1:
         st.markdown("**Work status by category**")
         st.plotly_chart(
@@ -629,26 +631,25 @@ def main():
             decision_donut(decisions_made, decisions_pending, decisions_needed),
             use_container_width=True, config={"displayModeBar": False},
         )
-    with c3:
-        st.markdown("**Completion % by workstream**")
-        st.plotly_chart(
-            completion_bar(eng_pct, blockers_pct, signoffs_pct, decisions_pct),
-            use_container_width=True, config={"displayModeBar": False},
-        )
 
     # =====================================================
     # PIPELINE PROGRESS DRILL-DOWN EXPANDERS
     # =====================================================
     p1, p2, p3, p4 = st.columns(4)
     with p1:
-        with st.expander(f"Engineering — {eng_rem} remaining"):
+        with st.expander(f"Engineering — {eng_rem} active, {len(eng_deferred)} deferred"):
             if eng_rem == 0:
-                st.markdown('<span style="color:#16a34a;font-size:13px">All engineering tickets complete!</span>', unsafe_allow_html=True)
-            for item in data.get("eng_remaining", []):
+                st.markdown('<span style="color:#16a34a;font-size:13px">All active engineering tickets complete!</span>', unsafe_allow_html=True)
+            for item in eng_active:
                 name = item.get("Task Name", "Untitled")
                 p = item.get("Priority", "")
                 p_color = {"High": "#ef4444", "Medium": "#f59e0b", "Low": "#3b82f6"}.get(p, "#6b7280")
                 st.markdown(f'<div style="font-size:12px;padding:4px 0;border-bottom:1px solid #f0f0f0"><span style="color:{p_color};font-weight:600;font-size:10px;margin-right:4px">{p.upper()}</span> {name}</div>', unsafe_allow_html=True)
+            if eng_deferred:
+                st.markdown('<div style="font-size:11px;color:#6b7280;margin-top:8px;font-weight:600">DEFERRED</div>', unsafe_allow_html=True)
+                for item in eng_deferred:
+                    name = item.get("Task Name", "Untitled")
+                    st.markdown(f'<div style="font-size:12px;padding:4px 0;border-bottom:1px solid #f0f0f0;color:#9ca3af">{name}</div>', unsafe_allow_html=True)
     with p2:
         with st.expander(f"Dependencies — {blockers_rem} remaining"):
             if blockers_rem == 0:
@@ -899,9 +900,9 @@ def main():
     st.markdown("**Baseline Recommendations & Alert Thresholds**")
     rec_data = [
         ("CRITICAL", "badge-red", "Volume-based auto-escalation", "88.6% enforcement at 100K+", "Auto-escalate >10K, suspend >50K"),
-        ("CRITICAL", "badge-red", "Cross-org domain blocking", "20 fraud domains org-hopping", "Block domain if prior enforcement (eHawk scoring)"),
-        ("HIGH", "badge-amber", "Spam ring fingerprinting", "31 apps, 12M emails", "[Brand] App pattern + clustering (eHawk scoring)"),
-        ("HIGH", "badge-amber", "TLD risk weighting", ".net 63.6%, .online 56.2%", "Enhanced scrutiny high-risk TLDs (eHawk scoring)"),
+        ("CRITICAL", "badge-red", "Cross-org domain blocking", "20 fraud domains org-hopping", "Block domain if prior enforcement (SDAT + eHawk)"),
+        ("HIGH", "badge-amber", "Spam ring fingerprinting", "31 apps, 12M emails", "[Brand] App pattern + clustering (SDAT + eHawk)"),
+        ("HIGH", "badge-amber", "TLD risk weighting", ".net 63.6%, .online 56.2%", "Enhanced scrutiny high-risk TLDs (SDAT + eHawk)"),
         ("MEDIUM", "badge-blue", "Enterprise detection acceleration", "34-day median detection", "Target <14 day detection"),
     ]
     for priority, badge_cls, rec, current, target in rec_data:
@@ -1209,7 +1210,7 @@ def main():
     # =====================================================
     st.markdown(f"""<div style="margin-top:36px;padding-top:18px;border-top:1px solid #1e3050;font-size:12px;color:#4a6080;text-align:center">
       OneSignal eHawk Phase 3 Auto-Approval Pipeline &nbsp;|&nbsp; Confidential &nbsp;|&nbsp;
-      {datetime.now().strftime('%B %d, %Y %H:%M')} &nbsp;|&nbsp; Data cached 5 min &nbsp;|&nbsp; Streamlit + Airtable + Gemini
+      {datetime.now().strftime('%B %d, %Y %H:%M')} &nbsp;|&nbsp; Data cached 5 min &nbsp;|&nbsp; Streamlit + Airtable
     </div>""", unsafe_allow_html=True)
 
 
