@@ -70,14 +70,14 @@ st.markdown("""
   /* Section Headers */
   .section-header {
     font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em;
-    color: #e2e8f0; margin: 28px 0 14px; padding-bottom: 10px;
-    border-bottom: 1px solid #1e3050;
+    color: #111827; margin: 28px 0 14px; padding-bottom: 10px;
+    border-bottom: 1px solid #d1d5db;
   }
 
   /* Detail Items */
   .detail-item {
     display: flex; align-items: flex-start; gap: 10px; padding: 10px 0;
-    border-bottom: 1px solid #1a2744; font-size: 14px; color: #f1f5f9;
+    border-bottom: 1px solid #d1d5db; font-size: 14px; color: #111827;
   }
   .detail-badge {
     font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px;
@@ -120,7 +120,7 @@ st.markdown("""
   /* Streamlit tab styling */
   .stTabs [data-baseweb="tab-list"] { gap: 4px; }
   .stTabs [data-baseweb="tab"] {
-    font-size: 13px; font-weight: 500; color: #e2e8f0;
+    font-size: 13px; font-weight: 500; color: #111827;
     border-radius: 8px 8px 0 0; padding: 8px 16px;
   }
 </style>
@@ -792,8 +792,8 @@ def main():
     for priority, badge_cls, rec, current, target in rec_data:
         st.markdown(f"""<div class="detail-item">
           <span class="detail-badge {badge_cls}">{priority}</span>
-          <span style="color:#e2e8f0;min-width:220px;font-weight:500">{rec}</span>
-          <span style="color:#e2e8f0;flex:1">Current: {current}</span>
+          <span style="color:#111827;min-width:220px;font-weight:500">{rec}</span>
+          <span style="color:#374151;flex:1">Current: {current}</span>
           <span style="color:#4ade80;flex:1">Target: {target}</span>
         </div>""", unsafe_allow_html=True)
 
@@ -986,49 +986,49 @@ Paragraph 3 -- NEXT 7 DAYS: Three specific actions with implied owners."""
         for item in data.get("blockers_remaining", []):
             name = item.get("Task Name", "Untitled")
             p = priority_badge(item.get("Priority", "")) if item.get("Priority") else ""
-            st.markdown(f'<div class="detail-item">{status_badge(item.get("Status","Not Started"))}{p}<span style="color:#e2e8f0">{name}</span></div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="detail-item">{status_badge(item.get("Status","Not Started"))}{p}<span style="color:#111827">{name}</span></div>', unsafe_allow_html=True)
     with tab2:
         st.markdown("**T&S sign-offs outstanding -- T&S owns all of these**")
         if not data.get("signoffs"):
-            st.markdown('<div style="color:#4ade80;padding:12px;font-size:14px">All sign-offs confirmed!</div>', unsafe_allow_html=True)
+            st.markdown('<div style="color:#16a34a;padding:12px;font-size:14px">All sign-offs confirmed!</div>', unsafe_allow_html=True)
         for item in data.get("signoffs", []):
             name = item.get("Task Name", "Untitled")
-            st.markdown(f'<div class="detail-item">{status_badge(item.get("Status","Not Started"))}<span style="color:#e2e8f0">{name}</span></div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="detail-item">{status_badge(item.get("Status","Not Started"))}<span style="color:#111827">{name}</span></div>', unsafe_allow_html=True)
     with tab3:
         st.markdown("**Critical decisions blocking downstream engineering**")
         if not data.get("decisions_needed"):
-            st.markdown('<div style="color:#4ade80;padding:12px;font-size:14px">All decisions made!</div>', unsafe_allow_html=True)
+            st.markdown('<div style="color:#16a34a;padding:12px;font-size:14px">All decisions made!</div>', unsafe_allow_html=True)
         for item in data.get("decisions_needed", []):
             title = item.get("Title", "Untitled")
             notes = item.get("Unblocks / Notes", "")[:120]
-            notes_html = f'<div style="font-size:12px;color:#e2e8f0;margin-top:4px">{notes}</div>' if notes else ""
-            st.markdown(f'<div class="detail-item"><span class="detail-badge badge-red">NEEDED</span><div><div style="color:#e2e8f0">{title}</div>{notes_html}</div></div>', unsafe_allow_html=True)
+            notes_html = f'<div style="font-size:12px;color:#374151;margin-top:4px">{notes}</div>' if notes else ""
+            st.markdown(f'<div class="detail-item"><span class="detail-badge badge-red">NEEDED</span><div><div style="color:#111827">{title}</div>{notes_html}</div></div>', unsafe_allow_html=True)
     with tab4:
         st.markdown("**Gap tickets -- all must close before launch**")
         if not data.get("gaps"):
-            st.markdown('<div style="color:#4ade80;padding:12px;font-size:14px">All gap tickets closed!</div>', unsafe_allow_html=True)
+            st.markdown('<div style="color:#16a34a;padding:12px;font-size:14px">All gap tickets closed!</div>', unsafe_allow_html=True)
         for item in data.get("gaps", []):
             name = item.get("Task Name", "Untitled")
             p = priority_badge(item.get("Priority", "")) if item.get("Priority") else ""
-            st.markdown(f'<div class="detail-item">{status_badge(item.get("Status","Not Started"))}{p}<span style="color:#e2e8f0">{name}</span></div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="detail-item">{status_badge(item.get("Status","Not Started"))}{p}<span style="color:#111827">{name}</span></div>', unsafe_allow_html=True)
     with tab5:
         st.markdown("**Open risks being tracked**")
         if not data.get("open_risks"):
-            st.markdown('<div style="color:#4ade80;padding:12px;font-size:14px">No open risks!</div>', unsafe_allow_html=True)
+            st.markdown('<div style="color:#16a34a;padding:12px;font-size:14px">No open risks!</div>', unsafe_allow_html=True)
         for item in data.get("open_risks", []):
             name = item.get("Risk", item.get("Title", item.get("Name", "Untitled")))
             severity = item.get("Severity", item.get("Priority", ""))
             sev_badge = priority_badge(severity) if severity else ""
-            st.markdown(f'<div class="detail-item">{sev_badge}<span style="color:#e2e8f0">{name}</span></div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="detail-item">{sev_badge}<span style="color:#111827">{name}</span></div>', unsafe_allow_html=True)
     with tab6:
         st.markdown("**What's been completed -- engineering foundation is solid**")
         if not data.get("completed"):
-            st.markdown('<div style="color:#e2e8f0;padding:12px;font-size:14px">No completed items yet.</div>', unsafe_allow_html=True)
+            st.markdown('<div style="color:#374151;padding:12px;font-size:14px">No completed items yet.</div>', unsafe_allow_html=True)
         for item in data.get("completed", []):
             name = item.get("Task Name", "Untitled")
             section = item.get("Section", "")
             sec_html = f'<span class="detail-badge badge-gray">{section.upper()[:12]}</span>' if section else ""
-            st.markdown(f'<div class="detail-item"><span class="detail-badge badge-green">DONE</span>{sec_html}<span style="color:#e2e8f0">{name}</span></div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="detail-item"><span class="detail-badge badge-green">DONE</span>{sec_html}<span style="color:#111827">{name}</span></div>', unsafe_allow_html=True)
 
     # =====================================================
     # FOOTER
