@@ -204,7 +204,7 @@ def ring(value, total, color, title):
 def workstream_bar(eng_done, eng_total, blockers_done, blockers_rem, signoffs_done, signoffs_total, tickets_done, tickets_total):
     cats = [
         f"Engineering ({eng_total})",
-        f"Dependencies ({blockers_done + blockers_rem})",
+        f"Blockers ({blockers_done + blockers_rem})",
         f"Action Items ({signoffs_total})",
         f"Tickets to Create ({tickets_total})",
     ]
@@ -253,7 +253,7 @@ def decision_donut(made, pending, needed):
     return fig
 
 def completion_bar(eng_pct, blockers_pct, signoffs_pct, decisions_pct):
-    cats = ["Engineering", "Dependencies", "Action Items", "Decisions"]
+    cats = ["Engineering", "Blockers", "Action Items", "Decisions"]
     pcts = [eng_pct, blockers_pct, signoffs_pct, decisions_pct]
     fig = go.Figure(go.Bar(
         x=cats, y=pcts,
@@ -490,7 +490,7 @@ def main():
       </div>
       <div style="text-align:right">
         <div class="masthead-big">{blockers_rem}</div>
-        <div class="masthead-label">dependencies/blockers to launch</div>
+        <div class="masthead-label">blockers to launch</div>
       </div>
     </div>
     """, unsafe_allow_html=True)
@@ -516,7 +516,7 @@ def main():
             <span class="owner-tag">ENG</span> {eng_pct}% complete &nbsp;
             <span class="owner-tag">Ops/Program</span> {signoffs_pct}% action items complete<br><br>
             {open_risks} open risks tracked &nbsp;|&nbsp; {decisions_needed} critical decisions pending<br>
-            {blockers_rem} pre-launch dependencies remaining
+            {blockers_rem} pre-launch blockers remaining
           </div>
         </div>""", unsafe_allow_html=True)
     with ov3:
@@ -540,7 +540,7 @@ def main():
 
     state_para = (
         f"Engineering is at {eng_pct}% completion with {eng_done} of {eng_total} tickets closed. "
-        f"The pipeline has {blockers_rem} pre-launch dependencies remaining out of {blockers_total} total, "
+        f"The pipeline has {blockers_rem} pre-launch blockers remaining out of {blockers_total} total, "
         f"with {blockers_pct}% cleared so far. "
         f"Ops/Program action items stand at {signoffs_done}/{signoffs_total} ({signoffs_pct}% complete), "
         f"Gap tickets have been resolved and merged into engineering. "
@@ -561,7 +561,7 @@ def main():
         f"(1) Close the remaining {decisions_needed} critical decisions to unblock engineering on dependent tickets. "
         f"(2) Drive Ops/Program action items from {signoffs_pct}% to at least 75% completion "
         f"-- {signoffs_rem} items remain outstanding. "
-        f"(3) Clear the {blockers_rem} pre-launch dependencies, focusing on any that gate "
+        f"(3) Clear the {blockers_rem} pre-launch blockers, focusing on any that gate "
         f"engineering completion or leadership sign-off for go/no-go."
     )
 
@@ -587,7 +587,7 @@ def main():
     kpi_data = [
         (k1, eng_done, eng_total, "green", "Engineering Tickets",
          f"T9 &amp; T11 in progress", f"{eng_pct}% complete"),
-        (k2, blockers_done, blockers_total, "amber" if blockers_pct >= 30 else "red", "Pre-launch Dependencies",
+        (k2, blockers_done, blockers_total, "amber" if blockers_pct >= 30 else "red", "Pre-launch Blockers",
          f"{blockers_done} cleared", f"{blockers_pct}% cleared"),
         (k3, signoffs_done, signoffs_total, "green" if signoffs_pct >= 60 else "red", "Ops/Program Action Items",
          f"{signoffs_rem} outstanding", f"{signoffs_pct}% confirmed"),
@@ -651,9 +651,9 @@ def main():
                     name = item.get("Task Name", "Untitled")
                     st.markdown(f'<div style="font-size:12px;padding:4px 0;border-bottom:1px solid #f0f0f0;color:#9ca3af">{name}</div>', unsafe_allow_html=True)
     with p2:
-        with st.expander(f"Dependencies — {blockers_rem} remaining"):
+        with st.expander(f"Blockers — {blockers_rem} remaining"):
             if blockers_rem == 0:
-                st.markdown('<span style="color:#16a34a;font-size:13px">All dependencies cleared!</span>', unsafe_allow_html=True)
+                st.markdown('<span style="color:#16a34a;font-size:13px">All blockers cleared!</span>', unsafe_allow_html=True)
             for item in data.get("blockers_remaining", []):
                 name = item.get("Task Name", "Untitled")
                 p = item.get("Priority", "")
@@ -1030,7 +1030,7 @@ def main():
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown('<div class="section-header">Drill-Down Detail</div>', unsafe_allow_html=True)
     tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
-        f"Dependencies ({blockers_rem})",
+        f"Blockers ({blockers_rem})",
         f"Action Items ({signoffs_rem})",
         f"Decisions Needed ({decisions_needed})",
         f"Open Risks ({open_risks})",
@@ -1038,9 +1038,9 @@ def main():
         "Recently Completed",
     ])
     with tab1:
-        st.markdown("**Pre-launch dependencies -- must clear before launch**")
+        st.markdown("**Pre-launch blockers -- must clear before launch**")
         if not data.get("blockers_remaining"):
-            st.markdown('<div style="color:#4ade80;padding:12px;font-size:14px">All dependencies cleared!</div>', unsafe_allow_html=True)
+            st.markdown('<div style="color:#4ade80;padding:12px;font-size:14px">All blockers cleared!</div>', unsafe_allow_html=True)
         for item in data.get("blockers_remaining", []):
             name = item.get("Task Name", "Untitled")
             p = priority_badge(item.get("Priority", "")) if item.get("Priority") else ""
