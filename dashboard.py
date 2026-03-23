@@ -915,7 +915,7 @@ def main():
     st.markdown("**Baseline Recommendations & Alert Thresholds**")
     rec_data = [
         ("CRITICAL", "badge-red", "Volume-based auto-escalation", "88.6% enforcement at 100K+", "Auto-escalate >10K, suspend >50K"),
-        ("CRITICAL", "badge-red", "Cross-org domain blocking", "20 fraud domains org-hopping", "Block domain if prior enforcement (SDAT + eHawk)"),
+        ("CRITICAL", "badge-red", "Cross-org domain blocking", "20 fraud domains org-hopping", "ADDRESSING: Feedback loop — prior enforcement history feeds into SDAT + eHawk scoring"),
         ("HIGH", "badge-amber", "Spam ring fingerprinting", "31 apps, 12M emails", "[Brand] App pattern + clustering (SDAT + eHawk)"),
         ("HIGH", "badge-amber", "TLD risk weighting", ".net 63.6%, .online 56.2%", "ADDRESSING: eHawk includes TLD risk in behavioral scoring"),
         ("MEDIUM", "badge-blue", "Enterprise detection acceleration", "34-day median detection", "Target <14 day detection"),
