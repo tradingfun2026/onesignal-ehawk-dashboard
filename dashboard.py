@@ -268,6 +268,36 @@ def completion_bar(eng_pct, blockers_pct, signoffs_pct, gaps_pct, decisions_pct)
     )
     return fig
 
+def enablement_time_chart():
+    """Email sender enablement time distribution - March 9 vs March 20 comparison."""
+    buckets = ["< 1 hr", "1-4 hrs", "4-12 hrs", "12-24 hrs", "> 24 hrs"]
+    mar9 = [25, 28, 13, 7, 75]     # 148 qualifying apps
+    mar20 = [8, 16, 12, 11, 38]    # 85 qualifying apps
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        name="Mar 9 (148 apps)", x=buckets, y=[v/148*100 for v in mar9],
+        marker_color="#3b82f6", marker_line_width=0, opacity=0.7,
+        text=[f"{v/148*100:.0f}%" for v in mar9], textposition="outside",
+        textfont=dict(size=11, color="#60a5fa"),
+    ))
+    fig.add_trace(go.Bar(
+        name="Mar 20 (85 apps)", x=buckets, y=[v/85*100 for v in mar20],
+        marker_color="#f97316", marker_line_width=0, opacity=0.7,
+        text=[f"{v/85*100:.0f}%" for v in mar20], textposition="outside",
+        textfont=dict(size=11, color="#fb923c"),
+    ))
+    fig.update_layout(
+        **DARK, height=280, barmode="group", bargap=0.3,
+        xaxis=dict(tickfont=dict(size=12, color="#c8d6e5")),
+        yaxis=dict(title="% of Apps", ticksuffix="%", showgrid=True, gridcolor="#1a2744",
+                   titlefont=dict(size=11, color="#7b93b3"),
+                   tickfont=dict(color="#7b93b3")),
+        legend=dict(orientation="h", y=1.12, x=0, font=dict(size=11, color="#8ba3c4"),
+                    bgcolor="rgba(0,0,0,0)"),
+    )
+    return fig
+
 def fnr_trend_chart():
     """False Negative Rate trend from baseline analysis."""
     months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026"]
@@ -643,6 +673,72 @@ def main():
     with bc2:
         st.markdown("**TLD Bypass Rate (Non-Enterprise)**")
         st.plotly_chart(tld_risk_chart(), use_container_width=True, config={"displayModeBar": False})
+
+    # =====================================================
+    # EMAIL SENDER ENABLEMENT TIME
+    # =====================================================
+    st.markdown('<div class="section-header">Email Sender Enablement Time <span style="font-size:9px;background:rgba(249,115,22,0.15);color:#fb923c;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">LIVE TRACKING</span></div>', unsafe_allow_html=True)
+
+    et1, et2, et3 = st.columns([2, 2, 3])
+    with et1:
+        st.markdown("""<div class="baseline-card">
+          <div class="baseline-title">Mar 9 Snapshot (148 apps)</div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px">
+            <div>
+              <div class="baseline-value" style="color:#60a5fa">24.3h</div>
+              <div class="baseline-label">Median enablement</div>
+            </div>
+            <div style="text-align:right">
+              <div class="baseline-value" style="color:#8ba3c4;font-size:20px">75.9h</div>
+              <div class="baseline-label">Average (~3.2 days)</div>
+            </div>
+          </div>
+          <div class="baseline-row">
+            <span class="baseline-metric">Min</span>
+            <span class="baseline-val val-good">0.2 hrs (13 min)</span>
+          </div>
+          <div class="baseline-row">
+            <span class="baseline-metric">Max</span>
+            <span class="baseline-val val-bad">657.9 hrs (27.4 days)</span>
+          </div>
+          <div class="baseline-row">
+            <span class="baseline-metric">&gt; 24 hours</span>
+            <span class="baseline-val val-warn">75 apps (50.7%)</span>
+          </div>
+        </div>""", unsafe_allow_html=True)
+    with et2:
+        st.markdown("""<div class="baseline-card">
+          <div class="baseline-title">Mar 20 Snapshot (85 apps)</div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px">
+            <div>
+              <div class="baseline-value" style="color:#fb923c">18.0h</div>
+              <div class="baseline-label">Median enablement</div>
+            </div>
+            <div style="text-align:right">
+              <div class="baseline-value" style="color:#8ba3c4;font-size:20px">83.7h</div>
+              <div class="baseline-label">Average (~3.5 days)</div>
+            </div>
+          </div>
+          <div class="baseline-row">
+            <span class="baseline-metric">Min</span>
+            <span class="baseline-val val-good">0.3 hrs (19 min)</span>
+          </div>
+          <div class="baseline-row">
+            <span class="baseline-metric">Max</span>
+            <span class="baseline-val val-bad">530.0 hrs (22.1 days)</span>
+          </div>
+          <div class="baseline-row">
+            <span class="baseline-metric">&gt; 24 hours</span>
+            <span class="baseline-val val-warn">38 apps (44.7%)</span>
+          </div>
+          <div class="baseline-row">
+            <span class="baseline-metric">No enable (46.2%)</span>
+            <span class="baseline-val val-bad">111 of 240 apps</span>
+          </div>
+        </div>""", unsafe_allow_html=True)
+    with et3:
+        st.markdown("**Enablement Time Distribution (Mar 9 vs Mar 20)**")
+        st.plotly_chart(enablement_time_chart(), use_container_width=True, config={"displayModeBar": False})
 
     # Recommendations from baseline
     st.markdown("<br>", unsafe_allow_html=True)
