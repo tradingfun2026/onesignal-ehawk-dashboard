@@ -1010,9 +1010,13 @@ def main():
             st.markdown('<div style="color:#16a34a;padding:12px;font-size:14px">No open risks!</div>', unsafe_allow_html=True)
         for item in data.get("open_risks", []):
             name = item.get("Risk", item.get("Title", item.get("Name", "Untitled")))
+            desc = item.get("Description", "")
             severity = item.get("Severity", item.get("Priority", ""))
             sev_badge = priority_badge(severity) if severity else ""
-            st.markdown(f'<div class="detail-item">{sev_badge}<span style="color:#111827">{name}</span></div>', unsafe_allow_html=True)
+            # Truncate description for display
+            short_desc = (desc[:200] + "...") if len(desc) > 200 else desc
+            desc_html = f'<div style="font-size:12px;color:#374151;margin-top:4px;line-height:1.5">{short_desc}</div>' if short_desc else ""
+            st.markdown(f'<div class="detail-item">{sev_badge}<div style="flex:1"><div style="color:#111827;font-weight:500">{name}</div>{desc_html}</div></div>', unsafe_allow_html=True)
     with tab6:
         st.markdown("**What's been completed -- engineering foundation is solid**")
         if not data.get("completed"):
