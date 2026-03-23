@@ -503,58 +503,51 @@ def main():
         </div>""", unsafe_allow_html=True)
 
     # =====================================================
-    # AI EXECUTIVE SUMMARY
+    # EXECUTIVE SUMMARY
     # =====================================================
-    st.markdown('<div class="section-header">AI Executive Summary <span style="font-size:9px;background:rgba(59,130,246,0.15);color:#60a5fa;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">GEMINI 2.0 FLASH</span></div>', unsafe_allow_html=True)
-    prompt = f"""Write a 3-paragraph executive status brief for the OneSignal eHawk Phase 3 auto-approval pipeline. Date: {datetime.now().strftime('%B %d, %Y')}. Prose only. No bullets. No hedging. Be direct.
+    st.markdown('<div class="section-header">Executive Summary <span style="font-size:9px;background:rgba(59,130,246,0.15);color:#60a5fa;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">LIVE DATA</span></div>', unsafe_allow_html=True)
 
-LIVE DATA:
-- Engineering: {eng_done}/{eng_total} done ({eng_pct}%). T9 and T11 in progress. T3 blocked.
-- Pre-launch dependencies: {blockers_done}/{blockers_total} cleared, {blockers_rem} remaining.
-- Ops/Program action items: {signoffs_done}/{signoffs_total} confirmed ({signoffs_pct}%). Critical bottleneck.
-- Gap tickets: {gaps_done}/{gaps_total} closed. {gaps_rem} open.
-- Decisions: {decisions_made}/{decisions_total} made. {decisions_needed} critical decisions blocking downstream engineering.
-- Open risks: {open_risks} tracked.
+    overall_pct = round((eng_pct + blockers_pct + signoffs_pct + gaps_pct + decisions_pct) / 5)
+    state_color = "#22c55e" if overall_pct >= 60 else "#f59e0b" if overall_pct >= 30 else "#ef4444"
 
-BASELINE CONTEXT:
-- Non-Enterprise False Negative Rate dropped from 61.3% peak (Nov 2025) to 0.0% (Feb 2026).
-- 31-app spam ring identified accounting for 12M emails (58.3% of Non-Ent volume).
-- High-risk TLDs: .net 63.6% bypass, .online 56.2% bypass.
-- 88.6% enforcement rate at 100K+ email volume band.
-- Enterprise median detection time: 34 days (target <14 days).
+    state_para = (
+        f"Engineering is at {eng_pct}% completion with {eng_done} of {eng_total} tickets closed. "
+        f"The pipeline has {blockers_rem} pre-launch dependencies remaining out of {blockers_total} total, "
+        f"with {blockers_pct}% cleared so far. "
+        f"Ops/Program action items stand at {signoffs_done}/{signoffs_total} ({signoffs_pct}% complete), "
+        f"and {gaps_rem} gap tickets remain open. "
+        f"The false negative rate has dropped to 0.0% for both Feb and Mar 2026, "
+        f"down from the 61.3% peak in Nov 2025."
+    )
 
-INTERCOM SUPPORT METRICS (90 days, Nov 11 2025 - Feb 9 2026):
-- 596 email verification tickets, 271 approved (45.5%), 377 user-responded (63.3%).
-- First response time: median 20.5 min, average 1.9 hrs, P90 = 1.5 hrs.
-- Resolution time (approved): median 2.6 hrs, average 2.0 days, P90 = 6.1 days.
-- 632 spammer conversations; 70% caught via verification flow within 1 message.
-- Spammer tag removal rate: 0% (permanent, no appeal process).
+    constraint_para = (
+        f"There are {decisions_needed} critical decisions still needed that block downstream engineering work, "
+        f"with only {decisions_pct}% of all decisions resolved. "
+        f"{open_risks} open risks are being tracked. "
+        f"Email sender enablement time has improved significantly from a baseline median of 8.1 days "
+        f"to 24.3 hours (Mar 9) and 18.0 hours (Mar 20), but 44.7% of apps still take over 24 hours "
+        f"and 46.2% never get enabled at all. "
+        f"Intercom verification resolution sits at a median of 2.6 hours, "
+        f"though P90 cases stretch to 6.1 days."
+    )
 
-EMAIL SENDER ENABLEMENT TIME:
-- Mar 9: 148 apps, median 24.3h, 50.7% over 24h.
-- Mar 20: 85 apps, median 18.0h, 44.7% over 24h. 46.2% never enabled.
+    next_para = (
+        f"Priority actions for the next 7 days: "
+        f"(1) Close the remaining {decisions_needed} critical decisions to unblock engineering on dependent tickets. "
+        f"(2) Drive Ops/Program action items from {signoffs_pct}% to at least 75% completion "
+        f"-- {signoffs_rem} items remain outstanding. "
+        f"(3) Clear the {blockers_rem} pre-launch dependencies, focusing on any that gate "
+        f"engineering completion or leadership sign-off for go/no-go."
+    )
 
-Paragraph 1 -- STATE: Engineering momentum vs Ops/Program readiness gap.
-Paragraph 2 -- CONSTRAINT: What happens if Ops/Program action items don't move this week.
-Paragraph 3 -- NEXT 7 DAYS: Three specific actions with implied owners."""
-
-    data_hash = hashlib.md5(str([(k, len(v)) for k, v in sorted(data.items())]).encode()).hexdigest()
-    pat_hash = hashlib.md5(pat[:8].encode()).hexdigest()
-    _, btn_col = st.columns([10, 1])
-    with btn_col:
-        if st.button("Refresh", help="Regenerate AI summary"):
-            st.cache_data.clear()
-            st.rerun()
-    with st.spinner("Generating AI analysis..."):
-        summary = ai_summary(pat_hash, data_hash, prompt)
-    paras = [p.strip() for p in summary.strip().split("\n\n") if p.strip()]
-    labels = ["State", "Constraint", "Next 7 Days"]
-    colors = ["#3b82f6", "#ef4444", "#22c55e"]
-    cols = st.columns(min(len(paras), 3))
-    for i, (col, para) in enumerate(zip(cols, paras)):
+    summary_data = [
+        ("State", state_color, state_para),
+        ("Constraint", "#ef4444", constraint_para),
+        ("Next 7 Days", "#22c55e", next_para),
+    ]
+    cols = st.columns(3)
+    for i, (col, (label, color, para)) in enumerate(zip(cols, summary_data)):
         with col:
-            label = labels[i] if i < len(labels) else ""
-            color = colors[i] if i < len(colors) else "#e2e8f0"
             st.markdown(f"""<div style="background:#0f172a;border-radius:10px;padding:18px 20px;border-top:2px solid {color};border:1px solid #1e3050;border-top:3px solid {color}">
               <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:{color};margin-bottom:12px">{label}</div>
               <div style="font-size:14px;line-height:1.75;color:#e2e8f0">{para}</div>
