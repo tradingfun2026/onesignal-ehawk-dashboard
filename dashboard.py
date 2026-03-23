@@ -142,6 +142,7 @@ VIEWS = {
     "decisions_needed":   ("tblIbxPFGdXNSI3rE", "viwZjwMjP7UmUitbZ"),
     "decisions_open":     ("tblIbxPFGdXNSI3rE", "viwZA3HsTO3DWU6Jm"),
     "open_risks":         ("tbl6GWnx6Oz18kbyi", "viwzV39ZM3CcNWbkE"),
+    "all_risks":          ("tbl6GWnx6Oz18kbyi", "viwShWwdJOKxoPkhL"),
 }
 
 # -- DATA FETCHING --
@@ -464,6 +465,7 @@ def main():
     decisions_needed = len(data.get("decisions_needed", []))
     decisions_total = decisions_made + decisions_pending + decisions_needed
     open_risks = len(data.get("open_risks", []))
+    mitigated_risks = [r for r in data.get("all_risks", []) if r.get("Status") in ("Mitigated Risk",)]
 
     eng_pct = round(eng_done / eng_total * 100) if eng_total else 0
     blockers_pct = round(blockers_done / blockers_total * 100) if blockers_total else 0
@@ -983,11 +985,12 @@ def main():
     # =====================================================
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown('<div class="section-header">Drill-Down Detail</div>', unsafe_allow_html=True)
-    tab1, tab2, tab3, tab4, tab5 = st.tabs([
+    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
         f"Dependencies ({blockers_rem})",
         f"Action Items ({signoffs_rem})",
         f"Decisions Needed ({decisions_needed})",
         f"Open Risks ({open_risks})",
+        f"Risks Mitigated ({len(mitigated_risks)})",
         "Recently Completed",
     ])
     with tab1:
@@ -1086,6 +1089,69 @@ def main():
                     desc_html = f'<div style="font-size:12px;color:#374151;margin-top:4px;line-height:1.5">{short_desc}</div>' if short_desc else ""
                     st.markdown(f'<div class="detail-item">{status_html}{sev_badge}<div style="flex:1"><div style="color:#111827;font-weight:500">{risk_num}{name}</div>{desc_html}</div></div>', unsafe_allow_html=True)
     with tab5:
+        st.markdown("**Risks recently mitigated**")
+        if not mitigated_risks:
+            st.markdown('<div style="color:#16a34a;padding:12px;font-size:14px">No mitigated risks yet.</div>', unsafe_allow_html=True)
+        else:
+            # Group mitigated risks by Category
+            from collections import defaultdict as _defaultdict
+            mitigated_by_cat = _defaultdict(list)
+            for item in mitigated_risks:
+                cat = item.get("Category", "Uncategorized")
+                mitigated_by_cat[cat].append(item)
+
+            CATEGORY_COLORS_M = {
+                "Reporting & Analytics": "#3b82f6",
+                "Signal Architecture": "#a855f7",
+                "Integration & Pipeline": "#06b6d4",
+                "Process & Governance": "#f97316",
+                "Threat Intelligence": "#ef4444",
+                "Incident Response": "#eab308",
+                "Compliance & Legal": "#14b8a6",
+            }
+            CATEGORY_ICONS_M = {
+                "Reporting & Analytics": "📊",
+                "Signal Architecture": "🏗️",
+                "Integration & Pipeline": "🔗",
+                "Process & Governance": "📋",
+                "Threat Intelligence": "🛡️",
+                "Incident Response": "🚨",
+                "Compliance & Legal": "⚖️",
+            }
+
+            sorted_m_cats = sorted(mitigated_by_cat.items(), key=lambda x: -len(x[1]))
+            for cat_name, cat_risks in sorted_m_cats:
+                cat_color = CATEGORY_COLORS_M.get(cat_name, "#6b7280")
+                cat_icon = CATEGORY_ICONS_M.get(cat_name, "📌")
+                st.markdown(
+                    f'<div style="margin-top:18px;margin-bottom:8px;padding:8px 14px;'
+                    f'background:rgba(0,0,0,0.03);border-radius:8px;border-left:3px solid {cat_color};'
+                    f'display:flex;align-items:center;justify-content:space-between">'
+                    f'<span style="font-size:13px;font-weight:700;color:#111827">'
+                    f'{cat_icon} {cat_name}</span>'
+                    f'<span style="font-size:11px;font-weight:600;color:{cat_color};'
+                    f'background:rgba(0,0,0,0.05);padding:2px 8px;border-radius:4px">'
+                    f'{len(cat_risks)} mitigated</span>'
+                    f'</div>',
+                    unsafe_allow_html=True,
+                )
+                for item in cat_risks:
+                    name = item.get("Risk", item.get("Title", item.get("Name", "Untitled")))
+                    desc = item.get("Description", "")
+                    # Extract mitigation note if present
+                    mitigation_note = ""
+                    if "MITIGATION:" in desc:
+                        mitigation_note = desc.split("MITIGATION:")[-1].strip()
+                    elif "RESOLUTION:" in desc:
+                        mitigation_note = desc.split("RESOLUTION:")[-1].strip()
+                    short_note = (mitigation_note[:200] + "...") if len(mitigation_note) > 200 else mitigation_note
+                    note_html = f'<div style="font-size:12px;color:#374151;margin-top:4px;line-height:1.5">{short_note}</div>' if short_note else ""
+                    st.markdown(
+                        f'<div class="detail-item"><span class="detail-badge badge-green">MITIGATED</span>'
+                        f'<div style="flex:1"><div style="color:#111827;font-weight:500">{name}</div>{note_html}</div></div>',
+                        unsafe_allow_html=True,
+                    )
+    with tab6:
         st.markdown("**What's been completed -- engineering foundation is solid**")
         if not data.get("completed"):
             st.markdown('<div style="color:#374151;padding:12px;font-size:14px">No completed items yet.</div>', unsafe_allow_html=True)
