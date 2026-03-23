@@ -35,11 +35,11 @@ st.markdown("""
     display: flex; justify-content: space-between; align-items: center;
     border: 1px solid #1e3a5f;
   }
-  .masthead-eyebrow { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: #9db4ce; margin-bottom: 6px; }
-  .masthead-title { font-size: 26px; font-weight: 700; color: #e8edf5; letter-spacing: -0.03em; margin: 0; }
-  .masthead-sub { font-size: 13px; color: #9db4ce; margin-top: 6px; }
+  .masthead-eyebrow { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: #111827; margin-bottom: 6px; }
+  .masthead-title { font-size: 26px; font-weight: 700; color: #111827; letter-spacing: -0.03em; margin: 0; }
+  .masthead-sub { font-size: 13px; color: #111827; margin-top: 6px; }
   .masthead-big { font-size: 56px; font-weight: 800; color: #f97316; letter-spacing: -0.04em; line-height: 1; }
-  .masthead-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; color: #afc5db; margin-top: 4px; }
+  .masthead-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; color: #111827; margin-top: 4px; }
 
   /* KPI Cards */
   .kpi-card {
@@ -50,14 +50,14 @@ st.markdown("""
   .kpi-card.amber { border-top-color: #f59e0b; }
   .kpi-card.red { border-top-color: #ef4444; }
   .kpi-card.blue { border-top-color: #3b82f6; }
-  .kpi-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #afc5db; margin-bottom: 10px; }
+  .kpi-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #111827; margin-bottom: 10px; }
   .kpi-num { font-size: 36px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
   .kpi-card.green .kpi-num { color: #22c55e; }
   .kpi-card.amber .kpi-num { color: #f59e0b; }
   .kpi-card.red .kpi-num { color: #ef4444; }
   .kpi-card.blue .kpi-num { color: #3b82f6; }
-  .kpi-denom { font-size: 16px; color: #9db4ce; }
-  .kpi-context { font-size: 12px; color: #afc5db; margin-top: 4px; }
+  .kpi-denom { font-size: 16px; color: #111827; }
+  .kpi-context { font-size: 12px; color: #111827; margin-top: 4px; }
   .kpi-pct {
     font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 4px;
     display: inline-block; margin-top: 8px;
@@ -70,14 +70,14 @@ st.markdown("""
   /* Section Headers */
   .section-header {
     font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em;
-    color: #afc5db; margin: 28px 0 14px; padding-bottom: 10px;
+    color: #111827; margin: 28px 0 14px; padding-bottom: 10px;
     border-bottom: 1px solid #1e3050;
   }
 
   /* Detail Items */
   .detail-item {
     display: flex; align-items: flex-start; gap: 10px; padding: 10px 0;
-    border-bottom: 1px solid #1a2744; font-size: 14px; color: #f0f4f8;
+    border-bottom: 1px solid #1a2744; font-size: 14px; color: #111827;
   }
   .detail-badge {
     font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px;
@@ -94,12 +94,12 @@ st.markdown("""
     background: #141e30; border-radius: 12px; padding: 18px 20px;
     border: 1px solid #1e3050;
   }
-  .baseline-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #afc5db; margin-bottom: 12px; }
+  .baseline-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #111827; margin-bottom: 12px; }
   .baseline-value { font-size: 28px; font-weight: 700; line-height: 1; }
-  .baseline-label { font-size: 12px; color: #9db4ce; margin-top: 4px; }
+  .baseline-label { font-size: 12px; color: #111827; margin-top: 4px; }
   .baseline-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #1a2744; }
   .baseline-row:last-child { border-bottom: none; }
-  .baseline-metric { font-size: 13px; color: #f0f4f8; }
+  .baseline-metric { font-size: 13px; color: #111827; }
   .baseline-val { font-size: 13px; font-weight: 600; }
   .val-good { color: #4ade80; }
   .val-warn { color: #fbbf24; }
@@ -110,8 +110,8 @@ st.markdown("""
     background: #141e30; border-radius: 12px; padding: 20px 22px;
     border: 1px solid #1e3050; margin-bottom: 12px;
   }
-  .phase-title { font-size: 15px; font-weight: 600; color: #e8edf5; margin-bottom: 6px; }
-  .phase-desc { font-size: 13px; color: #afc5db; line-height: 1.6; }
+  .phase-title { font-size: 15px; font-weight: 600; color: #111827; margin-bottom: 6px; }
+  .phase-desc { font-size: 13px; color: #111827; line-height: 1.6; }
   .owner-tag {
     font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 4px;
     background: rgba(59,130,246,0.15); color: #60a5fa; margin-right: 6px;
@@ -120,7 +120,7 @@ st.markdown("""
   /* Streamlit tab styling */
   .stTabs [data-baseweb="tab-list"] { gap: 4px; }
   .stTabs [data-baseweb="tab"] {
-    font-size: 13px; font-weight: 500; color: #afc5db;
+    font-size: 13px; font-weight: 500; color: #111827;
     border-radius: 8px 8px 0 0; padding: 8px 16px;
   }
 </style>
@@ -182,7 +182,7 @@ def fetch_all(pat):
 DARK = dict(
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
-    font=dict(family="Inter, sans-serif", color="#afc5db", size=13),
+    font=dict(family="Inter, sans-serif", color="#111827", size=13),
     margin=dict(l=0, r=0, t=10, b=0),
 )
 
@@ -195,7 +195,7 @@ def ring(value, total, color, title):
     fig.add_annotation(text=f"<b>{value}</b>", x=0.5, y=0.55, showarrow=False,
                        font=dict(size=30, color=color, family="Inter"))
     fig.add_annotation(text=f"of {total}", x=0.5, y=0.35, showarrow=False,
-                       font=dict(size=14, color="#9db4ce", family="Inter"))
+                       font=dict(size=14, color="#111827", family="Inter"))
     fig.update_layout(**DARK, height=160, showlegend=False)
     return fig
 
@@ -225,8 +225,8 @@ def workstream_bar(eng_done, eng_total, blockers_done, blockers_rem, signoffs_do
     fig.update_layout(
         **DARK, barmode="stack", height=220, bargap=0.35,
         xaxis=dict(range=[0, max_val], showgrid=True, gridcolor="#1a2744"),
-        yaxis=dict(showgrid=False, tickfont=dict(size=13, color="#c8d6e5")),
-        legend=dict(orientation="h", y=1.02, x=0, font=dict(size=12, color="#afc5db"),
+        yaxis=dict(showgrid=False, tickfont=dict(size=13, color="#111827")),
+        legend=dict(orientation="h", y=1.02, x=0, font=dict(size=12, color="#111827"),
                     bgcolor="rgba(0,0,0,0)"),
     )
     return fig
@@ -240,13 +240,13 @@ def decision_donut(made, pending, needed):
         textinfo="none", sort=False,
     ))
     fig.add_annotation(text=f"<b>{pct}%</b>", x=0.5, y=0.55, showarrow=False,
-                       font=dict(size=28, color="#e8edf5", family="Inter"))
+                       font=dict(size=28, color="#111827", family="Inter"))
     fig.add_annotation(text="decided", x=0.5, y=0.35, showarrow=False,
-                       font=dict(size=13, color="#9db4ce", family="Inter"))
+                       font=dict(size=13, color="#111827", family="Inter"))
     fig.update_layout(
         **DARK, height=220, showlegend=True,
         legend=dict(orientation="h", y=-0.15, x=0.5, xanchor="center",
-                    font=dict(size=12, color="#afc5db"), bgcolor="rgba(0,0,0,0)"),
+                    font=dict(size=12, color="#111827"), bgcolor="rgba(0,0,0,0)"),
     )
     return fig
 
@@ -258,12 +258,12 @@ def completion_bar(eng_pct, blockers_pct, signoffs_pct, gaps_pct, decisions_pct)
         marker_color=["#22c55e" if p >= 60 else "#f59e0b" if p >= 30 else "#ef4444" for p in pcts],
         marker_line_width=0,
         text=[f"{p}%" for p in pcts], textposition="outside",
-        textfont=dict(size=13, color="#c8d6e5"),
+        textfont=dict(size=13, color="#111827"),
     ))
     fig.add_hline(y=100, line_dash="dot", line_color="#334155", line_width=1)
     fig.update_layout(
         **DARK, height=220, showlegend=False,
-        xaxis=dict(showgrid=False, tickfont=dict(size=13, color="#c8d6e5")),
+        xaxis=dict(showgrid=False, tickfont=dict(size=13, color="#111827")),
         yaxis=dict(range=[0, 115], ticksuffix="%", showgrid=True, gridcolor="#1a2744"),
     )
     return fig
@@ -271,9 +271,9 @@ def completion_bar(eng_pct, blockers_pct, signoffs_pct, gaps_pct, decisions_pct)
 def enablement_time_chart():
     """Email sender enablement time - monthly median trend Oct 2025 to Mar 2026."""
     from plotly.subplots import make_subplots
-    months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 9", "Mar 20"]
-    median_hrs = [72.5, 246.3, 144.3, 47.8, 31.8, 24.3, 18.0]
-    apps_count = [274, 256, 150, 156, 139, 148, 85]
+    months = ["Baseline\nOct-Feb", "Mar 9", "Mar 20"]
+    median_hrs = [194.4, 24.3, 18.0]  # 8.1 days = 194.4 hrs baseline
+    apps_count = [2333, 148, 85]
 
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(go.Bar(
@@ -289,16 +289,16 @@ def enablement_time_chart():
     ), secondary_y=True)
     fig.update_layout(
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(family="Inter, sans-serif", color="#afc5db", size=13),
+        font=dict(family="Inter, sans-serif", color="#111827", size=13),
         margin=dict(l=0, r=0, t=10, b=0),
         height=280, showlegend=True,
-        legend=dict(orientation="h", y=1.12, x=0, font=dict(size=11, color="#afc5db"),
+        legend=dict(orientation="h", y=1.12, x=0, font=dict(size=11, color="#111827"),
                     bgcolor="rgba(0,0,0,0)"),
-        xaxis=dict(tickfont=dict(size=12, color="#c8d6e5")),
+        xaxis=dict(tickfont=dict(size=12, color="#111827")),
     )
     fig.update_yaxes(title_text="Apps", showgrid=True, gridcolor="#1a2744",
-                     title_font=dict(size=11, color="#9db4ce"),
-                     tickfont=dict(color="#9db4ce"), secondary_y=False)
+                     title_font=dict(size=11, color="#111827"),
+                     tickfont=dict(color="#111827"), secondary_y=False)
     fig.update_yaxes(title_text="Median Hours", showgrid=False,
                      title_font=dict(size=11, color="#fb923c"),
                      tickfont=dict(color="#fb923c"), secondary_y=True)
@@ -328,16 +328,16 @@ def fnr_trend_chart():
                   annotation_font_size=10, secondary_y=True)
     fig.update_layout(
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(family="Inter, sans-serif", color="#afc5db", size=13),
+        font=dict(family="Inter, sans-serif", color="#111827", size=13),
         margin=dict(l=0, r=0, t=10, b=0),
         height=280, showlegend=True,
-        legend=dict(orientation="h", y=1.12, x=0, font=dict(size=11, color="#afc5db"),
+        legend=dict(orientation="h", y=1.12, x=0, font=dict(size=11, color="#111827"),
                     bgcolor="rgba(0,0,0,0)"),
-        xaxis=dict(tickfont=dict(size=12, color="#c8d6e5")),
+        xaxis=dict(tickfont=dict(size=12, color="#111827")),
     )
     fig.update_yaxes(title_text="Apps", showgrid=True, gridcolor="#1a2744",
-                     title_font=dict(size=11, color="#9db4ce"),
-                     tickfont=dict(color="#9db4ce"), secondary_y=False)
+                     title_font=dict(size=11, color="#111827"),
+                     tickfont=dict(color="#111827"), secondary_y=False)
     fig.update_yaxes(title_text="FNR %", range=[0, 70], showgrid=False,
                      title_font=dict(size=11, color="#f87171"),
                      tickfont=dict(color="#f87171"), secondary_y=True)
@@ -353,15 +353,15 @@ def tld_risk_chart():
         y=tlds, x=rates, orientation="h",
         marker_color=colors, marker_line_width=0,
         text=[f"{r}%" for r in rates], textposition="outside",
-        textfont=dict(size=12, color="#c8d6e5"),
+        textfont=dict(size=12, color="#111827"),
     ))
     fig.add_vline(x=30, line_dash="dash", line_color="#f59e0b", line_width=1)
     fig.update_layout(
         **DARK, height=280, showlegend=False,
         xaxis=dict(title="Bypass Rate %", showgrid=True, gridcolor="#1a2744",
-                   title_font=dict(size=11, color="#9db4ce"),
-                   tickfont=dict(color="#9db4ce")),
-        yaxis=dict(tickfont=dict(size=13, color="#c8d6e5")),
+                   title_font=dict(size=11, color="#111827"),
+                   tickfont=dict(color="#111827")),
+        yaxis=dict(tickfont=dict(size=13, color="#111827")),
     )
     return fig
 
@@ -410,8 +410,8 @@ def main():
     pat = st.secrets.get("AIRTABLE_PAT", "")
     if not pat:
         st.markdown("""<div style="background:#141e30;border-radius:12px;padding:24px;margin-bottom:20px;border:1px solid #1e3050">
-          <div style="font-size:13px;color:#afc5db;margin-bottom:8px;font-weight:600">AIRTABLE PERSONAL ACCESS TOKEN</div>
-          <div style="font-size:14px;color:#c8d6e5">Add <code>AIRTABLE_PAT</code> to Streamlit Cloud secrets.</div>
+          <div style="font-size:13px;color:#111827;margin-bottom:8px;font-weight:600">AIRTABLE PERSONAL ACCESS TOKEN</div>
+          <div style="font-size:14px;color:#111827">Add <code>AIRTABLE_PAT</code> to Streamlit Cloud secrets.</div>
         </div>""", unsafe_allow_html=True)
         pat = st.text_input("Or enter your Airtable PAT:", type="password", key="pat_input")
         if not pat:
@@ -565,7 +565,7 @@ def main():
     # =====================================================
     # FRAUD BASELINE METRICS
     # =====================================================
-    st.markdown('<div class="section-header">Fraud Baseline Metrics <span style="font-size:9px;background:rgba(139,163,196,0.15);color:#afc5db;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">OCT 2025 - FEB 2026</span></div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-header">Fraud Baseline Metrics <span style="font-size:9px;background:rgba(139,163,196,0.15);color:#111827;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">OCT 2025 - FEB 2026</span></div>', unsafe_allow_html=True)
 
     b1, b2, b3, b4 = st.columns(4)
     with b1:
@@ -625,11 +625,11 @@ def main():
           <div class="baseline-title">App Population</div>
           <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px">
             <div>
-              <div class="baseline-value" style="color:#c8d6e5">2,333</div>
+              <div class="baseline-value" style="color:#111827">2,333</div>
               <div class="baseline-label">Non-Enterprise apps</div>
             </div>
             <div style="text-align:right">
-              <div class="baseline-value" style="color:#c8d6e5;font-size:20px">163</div>
+              <div class="baseline-value" style="color:#111827;font-size:20px">163</div>
               <div class="baseline-label">Enterprise apps</div>
             </div>
           </div>
@@ -655,7 +655,7 @@ def main():
               <div class="baseline-label">100K+ enforced rate</div>
             </div>
             <div style="text-align:right">
-              <div class="baseline-value" style="color:#c8d6e5;font-size:20px">12M</div>
+              <div class="baseline-value" style="color:#111827;font-size:20px">12M</div>
               <div class="baseline-label">Spam ring emails</div>
             </div>
           </div>
@@ -691,32 +691,32 @@ def main():
     et0, et1, et2, et3 = st.columns([2, 2, 2, 3])
     with et0:
         st.markdown("""<div class="baseline-card">
-          <div class="baseline-title">Baseline Oct-Feb (Median hrs)</div>
+          <div class="baseline-title">Baseline Oct-Feb (apps &lt;30 days)</div>
           <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px">
             <div>
-              <div class="baseline-value" style="color:#c8d6e5">72.5h</div>
-              <div class="baseline-label">Oct 2025 (274 apps)</div>
+              <div class="baseline-value val-warn">8.1d</div>
+              <div class="baseline-label">Median enablement</div>
             </div>
             <div style="text-align:right">
-              <div class="baseline-value val-good" style="font-size:20px">31.8h</div>
-              <div class="baseline-label">Feb 2026 (139 apps)</div>
+              <div class="baseline-value" style="color:#111827;font-size:20px">2,333</div>
+              <div class="baseline-label">Non-Ent apps total</div>
             </div>
           </div>
           <div class="baseline-row">
-            <span class="baseline-metric">Nov 2025 (256 apps)</span>
-            <span class="baseline-val val-bad">246.3h (~10.3d)</span>
+            <span class="baseline-metric">Verified apps</span>
+            <span class="baseline-val" style="color:#111827">58.9% (1,375)</span>
           </div>
           <div class="baseline-row">
-            <span class="baseline-metric">Dec 2025 (150 apps)</span>
-            <span class="baseline-val val-warn">144.3h (~6.0d)</span>
+            <span class="baseline-metric">Never enabled</span>
+            <span class="baseline-val val-bad">40.8% (952)</span>
           </div>
           <div class="baseline-row">
-            <span class="baseline-metric">Jan 2026 (156 apps)</span>
-            <span class="baseline-val val-warn">47.8h (~2.0d)</span>
+            <span class="baseline-metric">Mar 9 median</span>
+            <span class="baseline-val val-good">24.3h (~1.0d)</span>
           </div>
           <div class="baseline-row">
-            <span class="baseline-metric">Trend</span>
-            <span class="baseline-val val-good">-56% Oct&rarr;Feb</span>
+            <span class="baseline-metric">Mar 20 median</span>
+            <span class="baseline-val val-good">18.0h (~0.75d)</span>
           </div>
         </div>""", unsafe_allow_html=True)
     with et1:
@@ -728,7 +728,7 @@ def main():
               <div class="baseline-label">Median enablement</div>
             </div>
             <div style="text-align:right">
-              <div class="baseline-value" style="color:#afc5db;font-size:20px">75.9h</div>
+              <div class="baseline-value" style="color:#111827;font-size:20px">75.9h</div>
               <div class="baseline-label">Average (~3.2 days)</div>
             </div>
           </div>
@@ -754,7 +754,7 @@ def main():
               <div class="baseline-label">Median enablement</div>
             </div>
             <div style="text-align:right">
-              <div class="baseline-value" style="color:#afc5db;font-size:20px">83.7h</div>
+              <div class="baseline-value" style="color:#111827;font-size:20px">83.7h</div>
               <div class="baseline-label">Average (~3.5 days)</div>
             </div>
           </div>
@@ -792,15 +792,15 @@ def main():
     for priority, badge_cls, rec, current, target in rec_data:
         st.markdown(f"""<div class="detail-item">
           <span class="detail-badge {badge_cls}">{priority}</span>
-          <span style="color:#e8edf5;min-width:220px;font-weight:500">{rec}</span>
-          <span style="color:#afc5db;flex:1">Current: {current}</span>
+          <span style="color:#111827;min-width:220px;font-weight:500">{rec}</span>
+          <span style="color:#111827;flex:1">Current: {current}</span>
           <span style="color:#4ade80;flex:1">Target: {target}</span>
         </div>""", unsafe_allow_html=True)
 
     # =====================================================
     # INTERCOM SUPPORT METRICS
     # =====================================================
-    st.markdown('<div class="section-header">Intercom Support Metrics <span style="font-size:9px;background:rgba(139,163,196,0.15);color:#afc5db;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">NOV 11 2025 - FEB 9 2026 (90 DAYS)</span></div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-header">Intercom Support Metrics <span style="font-size:9px;background:rgba(139,163,196,0.15);color:#111827;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">NOV 11 2025 - FEB 9 2026 (90 DAYS)</span></div>', unsafe_allow_html=True)
 
     ic1, ic2, ic3, ic4 = st.columns(4)
     with ic1:
@@ -808,7 +808,7 @@ def main():
           <div class="baseline-title">Email Verification Inbox</div>
           <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px">
             <div>
-              <div class="baseline-value" style="color:#e8edf5">596</div>
+              <div class="baseline-value" style="color:#111827">596</div>
               <div class="baseline-label">Total tickets (excl. AUP)</div>
             </div>
             <div style="text-align:right">
@@ -826,7 +826,7 @@ def main():
           </div>
           <div class="baseline-row">
             <span class="baseline-metric">Admin-replied tickets</span>
-            <span class="baseline-val" style="color:#c8d6e5">254 of 596</span>
+            <span class="baseline-val" style="color:#111827">254 of 596</span>
           </div>
         </div>""", unsafe_allow_html=True)
     with ic2:
@@ -838,7 +838,7 @@ def main():
               <div class="baseline-label">Median first response</div>
             </div>
             <div style="text-align:right">
-              <div class="baseline-value" style="color:#afc5db;font-size:20px">1.9h</div>
+              <div class="baseline-value" style="color:#111827;font-size:20px">1.9h</div>
               <div class="baseline-label">Average (mean)</div>
             </div>
           </div>
@@ -864,7 +864,7 @@ def main():
               <div class="baseline-label">Median resolution</div>
             </div>
             <div style="text-align:right">
-              <div class="baseline-value" style="color:#afc5db;font-size:20px">2.0d</div>
+              <div class="baseline-value" style="color:#111827;font-size:20px">2.0d</div>
               <div class="baseline-label">Average (mean)</div>
             </div>
           </div>
@@ -960,10 +960,10 @@ Paragraph 3 -- NEXT 7 DAYS: Three specific actions with implied owners."""
     for i, (col, para) in enumerate(zip(cols, paras)):
         with col:
             label = labels[i] if i < len(labels) else ""
-            color = colors[i] if i < len(colors) else "#9db4ce"
+            color = colors[i] if i < len(colors) else "#111827"
             st.markdown(f"""<div style="background:#0f172a;border-radius:10px;padding:18px 20px;border-top:2px solid {color};border:1px solid #1e3050;border-top:3px solid {color}">
               <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:{color};margin-bottom:12px">{label}</div>
-              <div style="font-size:14px;line-height:1.75;color:#c8d6e5">{para}</div>
+              <div style="font-size:14px;line-height:1.75;color:#111827">{para}</div>
             </div>""", unsafe_allow_html=True)
 
     # =====================================================
@@ -986,14 +986,14 @@ Paragraph 3 -- NEXT 7 DAYS: Three specific actions with implied owners."""
         for item in data.get("blockers_remaining", []):
             name = item.get("Task Name", "Untitled")
             p = priority_badge(item.get("Priority", "")) if item.get("Priority") else ""
-            st.markdown(f'<div class="detail-item">{status_badge(item.get("Status","Not Started"))}{p}<span style="color:#e8edf5">{name}</span></div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="detail-item">{status_badge(item.get("Status","Not Started"))}{p}<span style="color:#111827">{name}</span></div>', unsafe_allow_html=True)
     with tab2:
         st.markdown("**T&S sign-offs outstanding -- T&S owns all of these**")
         if not data.get("signoffs"):
             st.markdown('<div style="color:#4ade80;padding:12px;font-size:14px">All sign-offs confirmed!</div>', unsafe_allow_html=True)
         for item in data.get("signoffs", []):
             name = item.get("Task Name", "Untitled")
-            st.markdown(f'<div class="detail-item">{status_badge(item.get("Status","Not Started"))}<span style="color:#e8edf5">{name}</span></div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="detail-item">{status_badge(item.get("Status","Not Started"))}<span style="color:#111827">{name}</span></div>', unsafe_allow_html=True)
     with tab3:
         st.markdown("**Critical decisions blocking downstream engineering**")
         if not data.get("decisions_needed"):
@@ -1001,8 +1001,8 @@ Paragraph 3 -- NEXT 7 DAYS: Three specific actions with implied owners."""
         for item in data.get("decisions_needed", []):
             title = item.get("Title", "Untitled")
             notes = item.get("Unblocks / Notes", "")[:120]
-            notes_html = f'<div style="font-size:12px;color:#9db4ce;margin-top:4px">{notes}</div>' if notes else ""
-            st.markdown(f'<div class="detail-item"><span class="detail-badge badge-red">NEEDED</span><div><div style="color:#e8edf5">{title}</div>{notes_html}</div></div>', unsafe_allow_html=True)
+            notes_html = f'<div style="font-size:12px;color:#111827;margin-top:4px">{notes}</div>' if notes else ""
+            st.markdown(f'<div class="detail-item"><span class="detail-badge badge-red">NEEDED</span><div><div style="color:#111827">{title}</div>{notes_html}</div></div>', unsafe_allow_html=True)
     with tab4:
         st.markdown("**Gap tickets -- all must close before launch**")
         if not data.get("gaps"):
@@ -1010,7 +1010,7 @@ Paragraph 3 -- NEXT 7 DAYS: Three specific actions with implied owners."""
         for item in data.get("gaps", []):
             name = item.get("Task Name", "Untitled")
             p = priority_badge(item.get("Priority", "")) if item.get("Priority") else ""
-            st.markdown(f'<div class="detail-item">{status_badge(item.get("Status","Not Started"))}{p}<span style="color:#e8edf5">{name}</span></div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="detail-item">{status_badge(item.get("Status","Not Started"))}{p}<span style="color:#111827">{name}</span></div>', unsafe_allow_html=True)
     with tab5:
         st.markdown("**Open risks being tracked**")
         if not data.get("open_risks"):
@@ -1019,16 +1019,16 @@ Paragraph 3 -- NEXT 7 DAYS: Three specific actions with implied owners."""
             name = item.get("Risk", item.get("Title", item.get("Name", "Untitled")))
             severity = item.get("Severity", item.get("Priority", ""))
             sev_badge = priority_badge(severity) if severity else ""
-            st.markdown(f'<div class="detail-item">{sev_badge}<span style="color:#e8edf5">{name}</span></div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="detail-item">{sev_badge}<span style="color:#111827">{name}</span></div>', unsafe_allow_html=True)
     with tab6:
         st.markdown("**What's been completed -- engineering foundation is solid**")
         if not data.get("completed"):
-            st.markdown('<div style="color:#9db4ce;padding:12px;font-size:14px">No completed items yet.</div>', unsafe_allow_html=True)
+            st.markdown('<div style="color:#111827;padding:12px;font-size:14px">No completed items yet.</div>', unsafe_allow_html=True)
         for item in data.get("completed", []):
             name = item.get("Task Name", "Untitled")
             section = item.get("Section", "")
             sec_html = f'<span class="detail-badge badge-gray">{section.upper()[:12]}</span>' if section else ""
-            st.markdown(f'<div class="detail-item"><span class="detail-badge badge-green">DONE</span>{sec_html}<span style="color:#e8edf5">{name}</span></div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="detail-item"><span class="detail-badge badge-green">DONE</span>{sec_html}<span style="color:#111827">{name}</span></div>', unsafe_allow_html=True)
 
     # =====================================================
     # FOOTER
