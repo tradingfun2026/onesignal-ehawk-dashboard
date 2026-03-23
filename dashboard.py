@@ -182,7 +182,7 @@ def fetch_all(pat):
 DARK = dict(
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
-    font=dict(family="Inter, sans-serif", color="#e2e8f0", size=13),
+    font=dict(family="Inter, sans-serif", color="#111827", size=13),
     margin=dict(l=0, r=0, t=10, b=0),
 )
 
@@ -195,7 +195,7 @@ def ring(value, total, color, title):
     fig.add_annotation(text=f"<b>{value}</b>", x=0.5, y=0.55, showarrow=False,
                        font=dict(size=30, color=color, family="Inter"))
     fig.add_annotation(text=f"of {total}", x=0.5, y=0.35, showarrow=False,
-                       font=dict(size=14, color="#e2e8f0", family="Inter"))
+                       font=dict(size=14, color="#111827", family="Inter"))
     fig.update_layout(**DARK, height=160, showlegend=False)
     return fig
 
@@ -225,8 +225,8 @@ def workstream_bar(eng_done, eng_total, blockers_done, blockers_rem, signoffs_do
     fig.update_layout(
         **DARK, barmode="stack", height=220, bargap=0.35,
         xaxis=dict(range=[0, max_val], showgrid=True, gridcolor="#1a2744"),
-        yaxis=dict(showgrid=False, tickfont=dict(size=13, color="#e2e8f0")),
-        legend=dict(orientation="h", y=1.02, x=0, font=dict(size=12, color="#e2e8f0"),
+        yaxis=dict(showgrid=False, tickfont=dict(size=13, color="#111827")),
+        legend=dict(orientation="h", y=1.02, x=0, font=dict(size=12, color="#111827"),
                     bgcolor="rgba(0,0,0,0)"),
     )
     return fig
@@ -240,13 +240,13 @@ def decision_donut(made, pending, needed):
         textinfo="none", sort=False,
     ))
     fig.add_annotation(text=f"<b>{pct}%</b>", x=0.5, y=0.55, showarrow=False,
-                       font=dict(size=28, color="#e2e8f0", family="Inter"))
+                       font=dict(size=28, color="#111827", family="Inter"))
     fig.add_annotation(text="decided", x=0.5, y=0.35, showarrow=False,
-                       font=dict(size=13, color="#e2e8f0", family="Inter"))
+                       font=dict(size=13, color="#111827", family="Inter"))
     fig.update_layout(
         **DARK, height=220, showlegend=True,
         legend=dict(orientation="h", y=-0.15, x=0.5, xanchor="center",
-                    font=dict(size=12, color="#e2e8f0"), bgcolor="rgba(0,0,0,0)"),
+                    font=dict(size=12, color="#111827"), bgcolor="rgba(0,0,0,0)"),
     )
     return fig
 
@@ -258,12 +258,12 @@ def completion_bar(eng_pct, blockers_pct, signoffs_pct, gaps_pct, decisions_pct)
         marker_color=["#22c55e" if p >= 60 else "#f59e0b" if p >= 30 else "#ef4444" for p in pcts],
         marker_line_width=0,
         text=[f"{p}%" for p in pcts], textposition="outside",
-        textfont=dict(size=13, color="#e2e8f0"),
+        textfont=dict(size=13, color="#111827"),
     ))
     fig.add_hline(y=100, line_dash="dot", line_color="#334155", line_width=1)
     fig.update_layout(
         **DARK, height=220, showlegend=False,
-        xaxis=dict(showgrid=False, tickfont=dict(size=13, color="#e2e8f0")),
+        xaxis=dict(showgrid=False, tickfont=dict(size=13, color="#111827")),
         yaxis=dict(range=[0, 115], ticksuffix="%", showgrid=True, gridcolor="#1a2744"),
     )
     return fig
@@ -289,16 +289,16 @@ def enablement_time_chart():
     ), secondary_y=True)
     fig.update_layout(
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(family="Inter, sans-serif", color="#e2e8f0", size=13),
+        font=dict(family="Inter, sans-serif", color="#111827", size=13),
         margin=dict(l=0, r=0, t=10, b=0),
         height=280, showlegend=True,
-        legend=dict(orientation="h", y=1.12, x=0, font=dict(size=11, color="#e2e8f0"),
+        legend=dict(orientation="h", y=1.12, x=0, font=dict(size=11, color="#111827"),
                     bgcolor="rgba(0,0,0,0)"),
-        xaxis=dict(tickfont=dict(size=12, color="#e2e8f0")),
+        xaxis=dict(tickfont=dict(size=12, color="#111827")),
     )
     fig.update_yaxes(title_text="Apps", showgrid=True, gridcolor="#1a2744",
-                     title_font=dict(size=11, color="#e2e8f0"),
-                     tickfont=dict(color="#e2e8f0"), secondary_y=False)
+                     title_font=dict(size=11, color="#111827"),
+                     tickfont=dict(color="#111827"), secondary_y=False)
     fig.update_yaxes(title_text="Median Hours", showgrid=False,
                      title_font=dict(size=11, color="#fb923c"),
                      tickfont=dict(color="#fb923c"), secondary_y=True)
@@ -328,16 +328,16 @@ def fnr_trend_chart():
                   annotation_font_size=10, secondary_y=True)
     fig.update_layout(
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(family="Inter, sans-serif", color="#e2e8f0", size=13),
+        font=dict(family="Inter, sans-serif", color="#111827", size=13),
         margin=dict(l=0, r=0, t=10, b=0),
         height=280, showlegend=True,
-        legend=dict(orientation="h", y=1.12, x=0, font=dict(size=11, color="#e2e8f0"),
+        legend=dict(orientation="h", y=1.12, x=0, font=dict(size=11, color="#111827"),
                     bgcolor="rgba(0,0,0,0)"),
-        xaxis=dict(tickfont=dict(size=12, color="#e2e8f0")),
+        xaxis=dict(tickfont=dict(size=12, color="#111827")),
     )
     fig.update_yaxes(title_text="Apps", showgrid=True, gridcolor="#1a2744",
-                     title_font=dict(size=11, color="#e2e8f0"),
-                     tickfont=dict(color="#e2e8f0"), secondary_y=False)
+                     title_font=dict(size=11, color="#111827"),
+                     tickfont=dict(color="#111827"), secondary_y=False)
     fig.update_yaxes(title_text="FNR %", range=[0, 70], showgrid=False,
                      title_font=dict(size=11, color="#f87171"),
                      tickfont=dict(color="#f87171"), secondary_y=True)
@@ -353,15 +353,15 @@ def tld_risk_chart():
         y=tlds, x=rates, orientation="h",
         marker_color=colors, marker_line_width=0,
         text=[f"{r}%" for r in rates], textposition="outside",
-        textfont=dict(size=12, color="#e2e8f0"),
+        textfont=dict(size=12, color="#111827"),
     ))
     fig.add_vline(x=30, line_dash="dash", line_color="#f59e0b", line_width=1)
     fig.update_layout(
         **DARK, height=280, showlegend=False,
         xaxis=dict(title="Bypass Rate %", showgrid=True, gridcolor="#1a2744",
-                   title_font=dict(size=11, color="#e2e8f0"),
-                   tickfont=dict(color="#e2e8f0")),
-        yaxis=dict(tickfont=dict(size=13, color="#e2e8f0")),
+                   title_font=dict(size=11, color="#111827"),
+                   tickfont=dict(color="#111827")),
+        yaxis=dict(tickfont=dict(size=13, color="#111827")),
     )
     return fig
 
