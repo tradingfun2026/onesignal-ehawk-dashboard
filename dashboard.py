@@ -496,7 +496,7 @@ def main():
           <div class="phase-title">Workstream Owners</div>
           <div class="phase-desc">
             <span class="owner-tag">ENGINEERING</span> Tickets T1-T11, gap remediation<br>
-            <span class="owner-tag">OPS/PRODUCT</span> Action items, scoring thresholds, policy<br>
+            <span class="owner-tag">OPS/PROGRAM</span> Action items, scoring thresholds, policy<br>
             <span class="owner-tag">PRODUCT</span> Decision log, launch criteria<br>
             <span class="owner-tag">LEADERSHIP</span> Final go/no-go approval
           </div>
