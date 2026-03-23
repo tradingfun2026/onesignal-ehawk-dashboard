@@ -143,6 +143,7 @@ VIEWS = {
     "decisions_open":     ("tblIbxPFGdXNSI3rE", "viwZA3HsTO3DWU6Jm"),
     "open_risks":         ("tbl6GWnx6Oz18kbyi", "viwzV39ZM3CcNWbkE"),
     "all_risks":          ("tbl6GWnx6Oz18kbyi", "viwShWwdJOKxoPkhL"),
+    "signoffs_complete":  ("tblHIDvz3UahqWf1h", "viwmNXpK4exX0hBbN"),
 }
 
 # -- DATA FETCHING --
@@ -447,19 +448,20 @@ def main():
             st.stop()
 
     # -- Compute metrics from live data --
-    eng_total = 11
-    eng_done = eng_total - len(data.get("eng_remaining", []))
+    eng_rem = len(data.get("eng_remaining", []))
+    eng_done = len([r for r in data.get("completed", []) if r.get("Section") == "Engineering Ticket"])
+    eng_total = eng_done + eng_rem
     blockers_done = len(data.get("blockers_complete", []))
     blockers_rem = len(data.get("blockers_remaining", []))
     blockers_total = blockers_done + blockers_rem
-    signoffs_total = 11
+    signoffs_done = len(data.get("signoffs_complete", []))
     signoffs_list = data.get("signoffs", [])
     signoffs_rem = len(signoffs_list)
-    signoffs_done = signoffs_total - signoffs_rem
-    gaps_total = 7
+    signoffs_total = signoffs_done + signoffs_rem
+    gaps_done = len([r for r in data.get("completed", []) if r.get("Section") == "Gap Ticket"])
     gaps_list = data.get("gaps", [])
     gaps_rem = len(gaps_list)
-    gaps_done = gaps_total - gaps_rem
+    gaps_total = gaps_done + gaps_rem
     decisions_made = len(data.get("decisions_made", []))
     decisions_pending = len(data.get("decisions_pending", []))
     decisions_needed = len(data.get("decisions_needed", []))
