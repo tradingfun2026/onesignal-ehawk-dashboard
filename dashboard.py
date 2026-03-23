@@ -134,7 +134,7 @@ VIEWS = {
     "blockers_remaining": ("tblHIDvz3UahqWf1h", "viwAT3pgxpCeApJsM"),
     "blockers_complete":  ("tblHIDvz3UahqWf1h", "viwI45OS0OTda4w3C"),
     "signoffs":           ("tblHIDvz3UahqWf1h", "viwcRZQfywN0cyvFl"),
-    "gaps":               ("tblHIDvz3UahqWf1h", "viwlueN7Fe0ahlfpM"),
+    "tickets_to_create":  ("tblHIDvz3UahqWf1h", "viwFRrHVTIp7yj4zC"),
     "completed":          ("tblHIDvz3UahqWf1h", "viwiijG1RkwN62KSI"),
     "eng_remaining":      ("tblHIDvz3UahqWf1h", "viw0XBjg0kfksT06T"),
     "decisions_made":     ("tblIbxPFGdXNSI3rE", "viwT6Mn7zCm0df5ul"),
@@ -201,29 +201,29 @@ def ring(value, total, color, title):
     fig.update_layout(**DARK, height=160, showlegend=False)
     return fig
 
-def workstream_bar(eng_done, eng_total, blockers_done, blockers_rem, signoffs_done, signoffs_total, gaps_done, gaps_total):
+def workstream_bar(eng_done, eng_total, blockers_done, blockers_rem, signoffs_done, signoffs_total, tickets_done, tickets_total):
     cats = [
         f"Engineering ({eng_total})",
         f"Dependencies ({blockers_done + blockers_rem})",
         f"Action Items ({signoffs_total})",
-        f"Gap Tickets ({gaps_total})",
+        f"Tickets to Create ({tickets_total})",
     ]
     # Calculate dynamic values from live data
     eng_remaining = eng_total - eng_done
     blockers_total = blockers_done + blockers_rem
     signoffs_remaining = signoffs_total - signoffs_done
-    gaps_remaining = gaps_total - gaps_done
+    tickets_remaining = tickets_total - tickets_done
 
     fig = go.Figure()
     for vals, label, color in [
-        ([eng_done, blockers_done, signoffs_done, gaps_done], "Completed", "#22c55e"),
-        ([eng_remaining, blockers_rem, signoffs_remaining, gaps_remaining], "Remaining", "#334155"),
+        ([eng_done, blockers_done, signoffs_done, tickets_done], "Completed", "#22c55e"),
+        ([eng_remaining, blockers_rem, signoffs_remaining, tickets_remaining], "Remaining", "#334155"),
     ]:
         fig.add_trace(go.Bar(
             name=label, y=cats, x=vals, orientation="h",
             marker_color=color, marker_line_width=0,
         ))
-    max_val = max(eng_total, blockers_total, signoffs_total, gaps_total) + 2
+    max_val = max(eng_total, blockers_total, signoffs_total, tickets_total) + 2
     fig.update_layout(
         **DARK, barmode="stack", height=220, bargap=0.35,
         xaxis=dict(range=[0, max_val], showgrid=True, gridcolor="#1a2744"),
@@ -458,10 +458,10 @@ def main():
     signoffs_list = data.get("signoffs", [])
     signoffs_rem = len(signoffs_list)
     signoffs_total = signoffs_done + signoffs_rem
-    gaps_done = len([r for r in data.get("completed", []) if r.get("Section") == "Gap Ticket"])
-    gaps_list = data.get("gaps", [])
-    gaps_rem = len(gaps_list)
-    gaps_total = gaps_done + gaps_rem
+    tickets_done = len([r for r in data.get("completed", []) if r.get("Section") == "Ticket to Create"])
+    tickets_list = data.get("tickets_to_create", [])
+    tickets_rem = len(tickets_list)
+    tickets_total = tickets_done + tickets_rem
     decisions_made = len(data.get("decisions_made", []))
     decisions_pending = len(data.get("decisions_pending", []))
     decisions_needed = len(data.get("decisions_needed", []))
@@ -472,7 +472,7 @@ def main():
     eng_pct = round(eng_done / eng_total * 100) if eng_total else 0
     blockers_pct = round(blockers_done / blockers_total * 100) if blockers_total else 0
     signoffs_pct = round(signoffs_done / signoffs_total * 100) if signoffs_total else 0
-    gaps_pct = round(gaps_done / gaps_total * 100) if gaps_total else 0
+    tickets_pct = round(tickets_done / tickets_total * 100) if tickets_total else 0
     decisions_pct = round(decisions_made / decisions_total * 100) if decisions_total else 0
 
     # =====================================================
@@ -620,7 +620,7 @@ def main():
         st.markdown("**Work status by category**")
         st.plotly_chart(
             workstream_bar(eng_done, eng_total, blockers_done, blockers_rem,
-                           signoffs_done, signoffs_total, gaps_done, gaps_total),
+                           signoffs_done, signoffs_total, tickets_done, tickets_total),
             use_container_width=True, config={"displayModeBar": False},
         )
     with c2:
