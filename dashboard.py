@@ -999,12 +999,19 @@ def main():
             p = priority_badge(item.get("Priority", "")) if item.get("Priority") else ""
             st.markdown(f'<div class="detail-item">{status_badge(item.get("Status","Not Started"))}{p}<span style="color:#111827;flex:1">{name}</span>{date_tag(item)}</div>', unsafe_allow_html=True)
     with tab2:
-        st.markdown("**Ops/Program action items outstanding -- Ops/Program owns all of these**")
+        st.markdown("**Action items outstanding**")
         if not data.get("signoffs"):
-            st.markdown('<div style="color:#16a34a;padding:12px;font-size:14px">All action items confirmed!</div>', unsafe_allow_html=True)
+            st.markdown('<div style="color:#16a34a;padding:12px;font-size:14px">All action items complete!</div>', unsafe_allow_html=True)
         for item in data.get("signoffs", []):
             name = item.get("Task Name", "Untitled")
-            st.markdown(f'<div class="detail-item">{status_badge(item.get("Status","Not Started"))}<span style="color:#111827;flex:1">{name}</span>{date_tag(item)}</div>', unsafe_allow_html=True)
+            desc = item.get("Description", "")
+            owner = ""
+            for line in desc.split("\n"):
+                if line.strip().startswith("Owner:"):
+                    owner = line.strip().replace("Owner:", "").strip()
+                    break
+            owner_html = f'<span class="detail-badge badge-blue">{owner}</span>' if owner else ""
+            st.markdown(f'<div class="detail-item">{status_badge(item.get("Status","Not Started"))}{owner_html}<span style="color:#111827;flex:1">{name}</span>{date_tag(item)}</div>', unsafe_allow_html=True)
     with tab3:
         st.markdown("**Critical decisions blocking downstream engineering**")
         if not data.get("decisions_needed"):
