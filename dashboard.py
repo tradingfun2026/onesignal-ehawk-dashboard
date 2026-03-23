@@ -35,11 +35,11 @@ st.markdown("""
     display: flex; justify-content: space-between; align-items: center;
     border: 1px solid #1e3a5f;
   }
-  .masthead-eyebrow { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: #7b93b3; margin-bottom: 6px; }
+  .masthead-eyebrow { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: #9db4ce; margin-bottom: 6px; }
   .masthead-title { font-size: 26px; font-weight: 700; color: #e8edf5; letter-spacing: -0.03em; margin: 0; }
-  .masthead-sub { font-size: 13px; color: #7b93b3; margin-top: 6px; }
+  .masthead-sub { font-size: 13px; color: #9db4ce; margin-top: 6px; }
   .masthead-big { font-size: 56px; font-weight: 800; color: #f97316; letter-spacing: -0.04em; line-height: 1; }
-  .masthead-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; color: #8ba3c4; margin-top: 4px; }
+  .masthead-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; color: #afc5db; margin-top: 4px; }
 
   /* KPI Cards */
   .kpi-card {
@@ -50,14 +50,14 @@ st.markdown("""
   .kpi-card.amber { border-top-color: #f59e0b; }
   .kpi-card.red { border-top-color: #ef4444; }
   .kpi-card.blue { border-top-color: #3b82f6; }
-  .kpi-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #8ba3c4; margin-bottom: 10px; }
+  .kpi-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #afc5db; margin-bottom: 10px; }
   .kpi-num { font-size: 36px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
   .kpi-card.green .kpi-num { color: #22c55e; }
   .kpi-card.amber .kpi-num { color: #f59e0b; }
   .kpi-card.red .kpi-num { color: #ef4444; }
   .kpi-card.blue .kpi-num { color: #3b82f6; }
-  .kpi-denom { font-size: 16px; color: #7b93b3; }
-  .kpi-context { font-size: 12px; color: #8ba3c4; margin-top: 4px; }
+  .kpi-denom { font-size: 16px; color: #9db4ce; }
+  .kpi-context { font-size: 12px; color: #afc5db; margin-top: 4px; }
   .kpi-pct {
     font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 4px;
     display: inline-block; margin-top: 8px;
@@ -70,7 +70,7 @@ st.markdown("""
   /* Section Headers */
   .section-header {
     font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em;
-    color: #8ba3c4; margin: 28px 0 14px; padding-bottom: 10px;
+    color: #afc5db; margin: 28px 0 14px; padding-bottom: 10px;
     border-bottom: 1px solid #1e3050;
   }
 
@@ -94,9 +94,9 @@ st.markdown("""
     background: #141e30; border-radius: 12px; padding: 18px 20px;
     border: 1px solid #1e3050;
   }
-  .baseline-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #8ba3c4; margin-bottom: 12px; }
+  .baseline-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #afc5db; margin-bottom: 12px; }
   .baseline-value { font-size: 28px; font-weight: 700; line-height: 1; }
-  .baseline-label { font-size: 12px; color: #7b93b3; margin-top: 4px; }
+  .baseline-label { font-size: 12px; color: #9db4ce; margin-top: 4px; }
   .baseline-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #1a2744; }
   .baseline-row:last-child { border-bottom: none; }
   .baseline-metric { font-size: 13px; color: #c8d6e5; }
@@ -111,7 +111,7 @@ st.markdown("""
     border: 1px solid #1e3050; margin-bottom: 12px;
   }
   .phase-title { font-size: 15px; font-weight: 600; color: #e8edf5; margin-bottom: 6px; }
-  .phase-desc { font-size: 13px; color: #8ba3c4; line-height: 1.6; }
+  .phase-desc { font-size: 13px; color: #afc5db; line-height: 1.6; }
   .owner-tag {
     font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 4px;
     background: rgba(59,130,246,0.15); color: #60a5fa; margin-right: 6px;
@@ -120,7 +120,7 @@ st.markdown("""
   /* Streamlit tab styling */
   .stTabs [data-baseweb="tab-list"] { gap: 4px; }
   .stTabs [data-baseweb="tab"] {
-    font-size: 13px; font-weight: 500; color: #8ba3c4;
+    font-size: 13px; font-weight: 500; color: #afc5db;
     border-radius: 8px 8px 0 0; padding: 8px 16px;
   }
 </style>
@@ -182,7 +182,7 @@ def fetch_all(pat):
 DARK = dict(
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
-    font=dict(family="Inter, sans-serif", color="#8ba3c4", size=13),
+    font=dict(family="Inter, sans-serif", color="#afc5db", size=13),
     margin=dict(l=0, r=0, t=10, b=0),
 )
 
@@ -195,7 +195,7 @@ def ring(value, total, color, title):
     fig.add_annotation(text=f"<b>{value}</b>", x=0.5, y=0.55, showarrow=False,
                        font=dict(size=30, color=color, family="Inter"))
     fig.add_annotation(text=f"of {total}", x=0.5, y=0.35, showarrow=False,
-                       font=dict(size=14, color="#7b93b3", family="Inter"))
+                       font=dict(size=14, color="#9db4ce", family="Inter"))
     fig.update_layout(**DARK, height=160, showlegend=False)
     return fig
 
@@ -226,7 +226,7 @@ def workstream_bar(eng_done, eng_total, blockers_done, blockers_rem, signoffs_do
         **DARK, barmode="stack", height=220, bargap=0.35,
         xaxis=dict(range=[0, max_val], showgrid=True, gridcolor="#1a2744"),
         yaxis=dict(showgrid=False, tickfont=dict(size=13, color="#c8d6e5")),
-        legend=dict(orientation="h", y=1.02, x=0, font=dict(size=12, color="#8ba3c4"),
+        legend=dict(orientation="h", y=1.02, x=0, font=dict(size=12, color="#afc5db"),
                     bgcolor="rgba(0,0,0,0)"),
     )
     return fig
@@ -242,11 +242,11 @@ def decision_donut(made, pending, needed):
     fig.add_annotation(text=f"<b>{pct}%</b>", x=0.5, y=0.55, showarrow=False,
                        font=dict(size=28, color="#e8edf5", family="Inter"))
     fig.add_annotation(text="decided", x=0.5, y=0.35, showarrow=False,
-                       font=dict(size=13, color="#7b93b3", family="Inter"))
+                       font=dict(size=13, color="#9db4ce", family="Inter"))
     fig.update_layout(
         **DARK, height=220, showlegend=True,
         legend=dict(orientation="h", y=-0.15, x=0.5, xanchor="center",
-                    font=dict(size=12, color="#8ba3c4"), bgcolor="rgba(0,0,0,0)"),
+                    font=dict(size=12, color="#afc5db"), bgcolor="rgba(0,0,0,0)"),
     )
     return fig
 
@@ -291,9 +291,9 @@ def enablement_time_chart():
         **DARK, height=280, barmode="group", bargap=0.3,
         xaxis=dict(tickfont=dict(size=12, color="#c8d6e5")),
         yaxis=dict(title="% of Apps", ticksuffix="%", showgrid=True, gridcolor="#1a2744",
-                   title_font=dict(size=11, color="#7b93b3"),
-                   tickfont=dict(color="#7b93b3")),
-        legend=dict(orientation="h", y=1.12, x=0, font=dict(size=11, color="#8ba3c4"),
+                   title_font=dict(size=11, color="#9db4ce"),
+                   tickfont=dict(color="#9db4ce")),
+        legend=dict(orientation="h", y=1.12, x=0, font=dict(size=11, color="#afc5db"),
                     bgcolor="rgba(0,0,0,0)"),
     )
     return fig
@@ -322,16 +322,16 @@ def fnr_trend_chart():
                   annotation_font_size=10, secondary_y=True)
     fig.update_layout(
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(family="Inter, sans-serif", color="#8ba3c4", size=13),
+        font=dict(family="Inter, sans-serif", color="#afc5db", size=13),
         margin=dict(l=0, r=0, t=10, b=0),
         height=280, showlegend=True,
-        legend=dict(orientation="h", y=1.12, x=0, font=dict(size=11, color="#8ba3c4"),
+        legend=dict(orientation="h", y=1.12, x=0, font=dict(size=11, color="#afc5db"),
                     bgcolor="rgba(0,0,0,0)"),
         xaxis=dict(tickfont=dict(size=12, color="#c8d6e5")),
     )
     fig.update_yaxes(title_text="Apps", showgrid=True, gridcolor="#1a2744",
-                     title_font=dict(size=11, color="#7b93b3"),
-                     tickfont=dict(color="#7b93b3"), secondary_y=False)
+                     title_font=dict(size=11, color="#9db4ce"),
+                     tickfont=dict(color="#9db4ce"), secondary_y=False)
     fig.update_yaxes(title_text="FNR %", range=[0, 70], showgrid=False,
                      title_font=dict(size=11, color="#f87171"),
                      tickfont=dict(color="#f87171"), secondary_y=True)
@@ -353,8 +353,8 @@ def tld_risk_chart():
     fig.update_layout(
         **DARK, height=280, showlegend=False,
         xaxis=dict(title="Bypass Rate %", showgrid=True, gridcolor="#1a2744",
-                   title_font=dict(size=11, color="#7b93b3"),
-                   tickfont=dict(color="#7b93b3")),
+                   title_font=dict(size=11, color="#9db4ce"),
+                   tickfont=dict(color="#9db4ce")),
         yaxis=dict(tickfont=dict(size=13, color="#c8d6e5")),
     )
     return fig
@@ -404,7 +404,7 @@ def main():
     pat = st.secrets.get("AIRTABLE_PAT", "")
     if not pat:
         st.markdown("""<div style="background:#141e30;border-radius:12px;padding:24px;margin-bottom:20px;border:1px solid #1e3050">
-          <div style="font-size:13px;color:#8ba3c4;margin-bottom:8px;font-weight:600">AIRTABLE PERSONAL ACCESS TOKEN</div>
+          <div style="font-size:13px;color:#afc5db;margin-bottom:8px;font-weight:600">AIRTABLE PERSONAL ACCESS TOKEN</div>
           <div style="font-size:14px;color:#c8d6e5">Add <code>AIRTABLE_PAT</code> to Streamlit Cloud secrets.</div>
         </div>""", unsafe_allow_html=True)
         pat = st.text_input("Or enter your Airtable PAT:", type="password", key="pat_input")
@@ -559,7 +559,7 @@ def main():
     # =====================================================
     # FRAUD BASELINE METRICS
     # =====================================================
-    st.markdown('<div class="section-header">Fraud Baseline Metrics <span style="font-size:9px;background:rgba(139,163,196,0.15);color:#8ba3c4;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">OCT 2025 - FEB 2026</span></div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-header">Fraud Baseline Metrics <span style="font-size:9px;background:rgba(139,163,196,0.15);color:#afc5db;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">OCT 2025 - FEB 2026</span></div>', unsafe_allow_html=True)
 
     b1, b2, b3, b4 = st.columns(4)
     with b1:
@@ -692,7 +692,7 @@ def main():
               <div class="baseline-label">Median enablement</div>
             </div>
             <div style="text-align:right">
-              <div class="baseline-value" style="color:#8ba3c4;font-size:20px">75.9h</div>
+              <div class="baseline-value" style="color:#afc5db;font-size:20px">75.9h</div>
               <div class="baseline-label">Average (~3.2 days)</div>
             </div>
           </div>
@@ -718,7 +718,7 @@ def main():
               <div class="baseline-label">Median enablement</div>
             </div>
             <div style="text-align:right">
-              <div class="baseline-value" style="color:#8ba3c4;font-size:20px">83.7h</div>
+              <div class="baseline-value" style="color:#afc5db;font-size:20px">83.7h</div>
               <div class="baseline-label">Average (~3.5 days)</div>
             </div>
           </div>
@@ -757,8 +757,119 @@ def main():
         st.markdown(f"""<div class="detail-item">
           <span class="detail-badge {badge_cls}">{priority}</span>
           <span style="color:#e8edf5;min-width:220px;font-weight:500">{rec}</span>
-          <span style="color:#8ba3c4;flex:1">Current: {current}</span>
+          <span style="color:#afc5db;flex:1">Current: {current}</span>
           <span style="color:#4ade80;flex:1">Target: {target}</span>
+        </div>""", unsafe_allow_html=True)
+
+    # =====================================================
+    # INTERCOM SUPPORT METRICS
+    # =====================================================
+    st.markdown('<div class="section-header">Intercom Support Metrics <span style="font-size:9px;background:rgba(139,163,196,0.15);color:#afc5db;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">NOV 11 2025 - FEB 9 2026 (90 DAYS)</span></div>', unsafe_allow_html=True)
+
+    ic1, ic2, ic3, ic4 = st.columns(4)
+    with ic1:
+        st.markdown("""<div class="baseline-card">
+          <div class="baseline-title">Email Verification Inbox</div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px">
+            <div>
+              <div class="baseline-value" style="color:#e8edf5">596</div>
+              <div class="baseline-label">Total tickets (excl. AUP)</div>
+            </div>
+            <div style="text-align:right">
+              <div class="baseline-value val-good" style="font-size:20px">271</div>
+              <div class="baseline-label">Approved (45.5%)</div>
+            </div>
+          </div>
+          <div class="baseline-row">
+            <span class="baseline-metric">User responded</span>
+            <span class="baseline-val val-warn">377 (63.3%)</span>
+          </div>
+          <div class="baseline-row">
+            <span class="baseline-metric">No response / dropped</span>
+            <span class="baseline-val val-bad">219 (36.7%)</span>
+          </div>
+          <div class="baseline-row">
+            <span class="baseline-metric">Admin-replied tickets</span>
+            <span class="baseline-val" style="color:#c8d6e5">254 of 596</span>
+          </div>
+        </div>""", unsafe_allow_html=True)
+    with ic2:
+        st.markdown("""<div class="baseline-card">
+          <div class="baseline-title">First Response Time</div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px">
+            <div>
+              <div class="baseline-value val-good">20.5m</div>
+              <div class="baseline-label">Median first response</div>
+            </div>
+            <div style="text-align:right">
+              <div class="baseline-value" style="color:#afc5db;font-size:20px">1.9h</div>
+              <div class="baseline-label">Average (mean)</div>
+            </div>
+          </div>
+          <div class="baseline-row">
+            <span class="baseline-metric">P10</span>
+            <span class="baseline-val val-good">3.8 min</span>
+          </div>
+          <div class="baseline-row">
+            <span class="baseline-metric">P25</span>
+            <span class="baseline-val val-good">8.5 min</span>
+          </div>
+          <div class="baseline-row">
+            <span class="baseline-metric">P75 / P90</span>
+            <span class="baseline-val val-warn">44.7 min / 1.5 hrs</span>
+          </div>
+        </div>""", unsafe_allow_html=True)
+    with ic3:
+        st.markdown("""<div class="baseline-card">
+          <div class="baseline-title">Resolution Time (Approved)</div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px">
+            <div>
+              <div class="baseline-value" style="color:#60a5fa">2.6h</div>
+              <div class="baseline-label">Median resolution</div>
+            </div>
+            <div style="text-align:right">
+              <div class="baseline-value" style="color:#afc5db;font-size:20px">2.0d</div>
+              <div class="baseline-label">Average (mean)</div>
+            </div>
+          </div>
+          <div class="baseline-row">
+            <span class="baseline-metric">P10 (auto-verify path)</span>
+            <span class="baseline-val val-good">15 min</span>
+          </div>
+          <div class="baseline-row">
+            <span class="baseline-metric">P75</span>
+            <span class="baseline-val val-warn">3.7 days</span>
+          </div>
+          <div class="baseline-row">
+            <span class="baseline-metric">P90 (complex cases)</span>
+            <span class="baseline-val val-bad">6.1 days</span>
+          </div>
+        </div>""", unsafe_allow_html=True)
+    with ic4:
+        st.markdown("""<div class="baseline-card">
+          <div class="baseline-title">Spammers Inbox</div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px">
+            <div>
+              <div class="baseline-value val-bad">632</div>
+              <div class="baseline-label">Conversations (90 days)</div>
+            </div>
+            <div style="text-align:right">
+              <div class="baseline-value val-bad" style="font-size:20px">0%</div>
+              <div class="baseline-label">Tag removal rate</div>
+            </div>
+          </div>
+          <div class="baseline-row">
+            <span class="baseline-metric">Median msgs before catch</span>
+            <span class="baseline-val val-good">1.5 messages</span>
+          </div>
+          <div class="baseline-row">
+            <span class="baseline-metric">Via verification flow (70%)</span>
+            <span class="baseline-val val-good">~1 msg</span>
+          </div>
+          <div class="baseline-row">
+            <span class="baseline-metric">Via customer service (30%)</span>
+            <span class="baseline-val val-warn">6-7 msgs</span>
+          </div>
         </div>""", unsafe_allow_html=True)
 
     # =====================================================
@@ -782,6 +893,17 @@ BASELINE CONTEXT:
 - 88.6% enforcement rate at 100K+ email volume band.
 - Enterprise median detection time: 34 days (target <14 days).
 
+INTERCOM SUPPORT METRICS (90 days, Nov 11 2025 - Feb 9 2026):
+- 596 email verification tickets, 271 approved (45.5%), 377 user-responded (63.3%).
+- First response time: median 20.5 min, average 1.9 hrs, P90 = 1.5 hrs.
+- Resolution time (approved): median 2.6 hrs, average 2.0 days, P90 = 6.1 days.
+- 632 spammer conversations; 70% caught via verification flow within 1 message.
+- Spammer tag removal rate: 0% (permanent, no appeal process).
+
+EMAIL SENDER ENABLEMENT TIME:
+- Mar 9: 148 apps, median 24.3h, 50.7% over 24h.
+- Mar 20: 85 apps, median 18.0h, 44.7% over 24h. 46.2% never enabled.
+
 Paragraph 1 -- STATE: Engineering momentum vs T&S readiness gap.
 Paragraph 2 -- CONSTRAINT: What happens if T&S sign-offs don't move this week.
 Paragraph 3 -- NEXT 7 DAYS: Three specific actions with implied owners."""
@@ -802,7 +924,7 @@ Paragraph 3 -- NEXT 7 DAYS: Three specific actions with implied owners."""
     for i, (col, para) in enumerate(zip(cols, paras)):
         with col:
             label = labels[i] if i < len(labels) else ""
-            color = colors[i] if i < len(colors) else "#7b93b3"
+            color = colors[i] if i < len(colors) else "#9db4ce"
             st.markdown(f"""<div style="background:#0f172a;border-radius:10px;padding:18px 20px;border-top:2px solid {color};border:1px solid #1e3050;border-top:3px solid {color}">
               <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:{color};margin-bottom:12px">{label}</div>
               <div style="font-size:14px;line-height:1.75;color:#c8d6e5">{para}</div>
@@ -843,7 +965,7 @@ Paragraph 3 -- NEXT 7 DAYS: Three specific actions with implied owners."""
         for item in data.get("decisions_needed", []):
             title = item.get("Title", "Untitled")
             notes = item.get("Unblocks / Notes", "")[:120]
-            notes_html = f'<div style="font-size:12px;color:#7b93b3;margin-top:4px">{notes}</div>' if notes else ""
+            notes_html = f'<div style="font-size:12px;color:#9db4ce;margin-top:4px">{notes}</div>' if notes else ""
             st.markdown(f'<div class="detail-item"><span class="detail-badge badge-red">NEEDED</span><div><div style="color:#e8edf5">{title}</div>{notes_html}</div></div>', unsafe_allow_html=True)
     with tab4:
         st.markdown("**Gap tickets -- all must close before launch**")
@@ -865,7 +987,7 @@ Paragraph 3 -- NEXT 7 DAYS: Three specific actions with implied owners."""
     with tab6:
         st.markdown("**What's been completed -- engineering foundation is solid**")
         if not data.get("completed"):
-            st.markdown('<div style="color:#7b93b3;padding:12px;font-size:14px">No completed items yet.</div>', unsafe_allow_html=True)
+            st.markdown('<div style="color:#9db4ce;padding:12px;font-size:14px">No completed items yet.</div>', unsafe_allow_html=True)
         for item in data.get("completed", []):
             name = item.get("Task Name", "Untitled")
             section = item.get("Section", "")
