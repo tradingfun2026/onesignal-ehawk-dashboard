@@ -225,8 +225,7 @@ def workstream_bar(eng_done, eng_total, blockers_done, blockers_rem, signoffs_do
         ))
     max_val = max(eng_total, blockers_total, signoffs_total, tickets_total) + 2
     fig.update_layout(
-        **DARK, barmode="stack", height=260, bargap=0.35,
-        margin=dict(t=40),
+        **{**DARK, "margin": dict(l=0, r=0, t=40, b=0)}, barmode="stack", height=260, bargap=0.35,
         xaxis=dict(range=[0, max_val], showgrid=True, gridcolor="#1a2744"),
         yaxis=dict(showgrid=False, tickfont=dict(size=13, color="#111827")),
         legend=dict(orientation="h", y=1.12, x=0, font=dict(size=12, color="#111827"),
