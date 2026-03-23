@@ -474,11 +474,21 @@ def main():
     mitigated_risks = [r for r in data.get("all_risks", []) if r.get("Status") in ("Mitigated Risk",)]
     open_questions = [r for r in data.get("open_questions", []) if r.get("Status") == "Unanswered"]
 
+    # Appeal process tickets not yet created — estimate 3 tickets (appeals flow eng,
+    # re-approval UX, revet SDAT support) pending decision on appeal option
+    appeal_tickets_pending = len([r for r in tickets_list if "appeal" in r.get("Task Name", "").lower()])
+
     eng_pct = round(eng_done / eng_total * 100) if eng_total else 0
     blockers_pct = round(blockers_done / blockers_total * 100) if blockers_total else 0
     signoffs_pct = round(signoffs_done / signoffs_total * 100) if signoffs_total else 0
     tickets_pct = round(tickets_done / tickets_total * 100) if tickets_total else 0
     decisions_pct = round(decisions_made / decisions_total * 100) if decisions_total else 0
+
+    # Overall completion: eng + action items + tickets to create + decisions
+    overall_done = eng_done + signoffs_done + tickets_done + decisions_made
+    overall_total = eng_total + signoffs_total + tickets_total + decisions_total + appeal_tickets_pending
+    overall_pct = round(overall_done / overall_total * 100) if overall_total else 0
+    overall_color = "#22c55e" if overall_pct >= 70 else "#f59e0b" if overall_pct >= 40 else "#ef4444"
 
     # =====================================================
     # MASTHEAD
@@ -491,8 +501,9 @@ def main():
         <div class="masthead-sub">{datetime.now().strftime('%A, %B %d, %Y')} &nbsp;|&nbsp; Live data from Airtable &nbsp;|&nbsp; Refreshes every 5 min</div>
       </div>
       <div style="text-align:right">
-        <div class="masthead-big">{blockers_rem}</div>
-        <div class="masthead-label">blockers to launch</div>
+        <div class="masthead-big" style="color:{overall_color}">{overall_pct}%</div>
+        <div class="masthead-label">overall completion</div>
+        <div style="font-size:11px;color:#94a3b8;margin-top:4px">{overall_done} of {overall_total} items complete</div>
       </div>
     </div>
     """, unsafe_allow_html=True)
@@ -538,8 +549,8 @@ def main():
     # =====================================================
     st.markdown('<div class="section-header">Executive Summary <span style="font-size:9px;background:rgba(59,130,246,0.15);color:#60a5fa;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">LIVE DATA</span></div>', unsafe_allow_html=True)
 
-    overall_pct = round((eng_pct + blockers_pct + signoffs_pct + decisions_pct) / 4)
-    state_color = "#22c55e" if overall_pct >= 60 else "#f59e0b" if overall_pct >= 30 else "#ef4444"
+    avg_workstream_pct = round((eng_pct + blockers_pct + signoffs_pct + decisions_pct) / 4)
+    state_color = "#22c55e" if avg_workstream_pct >= 60 else "#f59e0b" if avg_workstream_pct >= 30 else "#ef4444"
 
     state_para = (
         f"Engineering is at {eng_pct}% completion with {eng_done} of {eng_total} tickets closed. "
