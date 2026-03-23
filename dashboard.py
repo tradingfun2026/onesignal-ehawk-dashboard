@@ -681,7 +681,7 @@ def main():
     # =====================================================
     # FRAUD BASELINE METRICS
     # =====================================================
-    st.markdown('<div class="section-header">Fraud Baseline Metrics <span style="font-size:9px;background:rgba(139,163,196,0.15);color:#e2e8f0;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">OCT 2025 - FEB 2026</span></div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-header">Fraud Baseline Metrics <span style="font-size:9px;background:rgba(139,163,196,0.15);color:#e2e8f0;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">FIXED SNAPSHOT &bull; OCT 2025 - FEB 2026</span></div>', unsafe_allow_html=True)
 
     b1, b2, b3, b4 = st.columns(4)
     with b1:
@@ -802,7 +802,7 @@ def main():
     # =====================================================
     # EMAIL SENDER ENABLEMENT TIME
     # =====================================================
-    st.markdown('<div class="section-header">Email Sender Enablement Time <span style="font-size:9px;background:rgba(249,115,22,0.15);color:#fb923c;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">LIVE TRACKING</span></div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-header">Email Sender Enablement Time <span style="font-size:9px;background:rgba(139,163,196,0.15);color:#e2e8f0;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">FIXED SNAPSHOT &bull; OCT 2025 - MAR 2026</span></div>', unsafe_allow_html=True)
 
     et0, et1, et2, et3 = st.columns([2, 2, 2, 3])
     with et0:
@@ -916,7 +916,7 @@ def main():
     # =====================================================
     # INTERCOM SUPPORT METRICS
     # =====================================================
-    st.markdown('<div class="section-header">Intercom Support Metrics <span style="font-size:9px;background:rgba(139,163,196,0.15);color:#e2e8f0;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">NOV 11 2025 - FEB 9 2026 (90 DAYS)</span></div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-header">Intercom Support Metrics <span style="font-size:9px;background:rgba(139,163,196,0.15);color:#e2e8f0;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">FIXED SNAPSHOT &bull; NOV 2025 - FEB 2026 (90 DAYS)</span></div>', unsafe_allow_html=True)
 
     ic1, ic2, ic3, ic4 = st.columns(4)
     with ic1:
