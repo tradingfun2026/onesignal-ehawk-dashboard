@@ -919,7 +919,7 @@ def main():
     # =====================================================
     # INTERCOM SUPPORT METRICS
     # =====================================================
-    st.markdown('<div class="section-header">Intercom Support Metrics <span style="font-size:9px;background:rgba(139,163,196,0.15);color:#e2e8f0;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">FIXED SNAPSHOT &bull; NOV 2025 - FEB 2026 (90 DAYS)</span></div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-header">Intercom Support Metrics <span style="font-size:9px;background:rgba(139,163,196,0.15);color:#111827;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">BASELINE &bull; NOV 2025 - FEB 2026 (90 DAYS) &bull; AWAITING UPDATE</span></div>', unsafe_allow_html=True)
 
     ic1, ic2, ic3, ic4 = st.columns(4)
     with ic1:
