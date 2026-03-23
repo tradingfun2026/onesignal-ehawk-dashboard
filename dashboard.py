@@ -505,8 +505,9 @@ def main():
           <div class="phase-title">What is eHawk Phase 3?</div>
           <div class="phase-desc">
             Auto-approval pipeline for email domain verification. Replaces manual review with
-            eHawk scoring to automatically verify low-risk email app provisioning requests,
-            reducing Ops/Program workload while maintaining fraud detection coverage.
+            eHawk behavioral scoring and SDAT domain infrastructure analysis to automatically
+            verify low-risk email app provisioning requests, reducing Ops/Program workload
+            while maintaining fraud detection coverage.
           </div>
         </div>""", unsafe_allow_html=True)
     with ov2:
