@@ -250,9 +250,9 @@ def decision_donut(made, pending, needed):
     )
     return fig
 
-def completion_bar(eng_pct, blockers_pct, signoffs_pct, gaps_pct, decisions_pct):
-    cats = ["Engineering", "Dependencies", "Action Items", "Gaps", "Decisions"]
-    pcts = [eng_pct, blockers_pct, signoffs_pct, gaps_pct, decisions_pct]
+def completion_bar(eng_pct, blockers_pct, signoffs_pct, decisions_pct):
+    cats = ["Engineering", "Dependencies", "Action Items", "Decisions"]
+    pcts = [eng_pct, blockers_pct, signoffs_pct, decisions_pct]
     fig = go.Figure(go.Bar(
         x=cats, y=pcts,
         marker_color=["#22c55e" if p >= 60 else "#f59e0b" if p >= 30 else "#ef4444" for p in pcts],
@@ -507,7 +507,7 @@ def main():
     # =====================================================
     st.markdown('<div class="section-header">Executive Summary <span style="font-size:9px;background:rgba(59,130,246,0.15);color:#60a5fa;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">LIVE DATA</span></div>', unsafe_allow_html=True)
 
-    overall_pct = round((eng_pct + blockers_pct + signoffs_pct + gaps_pct + decisions_pct) / 5)
+    overall_pct = round((eng_pct + blockers_pct + signoffs_pct + decisions_pct) / 4)
     state_color = "#22c55e" if overall_pct >= 60 else "#f59e0b" if overall_pct >= 30 else "#ef4444"
 
     state_para = (
@@ -515,7 +515,7 @@ def main():
         f"The pipeline has {blockers_rem} pre-launch dependencies remaining out of {blockers_total} total, "
         f"with {blockers_pct}% cleared so far. "
         f"Ops/Program action items stand at {signoffs_done}/{signoffs_total} ({signoffs_pct}% complete), "
-        f"and {gaps_rem} gap tickets remain open. "
+        f"Gap tickets have been resolved and merged into engineering. "
         f"The false negative rate has dropped to 0.0% for both Feb and Mar 2026, "
         f"down from the 61.3% peak in Nov 2025."
     )
@@ -557,7 +557,7 @@ def main():
     # KPI ROW
     # =====================================================
     st.markdown('<div class="section-header">Launch Readiness KPIs</div>', unsafe_allow_html=True)
-    k1, k2, k3, k4, k5 = st.columns(5)
+    k1, k2, k3, k4 = st.columns(4)
     color_map = {"green": "#22c55e", "amber": "#f59e0b", "red": "#ef4444", "blue": "#3b82f6"}
     kpi_data = [
         (k1, eng_done, eng_total, "green", "Engineering Tickets",
@@ -566,9 +566,7 @@ def main():
          f"{blockers_done} cleared", f"{blockers_pct}% cleared"),
         (k3, signoffs_done, signoffs_total, "green" if signoffs_pct >= 60 else "red", "Ops/Program Action Items",
          f"{signoffs_rem} outstanding", f"{signoffs_pct}% confirmed"),
-        (k4, gaps_done, gaps_total, "green" if gaps_pct >= 60 else "red", "Gap Tickets",
-         f"{gaps_rem} open", f"{gaps_pct}% closed"),
-        (k5, decisions_made, decisions_total, "blue", "Decisions",
+        (k4, decisions_made, decisions_total, "blue", "Decisions",
          f"{decisions_needed} critical needed", f"{decisions_pct}% decided"),
     ]
     for col, val, tot, color, label, ctx, pct in kpi_data:
@@ -609,7 +607,7 @@ def main():
     with c3:
         st.markdown("**Completion % by workstream**")
         st.plotly_chart(
-            completion_bar(eng_pct, blockers_pct, signoffs_pct, gaps_pct, decisions_pct),
+            completion_bar(eng_pct, blockers_pct, signoffs_pct, decisions_pct),
             use_container_width=True, config={"displayModeBar": False},
         )
 
@@ -964,11 +962,10 @@ def main():
     # =====================================================
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown('<div class="section-header">Drill-Down Detail</div>', unsafe_allow_html=True)
-    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+    tab1, tab2, tab3, tab4, tab5 = st.tabs([
         f"Dependencies ({blockers_rem})",
         f"Action Items ({signoffs_rem})",
         f"Decisions Needed ({decisions_needed})",
-        f"Gap Tickets ({gaps_rem})",
         f"Open Risks ({open_risks})",
         "Recently Completed",
     ])
@@ -997,14 +994,6 @@ def main():
             notes_html = f'<div style="font-size:12px;color:#374151;margin-top:4px">{notes}</div>' if notes else ""
             st.markdown(f'<div class="detail-item"><span class="detail-badge badge-red">NEEDED</span><div><div style="color:#111827">{title}</div>{notes_html}</div></div>', unsafe_allow_html=True)
     with tab4:
-        st.markdown("**Gap tickets -- all must close before launch**")
-        if not data.get("gaps"):
-            st.markdown('<div style="color:#16a34a;padding:12px;font-size:14px">All gap tickets closed!</div>', unsafe_allow_html=True)
-        for item in data.get("gaps", []):
-            name = item.get("Task Name", "Untitled")
-            p = priority_badge(item.get("Priority", "")) if item.get("Priority") else ""
-            st.markdown(f'<div class="detail-item">{status_badge(item.get("Status","Not Started"))}{p}<span style="color:#111827">{name}</span></div>', unsafe_allow_html=True)
-    with tab5:
         st.markdown("**Open risks being tracked**")
         if not data.get("open_risks"):
             st.markdown('<div style="color:#16a34a;padding:12px;font-size:14px">No open risks!</div>', unsafe_allow_html=True)
@@ -1017,7 +1006,7 @@ def main():
             short_desc = (desc[:200] + "...") if len(desc) > 200 else desc
             desc_html = f'<div style="font-size:12px;color:#374151;margin-top:4px;line-height:1.5">{short_desc}</div>' if short_desc else ""
             st.markdown(f'<div class="detail-item">{sev_badge}<div style="flex:1"><div style="color:#111827;font-weight:500">{name}</div>{desc_html}</div></div>', unsafe_allow_html=True)
-    with tab6:
+    with tab5:
         st.markdown("**What's been completed -- engineering foundation is solid**")
         if not data.get("completed"):
             st.markdown('<div style="color:#374151;padding:12px;font-size:14px">No completed items yet.</div>', unsafe_allow_html=True)
