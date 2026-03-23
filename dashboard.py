@@ -300,38 +300,41 @@ def enablement_time_chart():
 
 def fnr_trend_chart():
     """False Negative Rate trend from baseline analysis."""
+    from plotly.subplots import make_subplots
     months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026"]
     fnr = [48.9, 61.3, 6.7, 9.6, 0.0]
     apps = [435, 374, 327, 344, 296]
 
-    fig = go.Figure()
+    fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(go.Bar(
         x=months, y=apps, name="Non-Ent Apps",
-        marker_color="#1e40af", opacity=0.6, yaxis="y",
-    ))
+        marker_color="#1e40af", opacity=0.6,
+    ), secondary_y=False)
     fig.add_trace(go.Scatter(
         x=months, y=fnr, name="False Negative Rate %",
         mode="lines+markers+text", line=dict(color="#ef4444", width=3),
         marker=dict(size=8, color="#ef4444"),
         text=[f"{v}%" for v in fnr], textposition="top center",
         textfont=dict(size=11, color="#f87171"),
-        yaxis="y2",
-    ))
+    ), secondary_y=True)
     fig.add_hline(y=15, line_dash="dash", line_color="#f59e0b", line_width=1,
                   annotation_text="Alert: 15%", annotation_font_color="#fbbf24",
-                  annotation_font_size=10, yref="y2")
+                  annotation_font_size=10, secondary_y=True)
     fig.update_layout(
-        **DARK, height=280, showlegend=True,
+        paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(family="Inter, sans-serif", color="#8ba3c4", size=13),
+        margin=dict(l=0, r=0, t=10, b=0),
+        height=280, showlegend=True,
         legend=dict(orientation="h", y=1.12, x=0, font=dict(size=11, color="#8ba3c4"),
                     bgcolor="rgba(0,0,0,0)"),
-        yaxis=dict(title="Apps", showgrid=True, gridcolor="#1a2744",
-                   titlefont=dict(size=11, color="#7b93b3"),
-                   tickfont=dict(color="#7b93b3")),
-        yaxis2=dict(title="FNR %", overlaying="y", side="right", range=[0, 70],
-                    titlefont=dict(size=11, color="#f87171"),
-                    tickfont=dict(color="#f87171"), showgrid=False),
         xaxis=dict(tickfont=dict(size=12, color="#c8d6e5")),
     )
+    fig.update_yaxes(title_text="Apps", showgrid=True, gridcolor="#1a2744",
+                     titlefont=dict(size=11, color="#7b93b3"),
+                     tickfont=dict(color="#7b93b3"), secondary_y=False)
+    fig.update_yaxes(title_text="FNR %", range=[0, 70], showgrid=False,
+                     titlefont=dict(size=11, color="#f87171"),
+                     tickfont=dict(color="#f87171"), secondary_y=True)
     return fig
 
 def tld_risk_chart():
