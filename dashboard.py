@@ -1031,11 +1031,14 @@ def main():
             desc = item.get("Description", "")
             severity = item.get("Severity", item.get("Priority", ""))
             sev_badge = priority_badge(severity) if severity else ""
+            risk_status = item.get("Select", "Open Risk")
+            status_cls = {"Open Risk": "badge-red", "Mitigated Risk": "badge-green", "Deferred": "badge-gray"}.get(risk_status, "badge-amber")
+            status_label = {"Open Risk": "OPEN", "Mitigated Risk": "MITIGATED", "Deferred": "DEFERRED"}.get(risk_status, risk_status.upper())
+            status_html = f'<span class="detail-badge {status_cls}">{status_label}</span>'
             risk_num = f'<span style="font-size:11px;font-weight:700;color:#6b7280;margin-right:6px;white-space:nowrap">RISK-{idx:02d}</span>'
-            # Truncate description for display
             short_desc = (desc[:200] + "...") if len(desc) > 200 else desc
             desc_html = f'<div style="font-size:12px;color:#374151;margin-top:4px;line-height:1.5">{short_desc}</div>' if short_desc else ""
-            st.markdown(f'<div class="detail-item">{sev_badge}<div style="flex:1"><div style="color:#111827;font-weight:500">{risk_num}{name}</div>{desc_html}</div></div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="detail-item">{status_html}{sev_badge}<div style="flex:1"><div style="color:#111827;font-weight:500">{risk_num}{name}</div>{desc_html}</div></div>', unsafe_allow_html=True)
     with tab5:
         st.markdown("**What's been completed -- engineering foundation is solid**")
         if not data.get("completed"):
