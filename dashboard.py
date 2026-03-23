@@ -462,7 +462,7 @@ def main():
       </div>
       <div style="text-align:right">
         <div class="masthead-big">{blockers_rem}</div>
-        <div class="masthead-label">dependencies to launch</div>
+        <div class="masthead-label">dependencies/blockers to launch</div>
       </div>
     </div>
     """, unsafe_allow_html=True)
