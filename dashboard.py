@@ -225,10 +225,11 @@ def workstream_bar(eng_done, eng_total, blockers_done, blockers_rem, signoffs_do
         ))
     max_val = max(eng_total, blockers_total, signoffs_total, tickets_total) + 2
     fig.update_layout(
-        **DARK, barmode="stack", height=220, bargap=0.35,
+        **DARK, barmode="stack", height=260, bargap=0.35,
+        margin=dict(t=40),
         xaxis=dict(range=[0, max_val], showgrid=True, gridcolor="#1a2744"),
         yaxis=dict(showgrid=False, tickfont=dict(size=13, color="#111827")),
-        legend=dict(orientation="h", y=1.02, x=0, font=dict(size=12, color="#111827"),
+        legend=dict(orientation="h", y=1.12, x=0, font=dict(size=12, color="#111827"),
                     bgcolor="rgba(0,0,0,0)"),
     )
     return fig
@@ -635,6 +636,47 @@ def main():
             completion_bar(eng_pct, blockers_pct, signoffs_pct, decisions_pct),
             use_container_width=True, config={"displayModeBar": False},
         )
+
+    # =====================================================
+    # PIPELINE PROGRESS DRILL-DOWN EXPANDERS
+    # =====================================================
+    p1, p2, p3, p4 = st.columns(4)
+    with p1:
+        with st.expander(f"Engineering — {eng_rem} remaining"):
+            if eng_rem == 0:
+                st.markdown('<span style="color:#16a34a;font-size:13px">All engineering tickets complete!</span>', unsafe_allow_html=True)
+            for item in data.get("eng_remaining", []):
+                name = item.get("Task Name", "Untitled")
+                p = item.get("Priority", "")
+                p_color = {"High": "#ef4444", "Medium": "#f59e0b", "Low": "#3b82f6"}.get(p, "#6b7280")
+                st.markdown(f'<div style="font-size:12px;padding:4px 0;border-bottom:1px solid #f0f0f0"><span style="color:{p_color};font-weight:600;font-size:10px;margin-right:4px">{p.upper()}</span> {name}</div>', unsafe_allow_html=True)
+    with p2:
+        with st.expander(f"Dependencies — {blockers_rem} remaining"):
+            if blockers_rem == 0:
+                st.markdown('<span style="color:#16a34a;font-size:13px">All dependencies cleared!</span>', unsafe_allow_html=True)
+            for item in data.get("blockers_remaining", []):
+                name = item.get("Task Name", "Untitled")
+                p = item.get("Priority", "")
+                p_color = {"High": "#ef4444", "Medium": "#f59e0b", "Low": "#3b82f6"}.get(p, "#6b7280")
+                st.markdown(f'<div style="font-size:12px;padding:4px 0;border-bottom:1px solid #f0f0f0"><span style="color:{p_color};font-weight:600;font-size:10px;margin-right:4px">{p.upper()}</span> {name}</div>', unsafe_allow_html=True)
+    with p3:
+        with st.expander(f"Action Items — {signoffs_rem} remaining"):
+            if signoffs_rem == 0:
+                st.markdown('<span style="color:#16a34a;font-size:13px">All action items complete!</span>', unsafe_allow_html=True)
+            for item in signoffs_list:
+                name = item.get("Task Name", "Untitled")
+                p = item.get("Priority", "")
+                p_color = {"High": "#ef4444", "Medium": "#f59e0b", "Low": "#3b82f6"}.get(p, "#6b7280")
+                st.markdown(f'<div style="font-size:12px;padding:4px 0;border-bottom:1px solid #f0f0f0"><span style="color:{p_color};font-weight:600;font-size:10px;margin-right:4px">{p.upper()}</span> {name}</div>', unsafe_allow_html=True)
+    with p4:
+        with st.expander(f"Tickets to Create — {tickets_rem} remaining"):
+            if tickets_rem == 0:
+                st.markdown('<span style="color:#16a34a;font-size:13px">All tickets created!</span>', unsafe_allow_html=True)
+            for item in tickets_list:
+                name = item.get("Task Name", "Untitled")
+                p = item.get("Priority", "")
+                p_color = {"High": "#ef4444", "Medium": "#f59e0b", "Low": "#3b82f6"}.get(p, "#6b7280")
+                st.markdown(f'<div style="font-size:12px;padding:4px 0;border-bottom:1px solid #f0f0f0"><span style="color:{p_color};font-weight:600;font-size:10px;margin-right:4px">{p.upper()}</span> {name}</div>', unsafe_allow_html=True)
 
     # =====================================================
     # FRAUD BASELINE METRICS
