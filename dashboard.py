@@ -30,34 +30,34 @@ st.markdown("""
 
   /* Masthead */
   .masthead {
-    background: linear-gradient(135deg, #0c1222 0%, #162032 50%, #1a2744 100%);
+    background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 50%, #dbeafe 100%);
     border-radius: 14px; padding: 28px 36px; margin-bottom: 24px;
     display: flex; justify-content: space-between; align-items: center;
-    border: 1px solid #1e3a5f;
+    border: 1px solid #cbd5e1;
   }
-  .masthead-eyebrow { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: #cbd5e1; margin-bottom: 6px; }
-  .masthead-title { font-size: 26px; font-weight: 700; color: #f8fafc; letter-spacing: -0.03em; margin: 0; }
-  .masthead-sub { font-size: 13px; color: #cbd5e1; margin-top: 6px; }
+  .masthead-eyebrow { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: #374151; margin-bottom: 6px; }
+  .masthead-title { font-size: 26px; font-weight: 700; color: #111827; letter-spacing: -0.03em; margin: 0; }
+  .masthead-sub { font-size: 13px; color: #374151; margin-top: 6px; }
   .masthead-big { font-size: 56px; font-weight: 800; color: #f97316; letter-spacing: -0.04em; line-height: 1; }
-  .masthead-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; color: #cbd5e1; margin-top: 4px; }
+  .masthead-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; color: #374151; margin-top: 4px; }
 
   /* KPI Cards */
   .kpi-card {
-    background: #141e30; border-radius: 12px; padding: 18px 20px 16px;
-    border: 1px solid #1e3050; border-top: 3px solid transparent;
+    background: #f8fafc; border-radius: 12px; padding: 18px 20px 16px;
+    border: 1px solid #d1d5db; border-top: 3px solid transparent;
   }
   .kpi-card.green { border-top-color: #22c55e; }
   .kpi-card.amber { border-top-color: #f59e0b; }
   .kpi-card.red { border-top-color: #ef4444; }
   .kpi-card.blue { border-top-color: #3b82f6; }
-  .kpi-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #cbd5e1; margin-bottom: 10px; }
+  .kpi-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #374151; margin-bottom: 10px; }
   .kpi-num { font-size: 36px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
   .kpi-card.green .kpi-num { color: #22c55e; }
   .kpi-card.amber .kpi-num { color: #f59e0b; }
   .kpi-card.red .kpi-num { color: #ef4444; }
   .kpi-card.blue .kpi-num { color: #3b82f6; }
-  .kpi-denom { font-size: 16px; color: #cbd5e1; }
-  .kpi-context { font-size: 12px; color: #e2e8f0; margin-top: 4px; }
+  .kpi-denom { font-size: 16px; color: #374151; }
+  .kpi-context { font-size: 12px; color: #111827; margin-top: 4px; }
   .kpi-pct {
     font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 4px;
     display: inline-block; margin-top: 8px;
@@ -107,11 +107,11 @@ st.markdown("""
 
   /* Phase Overview */
   .phase-card {
-    background: #141e30; border-radius: 12px; padding: 20px 22px;
-    border: 1px solid #1e3050; margin-bottom: 12px;
+    background: #f8fafc; border-radius: 12px; padding: 20px 22px;
+    border: 1px solid #d1d5db; margin-bottom: 12px;
   }
-  .phase-title { font-size: 15px; font-weight: 600; color: #f8fafc; margin-bottom: 6px; }
-  .phase-desc { font-size: 13px; color: #e2e8f0; line-height: 1.6; }
+  .phase-title { font-size: 15px; font-weight: 600; color: #111827; margin-bottom: 6px; }
+  .phase-desc { font-size: 13px; color: #374151; line-height: 1.6; }
   .owner-tag {
     font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 4px;
     background: rgba(59,130,246,0.15); color: #60a5fa; margin-right: 6px;
@@ -192,7 +192,7 @@ DARK = dict(
 def ring(value, total, color, title):
     fig = go.Figure(go.Pie(
         values=[value, max(total - value, 0)],
-        hole=0.72, marker_colors=[color, "#1a2744"],
+        hole=0.72, marker_colors=[color, "#e5e7eb"],
         textinfo="none", labels=[title, "Remaining"], sort=False,
     ))
     fig.add_annotation(text=f"<b>{value}</b>", x=0.5, y=0.55, showarrow=False,
@@ -218,7 +218,7 @@ def workstream_bar(eng_done, eng_total, blockers_done, blockers_rem, signoffs_do
     fig = go.Figure()
     for vals, label, color in [
         ([eng_done, blockers_done, signoffs_done, tickets_done], "Completed", "#22c55e"),
-        ([eng_remaining, blockers_rem, signoffs_remaining, tickets_remaining], "Remaining", "#334155"),
+        ([eng_remaining, blockers_rem, signoffs_remaining, tickets_remaining], "Remaining", "#d1d5db"),
     ]:
         fig.add_trace(go.Bar(
             name=label, y=cats, x=vals, orientation="h",
@@ -227,7 +227,7 @@ def workstream_bar(eng_done, eng_total, blockers_done, blockers_rem, signoffs_do
     max_val = max(eng_total, blockers_total, signoffs_total, tickets_total) + 2
     fig.update_layout(
         **{**DARK, "margin": dict(l=0, r=0, t=40, b=0)}, barmode="stack", height=260, bargap=0.35,
-        xaxis=dict(range=[0, max_val], showgrid=True, gridcolor="#1a2744"),
+        xaxis=dict(range=[0, max_val], showgrid=True, gridcolor="#e5e7eb"),
         yaxis=dict(showgrid=False, tickfont=dict(size=13, color="#111827")),
         legend=dict(orientation="h", y=1.12, x=0, font=dict(size=12, color="#111827"),
                     bgcolor="rgba(0,0,0,0)"),
@@ -263,11 +263,11 @@ def completion_bar(eng_pct, blockers_pct, signoffs_pct, decisions_pct):
         text=[f"{p}%" for p in pcts], textposition="outside",
         textfont=dict(size=13, color="#111827"),
     ))
-    fig.add_hline(y=100, line_dash="dot", line_color="#334155", line_width=1)
+    fig.add_hline(y=100, line_dash="dot", line_color="#d1d5db", line_width=1)
     fig.update_layout(
         **DARK, height=220, showlegend=False,
         xaxis=dict(showgrid=False, tickfont=dict(size=13, color="#111827")),
-        yaxis=dict(range=[0, 115], ticksuffix="%", showgrid=True, gridcolor="#1a2744"),
+        yaxis=dict(range=[0, 115], ticksuffix="%", showgrid=True, gridcolor="#e5e7eb"),
     )
     return fig
 
@@ -299,7 +299,7 @@ def enablement_time_chart():
                     bgcolor="rgba(0,0,0,0)"),
         xaxis=dict(tickfont=dict(size=12, color="#111827")),
     )
-    fig.update_yaxes(title_text="Apps", showgrid=True, gridcolor="#1a2744",
+    fig.update_yaxes(title_text="Apps", showgrid=True, gridcolor="#e5e7eb",
                      title_font=dict(size=11, color="#111827"),
                      tickfont=dict(color="#111827"), secondary_y=False)
     fig.update_yaxes(title_text="Median Hours", showgrid=False,
@@ -338,7 +338,7 @@ def fnr_trend_chart():
                     bgcolor="rgba(0,0,0,0)"),
         xaxis=dict(tickfont=dict(size=12, color="#111827")),
     )
-    fig.update_yaxes(title_text="Apps", showgrid=True, gridcolor="#1a2744",
+    fig.update_yaxes(title_text="Apps", showgrid=True, gridcolor="#e5e7eb",
                      title_font=dict(size=11, color="#111827"),
                      tickfont=dict(color="#111827"), secondary_y=False)
     fig.update_yaxes(title_text="FNR %", range=[0, 70], showgrid=False,
@@ -361,7 +361,7 @@ def tld_risk_chart():
     fig.add_vline(x=30, line_dash="dash", line_color="#f59e0b", line_width=1)
     fig.update_layout(
         **DARK, height=280, showlegend=False,
-        xaxis=dict(title="Bypass Rate %", showgrid=True, gridcolor="#1a2744",
+        xaxis=dict(title="Bypass Rate %", showgrid=True, gridcolor="#e5e7eb",
                    title_font=dict(size=11, color="#111827"),
                    tickfont=dict(color="#111827")),
         yaxis=dict(tickfont=dict(size=13, color="#111827")),
@@ -577,7 +577,7 @@ def main():
     cols = st.columns(3)
     for i, (col, (label, color, para)) in enumerate(zip(cols, summary_data)):
         with col:
-            st.markdown(f"""<div style="background:#0f172a;border-radius:10px;padding:18px 20px;border-top:2px solid {color};border:1px solid #1e3050;border-top:3px solid {color}">
+            st.markdown(f"""<div style="background:#f8fafc;border-radius:10px;padding:18px 20px;border:1px solid #d1d5db;border-top:3px solid {color}">
               <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:{color};margin-bottom:12px">{label}</div>
               <div style="font-size:14px;line-height:1.75;color:#111827">{para}</div>
             </div>""", unsafe_allow_html=True)
@@ -906,7 +906,7 @@ def main():
         ("CRITICAL", "badge-red", "Volume-based auto-escalation", "88.6% enforcement at 100K+", "Auto-escalate >10K, suspend >50K"),
         ("CRITICAL", "badge-red", "Cross-org domain blocking", "20 fraud domains org-hopping", "Block domain if prior enforcement (SDAT + eHawk)"),
         ("HIGH", "badge-amber", "Spam ring fingerprinting", "31 apps, 12M emails", "[Brand] App pattern + clustering (SDAT + eHawk)"),
-        ("HIGH", "badge-amber", "TLD risk weighting", ".net 63.6%, .online 56.2%", "Enhanced scrutiny high-risk TLDs (SDAT + eHawk)"),
+        ("HIGH", "badge-amber", "TLD risk weighting", ".net 63.6%, .online 56.2%", "ADDRESSING: eHawk includes TLD risk in behavioral scoring"),
         ("MEDIUM", "badge-blue", "Enterprise detection acceleration", "34-day median detection", "Target <14 day detection"),
     ]
     for priority, badge_cls, rec, current, target in rec_data:
@@ -1223,7 +1223,7 @@ def main():
     # =====================================================
     # FOOTER
     # =====================================================
-    st.markdown(f"""<div style="margin-top:36px;padding-top:18px;border-top:1px solid #1e3050;font-size:12px;color:#4a6080;text-align:center">
+    st.markdown(f"""<div style="margin-top:36px;padding-top:18px;border-top:1px solid #d1d5db;font-size:12px;color:#6b7280;text-align:center">
       OneSignal eHawk Phase 3 Auto-Approval Pipeline &nbsp;|&nbsp; Confidential &nbsp;|&nbsp;
       {datetime.now().strftime('%B %d, %Y %H:%M')} &nbsp;|&nbsp; Data cached 5 min &nbsp;|&nbsp; Streamlit + Airtable
     </div>""", unsafe_allow_html=True)
