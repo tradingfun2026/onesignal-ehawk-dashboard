@@ -144,6 +144,7 @@ VIEWS = {
     "open_risks":         ("tbl6GWnx6Oz18kbyi", "viwzV39ZM3CcNWbkE"),
     "all_risks":          ("tbl6GWnx6Oz18kbyi", "viwShWwdJOKxoPkhL"),
     "signoffs_complete":  ("tblHIDvz3UahqWf1h", "viwmNXpK4exX0hBbN"),
+    "open_questions":     ("tblA1izx4x7QmcpiK", "viw3lskIbgVBExa4C"),
 }
 
 # -- DATA FETCHING --
@@ -471,6 +472,7 @@ def main():
     decisions_total = decisions_made + decisions_pending + decisions_needed
     open_risks = len(data.get("open_risks", []))
     mitigated_risks = [r for r in data.get("all_risks", []) if r.get("Status") in ("Mitigated Risk",)]
+    open_questions = [r for r in data.get("open_questions", []) if r.get("Status") == "Unanswered"]
 
     eng_pct = round(eng_done / eng_total * 100) if eng_total else 0
     blockers_pct = round(blockers_done / blockers_total * 100) if blockers_total else 0
@@ -1030,10 +1032,11 @@ def main():
     # =====================================================
     st.markdown("<br>", unsafe_allow_html=True)
     st.markdown('<div class="section-header">Drill-Down Detail</div>', unsafe_allow_html=True)
-    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+    tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([
         f"Blockers ({blockers_rem})",
         f"Action Items ({signoffs_rem})",
         f"Decisions Needed ({decisions_needed})",
+        f"Open Questions ({len(open_questions)})",
         f"Open Risks ({open_risks})",
         f"Risks Mitigated ({len(mitigated_risks)})",
         "Recently Completed",
@@ -1071,6 +1074,16 @@ def main():
             notes_html = f'<div style="font-size:12px;color:#374151;margin-top:4px">{notes}</div>' if notes else ""
             st.markdown(f'<div class="detail-item"><span class="detail-badge badge-red">NEEDED</span><div style="flex:1"><div style="color:#111827">{title}</div>{notes_html}</div>{due}</div>', unsafe_allow_html=True)
     with tab4:
+        st.markdown("**Open questions requiring answers**")
+        if not open_questions:
+            st.markdown('<div style="color:#16a34a;padding:12px;font-size:14px">All questions answered!</div>', unsafe_allow_html=True)
+        for item in open_questions:
+            question = item.get("Question", "Untitled")
+            desc = item.get("Description", "")
+            short_desc = (desc[:200] + "...") if len(desc) > 200 else desc
+            desc_html = f'<div style="font-size:12px;color:#374151;margin-top:4px;line-height:1.5">{short_desc}</div>' if short_desc else ""
+            st.markdown(f'<div class="detail-item"><span class="detail-badge badge-amber">OPEN</span><div style="flex:1"><div style="color:#111827;font-weight:500">{question}</div>{desc_html}</div></div>', unsafe_allow_html=True)
+    with tab5:
         st.markdown("**Open risks being tracked**")
         if not data.get("open_risks"):
             st.markdown('<div style="color:#16a34a;padding:12px;font-size:14px">No open risks!</div>', unsafe_allow_html=True)
@@ -1133,7 +1146,7 @@ def main():
                     short_desc = (desc[:200] + "...") if len(desc) > 200 else desc
                     desc_html = f'<div style="font-size:12px;color:#374151;margin-top:4px;line-height:1.5">{short_desc}</div>' if short_desc else ""
                     st.markdown(f'<div class="detail-item">{status_html}{sev_badge}<div style="flex:1"><div style="color:#111827;font-weight:500">{risk_num}{name}</div>{desc_html}</div></div>', unsafe_allow_html=True)
-    with tab5:
+    with tab6:
         st.markdown("**Risks recently mitigated**")
         if not mitigated_risks:
             st.markdown('<div style="color:#16a34a;padding:12px;font-size:14px">No mitigated risks yet.</div>', unsafe_allow_html=True)
@@ -1196,7 +1209,7 @@ def main():
                         f'<div style="flex:1"><div style="color:#111827;font-weight:500">{name}</div>{note_html}</div></div>',
                         unsafe_allow_html=True,
                     )
-    with tab6:
+    with tab7:
         st.markdown("**What's been completed -- engineering foundation is solid**")
         if not data.get("completed"):
             st.markdown('<div style="color:#374151;padding:12px;font-size:14px">No completed items yet.</div>', unsafe_allow_html=True)
