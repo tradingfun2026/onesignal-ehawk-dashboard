@@ -557,8 +557,9 @@ def main():
         f"The pipeline has {blockers_rem} pre-launch blockers remaining out of {blockers_total} total, "
         f"with {blockers_pct}% cleared so far. "
         f"Ops/Program action items stand at {signoffs_done}/{signoffs_total} ({signoffs_pct}% complete). "
-        f"Engineering tickets for the appeal process have not yet been created and are pending "
-        f"a decision on which appeal option to implement. "
+        f"The appeals process decision has been closed — Option D (self re-evaluation) was selected. "
+        f"Engineering tickets for the appeals pipeline are now unblocked and pending Asana ticket creation. "
+        f"The denial email template has been updated to reflect the self re-evaluation flow. "
         f"The false negative rate has dropped to 0.0% for both Feb and Mar 2026, "
         f"down from the 61.3% peak in Nov 2025."
     )
