@@ -860,7 +860,7 @@ def main():
         st.markdown("**TLD Bypass Rate (Non-Enterprise)**")
         st.plotly_chart(tld_risk_chart(), use_container_width=True, config={"displayModeBar": False})
     with bc3:
-        st.markdown("**Enabled vs Not Enabled (Fraud Rate)**")
+        st.markdown("**Enabled vs Not Enabled — Non-Enterprise (Fraud Rate)**")
         st.plotly_chart(enabled_vs_not_enabled_chart(), use_container_width=True, config={"displayModeBar": False})
 
     # =====================================================
