@@ -294,7 +294,7 @@ def enablement_time_chart():
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
         font=dict(family="Inter, sans-serif", color="#111827", size=13),
         margin=dict(l=0, r=0, t=10, b=0),
-        height=280, showlegend=True,
+        height=400, showlegend=True,
         legend=dict(orientation="h", y=1.12, x=0, font=dict(size=11, color="#111827"),
                     bgcolor="rgba(0,0,0,0)"),
         xaxis=dict(tickfont=dict(size=12, color="#111827")),
@@ -865,108 +865,43 @@ def main():
     # =====================================================
     st.markdown('<div class="section-header">Email Sender Enablement Time <span style="font-size:9px;background:rgba(139,163,196,0.15);color:#374151;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">FIXED SNAPSHOT &bull; OCT 2025 - MAR 2026</span></div>', unsafe_allow_html=True)
 
-    et0, et1, et2, et3 = st.columns([2, 2, 2, 3])
-    with et0:
-        st.markdown("""<div class="baseline-card">
-          <div class="baseline-title">Baseline Oct-Feb (apps &lt;30 days)</div>
-          <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px">
-            <div>
-              <div class="baseline-value val-warn">8.1d</div>
-              <div class="baseline-label">Median enablement</div>
-            </div>
-            <div style="text-align:right">
-              <div class="baseline-value" style="color:#111827;font-size:20px">2,333</div>
-              <div class="baseline-label">Non-Ent apps total</div>
-            </div>
-          </div>
-          <div class="baseline-row">
-            <span class="baseline-metric">Enabled</span>
-            <span class="baseline-val val-good">58.9% (1,375)</span>
-          </div>
-          <div class="baseline-row">
-            <span class="baseline-metric">Not enabled</span>
-            <span class="baseline-val val-bad">40.8% (952)</span>
-          </div>
-          <div class="baseline-row">
-            <span class="baseline-metric">Mar 9 median</span>
-            <span class="baseline-val val-good">24.3h (~1.0d)</span>
-          </div>
-          <div class="baseline-row">
-            <span class="baseline-metric">Mar 20 median</span>
-            <span class="baseline-val val-good">18.0h (~0.75d)</span>
-          </div>
-        </div>""", unsafe_allow_html=True)
-    with et1:
-        st.markdown("""<div class="baseline-card">
-          <div class="baseline-title">Mar 9 Snapshot (148 apps)</div>
-          <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px">
-            <div>
-              <div class="baseline-value" style="color:#60a5fa">24.3h</div>
-              <div class="baseline-label">Median enablement</div>
-            </div>
-            <div style="text-align:right">
-              <div class="baseline-value" style="color:#111827;font-size:20px">75.9h</div>
-              <div class="baseline-label">Average (~3.2 days)</div>
-            </div>
-          </div>
-          <div class="baseline-row">
-            <span class="baseline-metric">Min</span>
-            <span class="baseline-val val-good">0.2 hrs (13 min)</span>
-          </div>
-          <div class="baseline-row">
-            <span class="baseline-metric">Max</span>
-            <span class="baseline-val val-bad">657.9 hrs (27.4 days)</span>
-          </div>
-          <div class="baseline-row">
-            <span class="baseline-metric">&gt; 24 hours</span>
-            <span class="baseline-val val-warn">75 apps (50.7%)</span>
-          </div>
-          <div class="baseline-row">
-            <span class="baseline-metric">Enabled</span>
-            <span class="baseline-val val-good">67.0% (148 of 221)</span>
-          </div>
-          <div class="baseline-row">
-            <span class="baseline-metric">Not enabled</span>
-            <span class="baseline-val val-bad">33.0% (73 of 221)</span>
-          </div>
-        </div>""", unsafe_allow_html=True)
-    with et2:
-        st.markdown("""<div class="baseline-card">
-          <div class="baseline-title">Mar 20 Snapshot (85 apps)</div>
-          <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px">
-            <div>
-              <div class="baseline-value" style="color:#fb923c">18.0h</div>
-              <div class="baseline-label">Median enablement</div>
-            </div>
-            <div style="text-align:right">
-              <div class="baseline-value" style="color:#111827;font-size:20px">83.7h</div>
-              <div class="baseline-label">Average (~3.5 days)</div>
-            </div>
-          </div>
-          <div class="baseline-row">
-            <span class="baseline-metric">Min</span>
-            <span class="baseline-val val-good">0.3 hrs (19 min)</span>
-          </div>
-          <div class="baseline-row">
-            <span class="baseline-metric">Max</span>
-            <span class="baseline-val val-bad">530.0 hrs (22.1 days)</span>
-          </div>
-          <div class="baseline-row">
-            <span class="baseline-metric">&gt; 24 hours</span>
-            <span class="baseline-val val-warn">38 apps (44.7%)</span>
-          </div>
-          <div class="baseline-row">
-            <span class="baseline-metric">Enabled</span>
-            <span class="baseline-val val-good">53.8% (129 of 240)</span>
-          </div>
-          <div class="baseline-row">
-            <span class="baseline-metric">Not enabled</span>
-            <span class="baseline-val val-bad">46.2% (111 of 240)</span>
-          </div>
-        </div>""", unsafe_allow_html=True)
-    with et3:
-        st.markdown("**Median Enablement Time Trend (Oct 2025 - Mar 2026)**")
-        st.plotly_chart(enablement_time_chart(), use_container_width=True, config={"displayModeBar": False})
+    # Monthly snapshot cards
+    et_months = st.columns(6)
+    month_data = [
+        ("Oct 2025", "72.5h", "~3.0d", 435, 274, 161, "#ef4444"),
+        ("Nov 2025", "246.3h", "~10.3d", 374, 256, 118, "#ef4444"),
+        ("Dec 2025", "144.3h", "~6.0d", 327, 150, 177, "#f59e0b"),
+        ("Jan 2026", "47.8h", "~2.0d", 344, 156, 188, "#60a5fa"),
+        ("Feb 2026", "31.8h", "~1.3d", 296, 139, 157, "#22c55e"),
+        ("Mar 2026", "21.2h", "~0.9d", 461, 277, 184, "#22c55e"),
+    ]
+    for col, (month, median, days, total, enabled, not_en, color) in zip(et_months, month_data):
+        en_pct = round(enabled / total * 100, 1)
+        ne_pct = round(not_en / total * 100, 1)
+        with col:
+            st.markdown(f"""<div class="baseline-card">
+              <div class="baseline-title">{month}</div>
+              <div style="text-align:center;margin-bottom:8px">
+                <div class="baseline-value" style="color:{color}">{median}</div>
+                <div class="baseline-label">Median ({days})</div>
+              </div>
+              <div class="baseline-row">
+                <span class="baseline-metric">Total apps</span>
+                <span class="baseline-val" style="color:#111827">{total}</span>
+              </div>
+              <div class="baseline-row">
+                <span class="baseline-metric">Enabled</span>
+                <span class="baseline-val val-good">{en_pct}% ({enabled})</span>
+              </div>
+              <div class="baseline-row">
+                <span class="baseline-metric">Not enabled</span>
+                <span class="baseline-val val-bad">{ne_pct}% ({not_en})</span>
+              </div>
+            </div>""", unsafe_allow_html=True)
+
+    # Chart - full width for visibility
+    st.markdown("**Median Enablement Time Trend (Oct 2025 - Mar 2026)**")
+    st.plotly_chart(enablement_time_chart(), use_container_width=True, config={"displayModeBar": False})
 
     # Recommendations from baseline
     st.markdown("<br>", unsafe_allow_html=True)
