@@ -312,18 +312,21 @@ def enabled_vs_not_enabled_chart():
     periods = ["Baseline<br>Oct-Feb", "Mar 9", "Mar 20"]
     enabled = [1375, 148, 129]
     not_enabled = [952, 73, 111]
+    totals = [e + n for e, n in zip(enabled, not_enabled)]
+    enabled_pct = [round(e / t * 100, 1) for e, t in zip(enabled, totals)]
+    not_enabled_pct = [round(n / t * 100, 1) for n, t in zip(not_enabled, totals)]
 
     fig = go.Figure()
     fig.add_trace(go.Bar(
         x=periods, y=enabled, name="Enabled",
         marker_color="#22c55e", opacity=0.8,
-        text=[str(v) for v in enabled], textposition="outside",
+        text=[f"{v}<br>{p}%" for v, p in zip(enabled, enabled_pct)], textposition="outside",
         textfont=dict(size=10, color="#111827"),
     ))
     fig.add_trace(go.Bar(
         x=periods, y=not_enabled, name="Not Enabled (Fraud Rate)",
         marker_color="#ef4444", opacity=0.8,
-        text=[str(v) for v in not_enabled], textposition="outside",
+        text=[f"{v}<br>{p}%" for v, p in zip(not_enabled, not_enabled_pct)], textposition="outside",
         textfont=dict(size=10, color="#111827"),
     ))
     fig.update_layout(
