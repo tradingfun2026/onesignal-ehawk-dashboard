@@ -354,15 +354,13 @@ def fnr_trend_chart():
     fig.add_trace(go.Bar(
         x=months, y=disabled, name="Disabled Apps",
         marker_color="#1e40af", opacity=0.7,
-        text=[str(d) for d in disabled], textposition="inside",
-        textfont=dict(size=13, color="white", family="Inter, sans-serif"),
     ), secondary_y=False)
     fig.add_trace(go.Scatter(
         x=months, y=fnr, name="False Negative Rate %",
         mode="lines+markers+text", line=dict(color="#ef4444", width=4),
-        marker=dict(size=12, color="#ef4444", line=dict(width=2, color="white")),
-        text=[f"{v}%" for v in fnr], textposition="top center",
-        textfont=dict(size=14, color="white", family="Inter, sans-serif"),
+        marker=dict(size=28, color="#ef4444", line=dict(width=2, color="white")),
+        text=[f"{v}%<br>({d})" for v, d in zip(fnr, disabled)], textposition="top center",
+        textfont=dict(size=12, color="white", family="Inter, sans-serif"),
     ), secondary_y=True)
     fig.add_hline(y=15, line_dash="dash", line_color="#f59e0b", line_width=2,
                   annotation_text="Alert: 15%", annotation_font_color="#fbbf24",
@@ -430,6 +428,141 @@ def improvement_journey_chart():
                    tickfont=dict(size=12, color="#111827"), title_font=dict(size=12, color="#111827"),
                    range=[0, 65]),
     )
+    return fig
+
+def convergence_chart():
+    """Two normalized lines showing parallel decline of enablement time and FN rate."""
+    months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026"]
+    median_hrs = [75.6, 251.4, 161.4, 73.9, 71.2, 13.4]
+    fnr = [48.7, 60.0, 5.7, 7.9, 1.9, 2.6]
+    # Normalize to % of peak
+    max_hrs = max(median_hrs)
+    max_fnr = max(fnr)
+    norm_hrs = [round(v / max_hrs * 100, 1) for v in median_hrs]
+    norm_fnr = [round(v / max_fnr * 100, 1) for v in fnr]
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(
+        x=months, y=norm_hrs, name="Enablement Time",
+        mode="lines+markers+text", line=dict(color="#3b82f6", width=4),
+        marker=dict(size=12, color="#3b82f6", line=dict(width=2, color="white")),
+        text=[f"{v:.0f}%" for v in norm_hrs], textposition="top center",
+        textfont=dict(size=12, color="#3b82f6"),
+    ))
+    fig.add_trace(go.Scatter(
+        x=months, y=norm_fnr, name="False Negative Rate",
+        mode="lines+markers+text", line=dict(color="#ef4444", width=4),
+        marker=dict(size=12, color="#ef4444", line=dict(width=2, color="white")),
+        text=[f"{v:.0f}%" for v in norm_fnr], textposition="bottom center",
+        textfont=dict(size=12, color="#ef4444"),
+    ))
+    fig.update_layout(
+        paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(family="Inter, sans-serif", color="#111827", size=13),
+        margin=dict(l=10, r=10, t=10, b=10),
+        height=400, showlegend=True,
+        legend=dict(orientation="h", y=1.1, x=0.3, font=dict(size=12, color="#111827"),
+                    bgcolor="rgba(0,0,0,0)"),
+        xaxis=dict(tickfont=dict(size=12, color="#111827")),
+        yaxis=dict(title="% of Peak", showgrid=True, gridcolor="#e5e7eb",
+                   tickfont=dict(size=12, color="#111827"), title_font=dict(size=12, color="#111827"),
+                   range=[0, 110]),
+    )
+    return fig
+
+def before_after_chart():
+    """Before/After grouped bars showing % improvement."""
+    categories = ["Median Enablement\nTime (hours)", "False Negative\nRate (%)"]
+    before_vals = [round((75.6 + 251.4) / 2, 1), round((48.7 + 60.0) / 2, 1)]  # Oct-Nov avg
+    after_vals = [round((71.2 + 13.4) / 2, 1), round((1.9 + 2.6) / 2, 1)]  # Feb-Mar avg
+    pct_change = [round((a - b) / b * 100, 0) for b, a in zip(before_vals, after_vals)]
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        x=categories, y=before_vals, name="Before (Oct-Nov avg)",
+        marker_color="#ef4444", opacity=0.8,
+        text=[f"{v}" for v in before_vals], textposition="outside",
+        textfont=dict(size=14, color="#ef4444", family="Inter, sans-serif"),
+    ))
+    fig.add_trace(go.Bar(
+        x=categories, y=after_vals, name="After (Feb-Mar avg)",
+        marker_color="#22c55e", opacity=0.8,
+        text=[f"{v}" for v in after_vals], textposition="outside",
+        textfont=dict(size=14, color="#22c55e", family="Inter, sans-serif"),
+    ))
+    # Add % change annotations
+    for i, (cat, pct) in enumerate(zip(categories, pct_change)):
+        fig.add_annotation(
+            x=cat, y=max(before_vals[i], after_vals[i]) * 1.25,
+            text=f"<b>{pct:+.0f}%</b>", showarrow=False,
+            font=dict(size=18, color="#22c55e" if pct < 0 else "#ef4444", family="Inter, sans-serif"),
+        )
+    fig.update_layout(
+        paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(family="Inter, sans-serif", color="#111827", size=13),
+        margin=dict(l=10, r=10, t=30, b=10),
+        height=400, barmode="group", bargap=0.3, bargroupgap=0.15,
+        showlegend=True,
+        legend=dict(orientation="h", y=1.12, x=0.2, font=dict(size=12, color="#111827"),
+                    bgcolor="rgba(0,0,0,0)"),
+        xaxis=dict(tickfont=dict(size=12, color="#111827")),
+        yaxis=dict(showgrid=True, gridcolor="#e5e7eb",
+                   tickfont=dict(size=12, color="#111827")),
+    )
+    return fig
+
+def stacked_timeline_chart():
+    """Stacked bars for enabled/not-enabled with overlay lines for enablement time and FN rate."""
+    from plotly.subplots import make_subplots
+    months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026"]
+    enabled = [275, 260, 157, 177, 211, 116]
+    not_enabled = [160, 122, 179, 186, 200, 124]
+    median_hrs = [75.6, 251.4, 161.4, 73.9, 71.2, 13.4]
+    fnr = [48.7, 60.0, 5.7, 7.9, 1.9, 2.6]
+
+    fig = make_subplots(specs=[[{"secondary_y": True}]])
+    fig.add_trace(go.Bar(
+        x=months, y=enabled, name="Enabled",
+        marker_color="#22c55e", opacity=0.7,
+        text=[str(e) for e in enabled], textposition="inside",
+        textfont=dict(size=11, color="white"),
+    ), secondary_y=False)
+    fig.add_trace(go.Bar(
+        x=months, y=not_enabled, name="Not Enabled",
+        marker_color="#ef4444", opacity=0.7,
+        text=[str(n) for n in not_enabled], textposition="inside",
+        textfont=dict(size=11, color="white"),
+    ), secondary_y=False)
+    fig.add_trace(go.Scatter(
+        x=months, y=median_hrs, name="Median Enablement (hrs)",
+        mode="lines+markers+text", line=dict(color="#3b82f6", width=3, dash="solid"),
+        marker=dict(size=10, color="#3b82f6", line=dict(width=2, color="white")),
+        text=[f"{v:.0f}h" for v in median_hrs], textposition="top center",
+        textfont=dict(size=11, color="#3b82f6"),
+    ), secondary_y=True)
+    fig.add_trace(go.Scatter(
+        x=months, y=[f * 4 for f in fnr], name="FN Rate (%) — scaled 4x",
+        mode="lines+markers+text", line=dict(color="#f97316", width=3, dash="dot"),
+        marker=dict(size=10, color="#f97316", line=dict(width=2, color="white")),
+        text=[f"{v}%" for v in fnr], textposition="bottom center",
+        textfont=dict(size=11, color="#f97316"),
+    ), secondary_y=True)
+    fig.update_layout(
+        paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(family="Inter, sans-serif", color="#111827", size=13),
+        margin=dict(l=10, r=10, t=10, b=10),
+        height=420, barmode="stack",
+        showlegend=True,
+        legend=dict(orientation="h", y=1.15, x=0, font=dict(size=11, color="#111827"),
+                    bgcolor="rgba(0,0,0,0)"),
+        xaxis=dict(tickfont=dict(size=12, color="#111827")),
+    )
+    fig.update_yaxes(title_text="Apps", showgrid=True, gridcolor="#e5e7eb",
+                     title_font=dict(size=12, color="#111827"),
+                     tickfont=dict(size=12, color="#111827"), secondary_y=False)
+    fig.update_yaxes(title_text="Hours / Rate", showgrid=False,
+                     title_font=dict(size=12, color="#3b82f6"),
+                     tickfont=dict(size=12, color="#3b82f6"), secondary_y=True)
     return fig
 
 def tld_risk_chart():
@@ -913,6 +1046,19 @@ def main():
     # Improvement journey chart - full width
     st.markdown("**Improvement Journey: Enablement Speed vs False Negative Rate**")
     st.plotly_chart(improvement_journey_chart(), use_container_width=True, config={"displayModeBar": False})
+
+    # Convergence + Before/After side by side
+    conv1, conv2 = st.columns(2)
+    with conv1:
+        st.markdown("**Convergence: Controls Got Faster AND More Accurate**")
+        st.plotly_chart(convergence_chart(), use_container_width=True, config={"displayModeBar": False})
+    with conv2:
+        st.markdown("**Before vs After: Oct-Nov avg → Feb-Mar avg**")
+        st.plotly_chart(before_after_chart(), use_container_width=True, config={"displayModeBar": False})
+
+    # Stacked timeline - full width
+    st.markdown("**Full Timeline: Enabled/Not-Enabled Volume + Enablement Time + FN Rate**")
+    st.plotly_chart(stacked_timeline_chart(), use_container_width=True, config={"displayModeBar": False})
 
     # =====================================================
     # EMAIL SENDER ENABLEMENT TIME
