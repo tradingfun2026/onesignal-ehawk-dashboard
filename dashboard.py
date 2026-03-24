@@ -308,10 +308,10 @@ def enablement_time_chart():
     return fig
 
 def enabled_vs_not_enabled_chart():
-    """Enabled vs Not Enabled grouped bar chart — not enabled = fraud rate."""
-    periods = ["Baseline<br>Oct-Feb", "Mar 9", "Mar 20"]
-    enabled = [1375, 148, 129]
-    not_enabled = [952, 73, 111]
+    """Enabled vs Not Enabled grouped bar chart — not enabled = fraud rate, monthly breakdown."""
+    periods = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 9", "Mar 20"]
+    enabled = [274, 256, 150, 156, 139, 148, 129]
+    not_enabled = [161, 118, 177, 188, 157, 73, 111]
     totals = [e + n for e, n in zip(enabled, not_enabled)]
     enabled_pct = [round(e / t * 100, 1) for e, t in zip(enabled, totals)]
     not_enabled_pct = [round(n / t * 100, 1) for n, t in zip(not_enabled, totals)]
@@ -333,11 +333,11 @@ def enabled_vs_not_enabled_chart():
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
         font=dict(family="Inter, sans-serif", color="#111827", size=13),
         margin=dict(l=0, r=0, t=10, b=0),
-        height=280, barmode="group",
+        height=300, barmode="group",
         showlegend=True,
         legend=dict(orientation="h", y=1.12, x=0, font=dict(size=10, color="#111827"),
                     bgcolor="rgba(0,0,0,0)"),
-        xaxis=dict(tickfont=dict(size=11, color="#111827")),
+        xaxis=dict(tickfont=dict(size=10, color="#111827")),
         yaxis=dict(title_text="Apps", showgrid=True, gridcolor="#e5e7eb",
                    tickfont=dict(color="#111827"), title_font=dict(size=11, color="#111827")),
     )
