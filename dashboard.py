@@ -307,29 +307,36 @@ def enablement_time_chart():
                      tickfont=dict(color="#fb923c"), secondary_y=True)
     return fig
 
-def not_enabled_rate_chart():
-    """Not enabled rate across snapshots — fraud signup signal."""
-    periods = ["Baseline\nOct-Feb", "Mar 9", "Mar 20"]
-    not_enabled_pct = [40.8, 33.0, 46.2]
-    not_enabled_count = [952, 73, 111]
-    total_apps = [2333, 221, 240]
+def enabled_vs_not_enabled_chart():
+    """Enabled vs Not Enabled grouped bar chart — not enabled = fraud rate."""
+    periods = ["Baseline<br>Oct-Feb", "Mar 9", "Mar 20"]
+    enabled = [1375, 148, 129]
+    not_enabled = [952, 73, 111]
 
     fig = go.Figure()
     fig.add_trace(go.Bar(
-        x=periods, y=not_enabled_pct, name="Not Enabled %",
-        marker_color=["#ef4444", "#f59e0b", "#ef4444"], opacity=0.8,
-        text=[f"{p}%<br>({c}/{t})" for p, c, t in zip(not_enabled_pct, not_enabled_count, total_apps)],
-        textposition="outside", textfont=dict(size=10, color="#111827"),
+        x=periods, y=enabled, name="Enabled",
+        marker_color="#22c55e", opacity=0.8,
+        text=[str(v) for v in enabled], textposition="outside",
+        textfont=dict(size=10, color="#111827"),
+    ))
+    fig.add_trace(go.Bar(
+        x=periods, y=not_enabled, name="Not Enabled (Fraud Rate)",
+        marker_color="#ef4444", opacity=0.8,
+        text=[str(v) for v in not_enabled], textposition="outside",
+        textfont=dict(size=10, color="#111827"),
     ))
     fig.update_layout(
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
         font=dict(family="Inter, sans-serif", color="#111827", size=13),
         margin=dict(l=0, r=0, t=10, b=0),
-        height=200, showlegend=False,
-        xaxis=dict(tickfont=dict(size=12, color="#111827")),
-        yaxis=dict(title_text="% Not Enabled", showgrid=True, gridcolor="#e5e7eb",
-                   tickfont=dict(color="#111827"), title_font=dict(size=11, color="#111827"),
-                   range=[0, 60]),
+        height=280, barmode="group",
+        showlegend=True,
+        legend=dict(orientation="h", y=1.12, x=0, font=dict(size=10, color="#111827"),
+                    bgcolor="rgba(0,0,0,0)"),
+        xaxis=dict(tickfont=dict(size=11, color="#111827")),
+        yaxis=dict(title_text="Apps", showgrid=True, gridcolor="#e5e7eb",
+                   tickfont=dict(color="#111827"), title_font=dict(size=11, color="#111827")),
     )
     return fig
 
@@ -842,13 +849,16 @@ def main():
 
     # Baseline trend charts
     st.markdown("<br>", unsafe_allow_html=True)
-    bc1, bc2 = st.columns(2)
+    bc1, bc2, bc3 = st.columns(3)
     with bc1:
         st.markdown("**False Negative Rate Trend (Non-Enterprise)**")
         st.plotly_chart(fnr_trend_chart(), use_container_width=True, config={"displayModeBar": False})
     with bc2:
         st.markdown("**TLD Bypass Rate (Non-Enterprise)**")
         st.plotly_chart(tld_risk_chart(), use_container_width=True, config={"displayModeBar": False})
+    with bc3:
+        st.markdown("**Enabled vs Not Enabled (Fraud Rate)**")
+        st.plotly_chart(enabled_vs_not_enabled_chart(), use_container_width=True, config={"displayModeBar": False})
 
     # =====================================================
     # EMAIL SENDER ENABLEMENT TIME
@@ -871,7 +881,7 @@ def main():
           </div>
           <div class="baseline-row">
             <span class="baseline-metric">Enabled</span>
-            <span class="baseline-val" style="color:#111827">58.9% (1,375)</span>
+            <span class="baseline-val val-good">58.9% (1,375)</span>
           </div>
           <div class="baseline-row">
             <span class="baseline-metric">Not enabled</span>
@@ -912,8 +922,12 @@ def main():
             <span class="baseline-val val-warn">75 apps (50.7%)</span>
           </div>
           <div class="baseline-row">
+            <span class="baseline-metric">Enabled</span>
+            <span class="baseline-val val-good">67.0% (148 of 221)</span>
+          </div>
+          <div class="baseline-row">
             <span class="baseline-metric">Not enabled</span>
-            <span class="baseline-val val-bad">73 of 221 apps (33.0%)</span>
+            <span class="baseline-val val-bad">33.0% (73 of 221)</span>
           </div>
         </div>""", unsafe_allow_html=True)
     with et2:
@@ -942,15 +956,17 @@ def main():
             <span class="baseline-val val-warn">38 apps (44.7%)</span>
           </div>
           <div class="baseline-row">
+            <span class="baseline-metric">Enabled</span>
+            <span class="baseline-val val-good">53.8% (129 of 240)</span>
+          </div>
+          <div class="baseline-row">
             <span class="baseline-metric">Not enabled</span>
-            <span class="baseline-val val-bad">111 of 240 apps (46.2%)</span>
+            <span class="baseline-val val-bad">46.2% (111 of 240)</span>
           </div>
         </div>""", unsafe_allow_html=True)
     with et3:
         st.markdown("**Median Enablement Time Trend (Oct 2025 - Mar 2026)**")
         st.plotly_chart(enablement_time_chart(), use_container_width=True, config={"displayModeBar": False})
-        st.markdown("**Not Enabled Rate (Fraud Signal)**")
-        st.plotly_chart(not_enabled_rate_chart(), use_container_width=True, config={"displayModeBar": False})
 
     # Recommendations from baseline
     st.markdown("<br>", unsafe_allow_html=True)
