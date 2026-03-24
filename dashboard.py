@@ -309,9 +309,9 @@ def enablement_time_chart():
 
 def enabled_vs_not_enabled_chart():
     """Enabled vs Not Enabled grouped bar chart — not enabled = fraud rate, monthly breakdown."""
-    periods = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 9", "Mar 20"]
-    enabled = [274, 256, 150, 156, 139, 148, 129]
-    not_enabled = [161, 118, 177, 188, 157, 73, 111]
+    periods = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026"]
+    enabled = [274, 256, 150, 156, 139, 277]
+    not_enabled = [161, 118, 177, 188, 157, 184]
     totals = [e + n for e, n in zip(enabled, not_enabled)]
     enabled_pct = [round(e / t * 100, 1) for e, t in zip(enabled, totals)]
     not_enabled_pct = [round(n / t * 100, 1) for n, t in zip(not_enabled, totals)]
@@ -852,14 +852,11 @@ def main():
 
     # Baseline trend charts
     st.markdown("<br>", unsafe_allow_html=True)
-    bc1, bc2, bc3 = st.columns(3)
+    bc1, bc2 = st.columns(2)
     with bc1:
         st.markdown("**False Negative Rate Trend (Non-Enterprise)**")
         st.plotly_chart(fnr_trend_chart(), use_container_width=True, config={"displayModeBar": False})
     with bc2:
-        st.markdown("**TLD Bypass Rate (Non-Enterprise)**")
-        st.plotly_chart(tld_risk_chart(), use_container_width=True, config={"displayModeBar": False})
-    with bc3:
         st.markdown("**Enabled vs Not Enabled — Non-Enterprise (Fraud Rate)**")
         st.plotly_chart(enabled_vs_not_enabled_chart(), use_container_width=True, config={"displayModeBar": False})
 
