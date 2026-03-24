@@ -347,8 +347,8 @@ def fnr_trend_chart():
     """False Negative Rate trend from baseline analysis."""
     from plotly.subplots import make_subplots
     months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026"]
-    fnr = [48.9, 61.3, 6.7, 9.6, 0.0, 0.0]
-    apps = [435, 374, 327, 344, 296, 160]
+    fnr = [48.7, 60.0, 5.7, 7.9, 1.9, 2.6]
+    apps = [435, 382, 336, 363, 411, 240]
 
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(go.Bar(
@@ -596,8 +596,8 @@ def main():
         f"The appeals process decision has been closed — Option D (self re-evaluation) was selected. "
         f"Engineering tickets for the appeals pipeline are now unblocked and pending Asana ticket creation. "
         f"Both approval and denial email templates have been finalized and an Asana ticket created for implementation. "
-        f"The false negative rate has dropped to 0.0% for both Feb and Mar 2026, "
-        f"down from the 61.3% peak in Nov 2025."
+        f"The false negative rate has dropped to 2.6% in Mar 2026 and 1.9% in Feb 2026, "
+        f"down from the 60.0% peak in Nov 2025."
     )
 
     constraint_para = (
@@ -750,21 +750,21 @@ def main():
           <div class="baseline-title">False Negative Rate</div>
           <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px">
             <div>
-              <div class="baseline-value val-warn">30.7%</div>
-              <div class="baseline-label">Non-Enterprise overall</div>
+              <div class="baseline-value val-good">2.6%</div>
+              <div class="baseline-label">Mar 2026 (latest)</div>
             </div>
             <div style="text-align:right">
-              <div class="baseline-value val-good" style="font-size:20px">0.0%</div>
-              <div class="baseline-label">Mar 2026 MTD (latest)</div>
+              <div class="baseline-value val-warn" style="font-size:20px">1.9%</div>
+              <div class="baseline-label">Feb 2026</div>
             </div>
-          </div>
-          <div class="baseline-row">
-            <span class="baseline-metric">Enterprise FNR</span>
-            <span class="baseline-val val-warn">14.7%</span>
           </div>
           <div class="baseline-row">
             <span class="baseline-metric">Peak (Nov 2025)</span>
-            <span class="baseline-val val-bad">61.3%</span>
+            <span class="baseline-val val-bad">60.0%</span>
+          </div>
+          <div class="baseline-row">
+            <span class="baseline-metric">Oct 2025</span>
+            <span class="baseline-val val-bad">48.7%</span>
           </div>
           <div class="baseline-row">
             <span class="baseline-metric">Alert threshold</span>
