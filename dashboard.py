@@ -274,9 +274,9 @@ def completion_bar(eng_pct, blockers_pct, signoffs_pct, decisions_pct):
 def enablement_time_chart():
     """Email sender enablement time - monthly median trend Oct 2025 to Mar 2026."""
     from plotly.subplots import make_subplots
-    months = ["Baseline\nOct-Feb", "Mar 9", "Mar 20"]
-    median_hrs = [194.4, 24.3, 18.0]  # 8.1 days = 194.4 hrs baseline
-    apps_count = [2333, 148, 85]
+    months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026"]
+    median_hrs = [72.5, 246.3, 144.3, 47.8, 31.8, 21.2]
+    apps_count = [274, 256, 150, 156, 139, 233]
 
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(go.Bar(
