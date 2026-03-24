@@ -354,13 +354,15 @@ def fnr_trend_chart():
     fig.add_trace(go.Bar(
         x=months, y=disabled, name="Disabled Apps",
         marker_color="#1e40af", opacity=0.7,
+        text=[str(d) for d in disabled], textposition="outside",
+        textfont=dict(size=12, color="#1e40af", family="Inter, sans-serif"),
     ), secondary_y=False)
     fig.add_trace(go.Scatter(
         x=months, y=fnr, name="False Negative Rate %",
-        mode="lines+markers+text", line=dict(color="#ef4444", width=4),
-        marker=dict(size=28, color="#ef4444", line=dict(width=2, color="white")),
-        text=[f"{v}%<br>({d})" for v, d in zip(fnr, disabled)], textposition="top center",
-        textfont=dict(size=12, color="white", family="Inter, sans-serif"),
+        mode="lines+markers+text", line=dict(color="#ef4444", width=3),
+        marker=dict(size=10, color="#ef4444", line=dict(width=2, color="white")),
+        text=[f"{v}%" for v in fnr], textposition="top right",
+        textfont=dict(size=13, color="#ef4444", family="Inter, sans-serif"),
     ), secondary_y=True)
     fig.add_hline(y=15, line_dash="dash", line_color="#f59e0b", line_width=2,
                   annotation_text="Alert: 15%", annotation_font_color="#fbbf24",
