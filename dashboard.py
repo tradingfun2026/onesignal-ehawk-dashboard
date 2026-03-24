@@ -559,7 +559,7 @@ def main():
         f"Ops/Program action items stand at {signoffs_done}/{signoffs_total} ({signoffs_pct}% complete). "
         f"The appeals process decision has been closed — Option D (self re-evaluation) was selected. "
         f"Engineering tickets for the appeals pipeline are now unblocked and pending Asana ticket creation. "
-        f"The denial email template has been updated to reflect the self re-evaluation flow. "
+        f"Both approval and denial email templates have been finalized and an Asana ticket created for implementation. "
         f"The false negative rate has dropped to 0.0% for both Feb and Mar 2026, "
         f"down from the 61.3% peak in Nov 2025."
     )
