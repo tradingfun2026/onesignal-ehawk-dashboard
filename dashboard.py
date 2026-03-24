@@ -541,10 +541,10 @@ def stacked_timeline_chart():
     ), secondary_y=True)
     fig.add_trace(go.Scatter(
         x=months, y=[f * 4 for f in fnr], name="FN Rate (%) — scaled 4x",
-        mode="lines+markers+text", line=dict(color="#f97316", width=3, dash="dot"),
-        marker=dict(size=10, color="#f97316", line=dict(width=2, color="white")),
+        mode="lines+markers+text", line=dict(color="white", width=3, dash="dot"),
+        marker=dict(size=10, color="white", line=dict(width=2, color="#f97316")),
         text=[f"{v}%" for v in fnr], textposition="bottom center",
-        textfont=dict(size=11, color="#f97316"),
+        textfont=dict(size=11, color="white"),
     ), secondary_y=True)
     fig.update_layout(
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
