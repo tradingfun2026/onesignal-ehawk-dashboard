@@ -1071,14 +1071,14 @@ def main():
     # Monthly snapshot cards
     et_months = st.columns(6)
     month_data = [
-        ("Oct 2025", "75.6h", "~3.2d", 435, 275, 160, "#ef4444"),
-        ("Nov 2025", "251.4h", "~10.5d", 382, 260, 122, "#ef4444"),
-        ("Dec 2025", "161.4h", "~6.7d", 336, 157, 179, "#f59e0b"),
-        ("Jan 2026", "73.9h", "~3.1d", 363, 177, 186, "#f59e0b"),
-        ("Feb 2026", "71.2h", "~3.0d", 411, 211, 200, "#60a5fa"),
-        ("Mar 2026", "13.4h", "~0.6d", 240, 116, 124, "#22c55e"),
+        ("Oct 2025", "75.6h", "~3.2d", 435, 275, 160, "#ef4444", "435.0h", "~18.1d", "0.1h", "6 min", "3554.4h", "~148.1d"),
+        ("Nov 2025", "251.4h", "~10.5d", 382, 260, 122, "#ef4444", "440.0h", "~18.3d", "0.2h", "12 min", "2943.9h", "~122.7d"),
+        ("Dec 2025", "161.4h", "~6.7d", 336, 157, 179, "#f59e0b", "391.8h", "~16.3d", "0.9h", "54 min", "2256.4h", "~94.0d"),
+        ("Jan 2026", "73.9h", "~3.1d", 363, 177, 186, "#f59e0b", "310.2h", "~12.9d", "0.1h", "6 min", "1678.9h", "~70.0d"),
+        ("Feb 2026", "71.2h", "~3.0d", 411, 211, 200, "#60a5fa", "158.4h", "~6.6d", "0.2h", "12 min", "1133.9h", "~47.2d"),
+        ("Mar 2026", "13.4h", "~0.6d", 240, 116, 124, "#22c55e", "52.2h", "~2.2d", "0.2h", "12 min", "443.8h", "~18.5d"),
     ]
-    for col, (month, median, days, total, enabled, not_en, color) in zip(et_months, month_data):
+    for col, (month, median, days, total, enabled, not_en, color, avg, avg_d, mn, mn_min, mx, mx_d) in zip(et_months, month_data):
         en_pct = round(enabled / total * 100, 1)
         ne_pct = round(not_en / total * 100, 1)
         with col:
@@ -1089,6 +1089,18 @@ def main():
                 <div class="baseline-label">Median ({days})</div>
               </div>
               <div class="baseline-row">
+                <span class="baseline-metric">Average</span>
+                <span class="baseline-val" style="color:#111827">{avg} ({avg_d})</span>
+              </div>
+              <div class="baseline-row">
+                <span class="baseline-metric">Min</span>
+                <span class="baseline-val val-good">{mn} ({mn_min})</span>
+              </div>
+              <div class="baseline-row">
+                <span class="baseline-metric">Max</span>
+                <span class="baseline-val val-bad">{mx} ({mx_d})</span>
+              </div>
+              <div class="baseline-row" style="margin-top:6px;border-top:1px solid #e5e7eb;padding-top:6px">
                 <span class="baseline-metric">Total apps</span>
                 <span class="baseline-val" style="color:#111827">{total}</span>
               </div>
