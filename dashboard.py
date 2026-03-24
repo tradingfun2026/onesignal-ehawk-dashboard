@@ -364,9 +364,6 @@ def fnr_trend_chart():
         text=[f"{v}%" for v in fnr], textposition="top right",
         textfont=dict(size=13, color="#ef4444", family="Inter, sans-serif"),
     ), secondary_y=True)
-    fig.add_hline(y=15, line_dash="dash", line_color="#f59e0b", line_width=2,
-                  annotation_text="Alert: 15%", annotation_font_color="#fbbf24",
-                  annotation_font_size=12, secondary_y=True)
     fig.update_layout(
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
         font=dict(family="Inter, sans-serif", color="#111827", size=13),
