@@ -348,13 +348,13 @@ def fnr_trend_chart():
     from plotly.subplots import make_subplots
     months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026"]
     fnr = [48.7, 60.0, 5.7, 7.9, 1.9, 2.6]
-    apps = [435, 382, 336, 363, 411, 240]
+    disabled = [134, 156, 9, 14, 4, 3]
 
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(go.Bar(
-        x=months, y=apps, name="Non-Ent Apps",
+        x=months, y=disabled, name="Disabled Apps",
         marker_color="#1e40af", opacity=0.7,
-        text=[str(a) for a in apps], textposition="inside",
+        text=[str(d) for d in disabled], textposition="inside",
         textfont=dict(size=13, color="white", family="Inter, sans-serif"),
     ), secondary_y=False)
     fig.add_trace(go.Scatter(
@@ -376,12 +376,60 @@ def fnr_trend_chart():
                     bgcolor="rgba(0,0,0,0)"),
         xaxis=dict(tickfont=dict(size=13, color="#111827")),
     )
-    fig.update_yaxes(title_text="Apps", showgrid=True, gridcolor="#e5e7eb",
+    fig.update_yaxes(title_text="Disabled Apps", showgrid=True, gridcolor="#e5e7eb",
                      title_font=dict(size=12, color="#111827"),
                      tickfont=dict(size=12, color="#111827"), secondary_y=False)
     fig.update_yaxes(title_text="FNR %", range=[0, 70], showgrid=False,
                      title_font=dict(size=12, color="#ef4444"),
                      tickfont=dict(size=12, color="#ef4444"), secondary_y=True)
+    return fig
+
+def improvement_journey_chart():
+    """Scatter plot showing month-over-month journey from slow+risky to fast+safe."""
+    months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026"]
+    median_hrs = [75.6, 251.4, 161.4, 73.9, 71.2, 13.4]
+    fnr = [48.7, 60.0, 5.7, 7.9, 1.9, 2.6]
+    colors = ["#ef4444", "#ef4444", "#f59e0b", "#f59e0b", "#22c55e", "#22c55e"]
+    sizes = [18, 18, 16, 16, 20, 22]
+
+    fig = go.Figure()
+    # Draw arrows between points
+    for i in range(len(months) - 1):
+        fig.add_annotation(
+            x=median_hrs[i+1], y=fnr[i+1],
+            ax=median_hrs[i], ay=fnr[i],
+            xref="x", yref="y", axref="x", ayref="y",
+            showarrow=True, arrowhead=2, arrowsize=1.5, arrowwidth=2,
+            arrowcolor="#94a3b8", opacity=0.5,
+        )
+    # Plot each month as a point
+    for i, m in enumerate(months):
+        fig.add_trace(go.Scatter(
+            x=[median_hrs[i]], y=[fnr[i]],
+            mode="markers+text",
+            marker=dict(size=sizes[i], color=colors[i], line=dict(width=2, color="white")),
+            text=[m], textposition="top center",
+            textfont=dict(size=12, color="#111827", family="Inter, sans-serif"),
+            name=m, showlegend=False,
+        ))
+    # Quadrant labels
+    fig.add_annotation(x=200, y=55, text="SLOW + RISKY", showarrow=False,
+                       font=dict(size=14, color="#ef4444", family="Inter, sans-serif"), opacity=0.4)
+    fig.add_annotation(x=20, y=55, text="FAST + RISKY", showarrow=False,
+                       font=dict(size=14, color="#f59e0b", family="Inter, sans-serif"), opacity=0.4)
+    fig.add_annotation(x=20, y=5, text="FAST + SAFE ✓", showarrow=False,
+                       font=dict(size=14, color="#22c55e", family="Inter, sans-serif"), opacity=0.6)
+    fig.update_layout(
+        paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(family="Inter, sans-serif", color="#111827", size=13),
+        margin=dict(l=10, r=10, t=10, b=10),
+        height=420, showlegend=False,
+        xaxis=dict(title="Median Enablement Time (hours)", showgrid=True, gridcolor="#e5e7eb",
+                   tickfont=dict(size=12, color="#111827"), title_font=dict(size=12, color="#111827")),
+        yaxis=dict(title="False Negative Rate (%)", showgrid=True, gridcolor="#e5e7eb",
+                   tickfont=dict(size=12, color="#111827"), title_font=dict(size=12, color="#111827"),
+                   range=[0, 65]),
+    )
     return fig
 
 def tld_risk_chart():
@@ -861,6 +909,10 @@ def main():
     with bc2:
         st.markdown("**Enabled vs Not Enabled — Non-Enterprise (Fraud Rate)**")
         st.plotly_chart(enabled_vs_not_enabled_chart(), use_container_width=True, config={"displayModeBar": False})
+
+    # Improvement journey chart - full width
+    st.markdown("**Improvement Journey: Enablement Speed vs False Negative Rate**")
+    st.plotly_chart(improvement_journey_chart(), use_container_width=True, config={"displayModeBar": False})
 
     # =====================================================
     # EMAIL SENDER ENABLEMENT TIME
