@@ -359,10 +359,10 @@ def fnr_trend_chart():
     ), secondary_y=False)
     fig.add_trace(go.Scatter(
         x=months, y=fnr, name="False Negative Rate %",
-        mode="lines+markers+text", line=dict(color="#ef4444", width=3),
-        marker=dict(size=10, color="#ef4444", line=dict(width=2, color="white")),
+        mode="lines+markers+text", line=dict(color="#111827", width=3),
+        marker=dict(size=10, color="#111827", line=dict(width=2, color="white")),
         text=[f"{v}%" for v in fnr], textposition="top right",
-        textfont=dict(size=13, color="#ef4444", family="Inter, sans-serif"),
+        textfont=dict(size=13, color="#111827", family="Inter, sans-serif"),
     ), secondary_y=True)
     fig.update_layout(
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
@@ -377,8 +377,8 @@ def fnr_trend_chart():
                      title_font=dict(size=12, color="#111827"),
                      tickfont=dict(size=12, color="#111827"), secondary_y=False)
     fig.update_yaxes(title_text="FNR %", range=[0, 70], showgrid=False,
-                     title_font=dict(size=12, color="#ef4444"),
-                     tickfont=dict(size=12, color="#ef4444"), secondary_y=True)
+                     title_font=dict(size=12, color="#111827"),
+                     tickfont=dict(size=12, color="#111827"), secondary_y=True)
     return fig
 
 def improvement_journey_chart():
@@ -1044,19 +1044,23 @@ def main():
 
     # Improvement journey chart - full width
     st.markdown("**Improvement Journey: Enablement Speed vs False Negative Rate**")
+    st.caption("Each dot is a month. X-axis is how long it took to enable apps (hours), Y-axis is the % of enabled apps that were later disabled as fraud. The path shows movement from slow & risky (top-right) to fast & safe (bottom-left).")
     st.plotly_chart(improvement_journey_chart(), use_container_width=True, config={"displayModeBar": False})
 
     # Convergence + Before/After side by side
     conv1, conv2 = st.columns(2)
     with conv1:
         st.markdown("**Convergence: Controls Got Faster AND More Accurate**")
+        st.caption("Both metrics normalized as a % of their worst month (Nov 2025 = 100%). Blue line is median enablement time, red line is false negative rate. Both declining together shows controls improved speed without sacrificing accuracy.")
         st.plotly_chart(convergence_chart(), use_container_width=True, config={"displayModeBar": False})
     with conv2:
         st.markdown("**Before vs After: Oct-Nov avg → Feb-Mar avg**")
+        st.caption("Compares the average of the two worst months (Oct-Nov) against the two most recent months (Feb-Mar). Red bars are the 'before' baseline, green bars are 'after'. The percentage above each pair shows the improvement.")
         st.plotly_chart(before_after_chart(), use_container_width=True, config={"displayModeBar": False})
 
     # Stacked timeline - full width
     st.markdown("**Full Timeline: Enabled/Not-Enabled Volume + Enablement Time + FN Rate**")
+    st.caption("Stacked bars show total app volume split by enabled (green) vs not-enabled (red). Blue line overlays median enablement time in hours. Orange dotted line overlays the false negative rate. Shows all three improvement dimensions together.")
     st.plotly_chart(stacked_timeline_chart(), use_container_width=True, config={"displayModeBar": False})
 
     # =====================================================
