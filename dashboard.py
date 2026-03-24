@@ -275,8 +275,8 @@ def enablement_time_chart():
     """Email sender enablement time - monthly median trend Oct 2025 to Mar 2026."""
     from plotly.subplots import make_subplots
     months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026"]
-    median_hrs = [72.5, 246.3, 144.3, 47.8, 31.8, 21.2]
-    apps_count = [274, 256, 150, 156, 139, 233]
+    median_hrs = [75.6, 251.4, 161.4, 73.9, 71.2, 13.4]
+    apps_count = [275, 260, 157, 177, 211, 116]
 
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(go.Bar(
@@ -310,8 +310,8 @@ def enablement_time_chart():
 def enabled_vs_not_enabled_chart():
     """Enabled vs Not Enabled grouped bar chart — not enabled = fraud rate, monthly breakdown."""
     periods = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026"]
-    enabled = [274, 256, 150, 156, 139, 277]
-    not_enabled = [161, 118, 177, 188, 157, 184]
+    enabled = [275, 260, 157, 177, 211, 116]
+    not_enabled = [160, 122, 179, 186, 200, 124]
     totals = [e + n for e, n in zip(enabled, not_enabled)]
     enabled_pct = [round(e / t * 100, 1) for e, t in zip(enabled, totals)]
     not_enabled_pct = [round(n / t * 100, 1) for n, t in zip(not_enabled, totals)]
@@ -868,12 +868,12 @@ def main():
     # Monthly snapshot cards
     et_months = st.columns(6)
     month_data = [
-        ("Oct 2025", "72.5h", "~3.0d", 435, 274, 161, "#ef4444"),
-        ("Nov 2025", "246.3h", "~10.3d", 374, 256, 118, "#ef4444"),
-        ("Dec 2025", "144.3h", "~6.0d", 327, 150, 177, "#f59e0b"),
-        ("Jan 2026", "47.8h", "~2.0d", 344, 156, 188, "#60a5fa"),
-        ("Feb 2026", "31.8h", "~1.3d", 296, 139, 157, "#22c55e"),
-        ("Mar 2026", "21.2h", "~0.9d", 461, 277, 184, "#22c55e"),
+        ("Oct 2025", "75.6h", "~3.2d", 435, 275, 160, "#ef4444"),
+        ("Nov 2025", "251.4h", "~10.5d", 382, 260, 122, "#ef4444"),
+        ("Dec 2025", "161.4h", "~6.7d", 336, 157, 179, "#f59e0b"),
+        ("Jan 2026", "73.9h", "~3.1d", 363, 177, 186, "#f59e0b"),
+        ("Feb 2026", "71.2h", "~3.0d", 411, 211, 200, "#60a5fa"),
+        ("Mar 2026", "13.4h", "~0.6d", 240, 116, 124, "#22c55e"),
     ]
     for col, (month, median, days, total, enabled, not_en, color) in zip(et_months, month_data):
         en_pct = round(enabled / total * 100, 1)
