@@ -776,7 +776,7 @@ def main():
         f"with {blockers_pct}% cleared so far. "
         f"Ops/Program action items stand at {signoffs_done}/{signoffs_total} ({signoffs_pct}% complete). "
         f"The appeals process decision has been closed — Option D (self re-evaluation) was selected. "
-        f"Engineering tickets for the appeals pipeline are now unblocked and pending Asana ticket creation. "
+        f"The main engineering tickets for the appeals pipeline have been created in Asana; subtasks now need to be broken down by engineering. "
         f"Both approval and denial email templates have been finalized and an Asana ticket created for implementation. "
         f"The false negative rate has dropped to 2.6% in Mar 2026 and 1.9% in Feb 2026, "
         f"down from the 60.0% peak in Nov 2025."
@@ -796,7 +796,8 @@ def main():
         next_items.append(f"({item_num}) Close the remaining {decisions_needed} critical decisions to unblock engineering on dependent tickets.")
         item_num += 1
     if signoffs_rem > 0:
-        next_items.append(f"({item_num}) Drive Ops/Program action items from {signoffs_pct}% to at least 75% completion -- {signoffs_rem} items remain outstanding.")
+        target_pct = max(signoffs_pct + 10, 85)
+        next_items.append(f"({item_num}) Drive Ops/Program action items from {signoffs_pct}% to at least {target_pct}% completion -- {signoffs_rem} items remain outstanding.")
         item_num += 1
     if blockers_rem > 0:
         next_items.append(f"({item_num}) Clear the {blockers_rem} pre-launch blockers, focusing on any that gate engineering completion or leadership sign-off for go/no-go.")
