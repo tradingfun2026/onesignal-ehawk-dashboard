@@ -678,7 +678,7 @@ def main():
     blockers_total = blockers_done + blockers_rem
     signoffs_done = len(data.get("signoffs_complete", []))
     signoffs_all = data.get("signoffs", [])
-      signoffs_list = [r for r in signoffs_all if r.get("Status") != "Deferred"]
+    signoffs_list = [r for r in signoffs_all if r.get("Status") != "Deferred"]
     signoffs_deferred = [r for r in signoffs_all if r.get("Status") == "Deferred"]
     signoffs_rem = len(signoffs_list)
     signoffs_total = signoffs_done + signoffs_rem
