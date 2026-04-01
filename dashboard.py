@@ -677,11 +677,15 @@ def main():
     blockers_rem = len(data.get("blockers_remaining", []))
     blockers_total = blockers_done + blockers_rem
     signoffs_done = len(data.get("signoffs_complete", []))
-    signoffs_list = data.get("signoffs", [])
+    signoffs_all = data.get("signoffs", [])
+      signoffs_list = [r for r in signoffs_all if r.get("Status") != "Deferred"]
+    signoffs_deferred = [r for r in signoffs_all if r.get("Status") == "Deferred"]
     signoffs_rem = len(signoffs_list)
     signoffs_total = signoffs_done + signoffs_rem
     tickets_done = len([r for r in data.get("completed", []) if r.get("Section") == "Ticket to Create"])
-    tickets_list = data.get("tickets_to_create", [])
+    tickets_all = data.get("tickets_to_create", [])
+    tickets_list = [r for r in tickets_all if r.get("Status") != "Deferred"]
+    tickets_deferred = [r for r in tickets_all if r.get("Status") == "Deferred"]
     tickets_rem = len(tickets_list)
     tickets_total = tickets_done + tickets_rem
     decisions_made = len(data.get("decisions_made", []))
@@ -904,7 +908,7 @@ def main():
                 p_color = {"High": "#ef4444", "Medium": "#f59e0b", "Low": "#3b82f6"}.get(p, "#6b7280")
                 st.markdown(f'<div style="font-size:12px;padding:4px 0;border-bottom:1px solid #f0f0f0"><span style="color:{p_color};font-weight:600;font-size:10px;margin-right:4px">{p.upper()}</span> {name}</div>', unsafe_allow_html=True)
     with p3:
-        with st.expander(f"Action Items — {signoffs_rem} remaining"):
+        with st.expander(f"Action Items — {signoffs_rem} active, {len(signoffs_deferred)} deferred"):
             if signoffs_rem == 0:
                 st.markdown('<span style="color:#16a34a;font-size:13px">All action items complete!</span>', unsafe_allow_html=True)
             for item in signoffs_list:
@@ -913,7 +917,7 @@ def main():
                 p_color = {"High": "#ef4444", "Medium": "#f59e0b", "Low": "#3b82f6"}.get(p, "#6b7280")
                 st.markdown(f'<div style="font-size:12px;padding:4px 0;border-bottom:1px solid #f0f0f0"><span style="color:{p_color};font-weight:600;font-size:10px;margin-right:4px">{p.upper()}</span> {name}</div>', unsafe_allow_html=True)
     with p4:
-        with st.expander(f"Tickets to Create — {tickets_rem} remaining"):
+        with st.expander(f"Tickets to Create — {tickets_rem} active, {len(tickets_deferred)} deferred"):
             if tickets_rem == 0:
                 st.markdown('<span style="color:#16a34a;font-size:13px">All tickets created!</span>', unsafe_allow_html=True)
             for item in tickets_list:
