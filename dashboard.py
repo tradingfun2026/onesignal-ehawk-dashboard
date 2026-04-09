@@ -473,7 +473,7 @@ def before_after_chart():
     """Before/After grouped bars showing % improvement."""
     categories = ["Median Enablement\nTime (hours)", "False Negative\nRate (%)"]
     before_vals = [round((81.3 + 258.3) / 2, 1), round((48.0 + 58.9) / 2, 1)]  # Oct-Nov avg
-    after_vals = [round((24.8 + 3.0) / 2, 1), round((2.1 + 5.6) / 2, 1)]  # Mar-Apr avg
+    after_vals = [round((85.5 + 24.8) / 2, 1), round((2.2 + 2.1) / 2, 1)]  # Feb-Mar avg
     pct_change = [round((a - b) / b * 100, 0) for b, a in zip(before_vals, after_vals)]
 
     fig = go.Figure()
@@ -484,7 +484,7 @@ def before_after_chart():
         textfont=dict(size=14, color="#ef4444", family="Inter, sans-serif"),
     ))
     fig.add_trace(go.Bar(
-        x=categories, y=after_vals, name="After (Mar-Apr avg)",
+        x=categories, y=after_vals, name="After (Feb-Mar avg)",
         marker_color="#22c55e", opacity=0.8,
         text=[f"{v}" for v in after_vals], textposition="outside",
         textfont=dict(size=14, color="#22c55e", family="Inter, sans-serif"),
