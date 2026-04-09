@@ -272,11 +272,11 @@ def completion_bar(eng_pct, blockers_pct, signoffs_pct, decisions_pct):
     return fig
 
 def enablement_time_chart():
-    """Email sender enablement time - monthly median trend Oct 2025 to Mar 2026."""
+    """Email sender enablement time - monthly median trend Oct 2025 to Apr 2026."""
     from plotly.subplots import make_subplots
-    months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026"]
-    median_hrs = [75.6, 251.4, 161.4, 73.9, 71.2, 13.4]
-    apps_count = [275, 260, 157, 177, 211, 116]
+    months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026", "Apr 2026*"]
+    median_hrs = [81.3, 258.3, 165.5, 116.8, 85.5, 24.8, 3.0]
+    apps_count = [277, 263, 159, 194, 227, 194, 36]
 
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(go.Bar(
@@ -309,9 +309,9 @@ def enablement_time_chart():
 
 def enabled_vs_not_enabled_chart():
     """Enabled vs Not Enabled grouped bar chart — not enabled = fraud rate, monthly breakdown."""
-    periods = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026"]
-    enabled = [275, 260, 157, 177, 211, 116]
-    not_enabled = [160, 122, 179, 186, 200, 124]
+    periods = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026", "Apr 2026*"]
+    enabled = [277, 263, 159, 194, 227, 194, 36]
+    not_enabled = [162, 122, 178, 187, 202, 175, 44]
     totals = [e + n for e, n in zip(enabled, not_enabled)]
     enabled_pct = [round(e / t * 100, 1) for e, t in zip(enabled, totals)]
     not_enabled_pct = [round(n / t * 100, 1) for n, t in zip(not_enabled, totals)]
@@ -346,9 +346,9 @@ def enabled_vs_not_enabled_chart():
 def fnr_trend_chart():
     """False Negative Rate trend from baseline analysis."""
     from plotly.subplots import make_subplots
-    months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026"]
-    fnr = [48.7, 60.0, 5.7, 7.9, 1.9, 2.6]
-    disabled = [134, 156, 9, 14, 4, 3]
+    months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026", "Apr 2026*"]
+    fnr = [48.0, 58.9, 5.7, 7.7, 2.2, 2.1, 5.6]
+    disabled = [133, 155, 9, 15, 5, 4, 2]
 
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(go.Bar(
@@ -383,11 +383,11 @@ def fnr_trend_chart():
 
 def improvement_journey_chart():
     """Scatter plot showing month-over-month journey from slow+risky to fast+safe."""
-    months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026"]
-    median_hrs = [75.6, 251.4, 161.4, 73.9, 71.2, 13.4]
-    fnr = [48.7, 60.0, 5.7, 7.9, 1.9, 2.6]
-    colors = ["#ef4444", "#ef4444", "#f59e0b", "#f59e0b", "#22c55e", "#22c55e"]
-    sizes = [18, 18, 16, 16, 20, 22]
+    months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026", "Apr 2026*"]
+    median_hrs = [81.3, 258.3, 165.5, 116.8, 85.5, 24.8, 3.0]
+    fnr = [48.0, 58.9, 5.7, 7.7, 2.2, 2.1, 5.6]
+    colors = ["#ef4444", "#ef4444", "#f59e0b", "#f59e0b", "#22c55e", "#22c55e", "#22c55e"]
+    sizes = [18, 18, 16, 16, 20, 22, 22]
 
     fig = go.Figure()
     # Draw arrows between points
@@ -431,9 +431,9 @@ def improvement_journey_chart():
 
 def convergence_chart():
     """Two normalized lines showing parallel decline of enablement time and FN rate."""
-    months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026"]
-    median_hrs = [75.6, 251.4, 161.4, 73.9, 71.2, 13.4]
-    fnr = [48.7, 60.0, 5.7, 7.9, 1.9, 2.6]
+    months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026", "Apr 2026*"]
+    median_hrs = [81.3, 258.3, 165.5, 116.8, 85.5, 24.8, 3.0]
+    fnr = [48.0, 58.9, 5.7, 7.7, 2.2, 2.1, 5.6]
     # Normalize to % of peak
     max_hrs = max(median_hrs)
     max_fnr = max(fnr)
@@ -472,8 +472,8 @@ def convergence_chart():
 def before_after_chart():
     """Before/After grouped bars showing % improvement."""
     categories = ["Median Enablement\nTime (hours)", "False Negative\nRate (%)"]
-    before_vals = [round((75.6 + 251.4) / 2, 1), round((48.7 + 60.0) / 2, 1)]  # Oct-Nov avg
-    after_vals = [round((71.2 + 13.4) / 2, 1), round((1.9 + 2.6) / 2, 1)]  # Feb-Mar avg
+    before_vals = [round((81.3 + 258.3) / 2, 1), round((48.0 + 58.9) / 2, 1)]  # Oct-Nov avg
+    after_vals = [round((24.8 + 3.0) / 2, 1), round((2.1 + 5.6) / 2, 1)]  # Mar-Apr avg
     pct_change = [round((a - b) / b * 100, 0) for b, a in zip(before_vals, after_vals)]
 
     fig = go.Figure()
@@ -484,7 +484,7 @@ def before_after_chart():
         textfont=dict(size=14, color="#ef4444", family="Inter, sans-serif"),
     ))
     fig.add_trace(go.Bar(
-        x=categories, y=after_vals, name="After (Feb-Mar avg)",
+        x=categories, y=after_vals, name="After (Mar-Apr avg)",
         marker_color="#22c55e", opacity=0.8,
         text=[f"{v}" for v in after_vals], textposition="outside",
         textfont=dict(size=14, color="#22c55e", family="Inter, sans-serif"),
@@ -513,11 +513,11 @@ def before_after_chart():
 def stacked_timeline_chart():
     """Stacked bars for enabled/not-enabled with overlay lines for enablement time and FN rate."""
     from plotly.subplots import make_subplots
-    months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026"]
-    enabled = [275, 260, 157, 177, 211, 116]
-    not_enabled = [160, 122, 179, 186, 200, 124]
-    median_hrs = [75.6, 251.4, 161.4, 73.9, 71.2, 13.4]
-    fnr = [48.7, 60.0, 5.7, 7.9, 1.9, 2.6]
+    months = ["Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026", "Mar 2026", "Apr 2026*"]
+    enabled = [277, 263, 159, 194, 227, 194, 36]
+    not_enabled = [162, 122, 178, 187, 202, 175, 44]
+    median_hrs = [81.3, 258.3, 165.5, 116.8, 85.5, 24.8, 3.0]
+    fnr = [48.0, 58.9, 5.7, 7.7, 2.2, 2.1, 5.6]
 
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(go.Bar(
@@ -782,8 +782,8 @@ def main():
         f"The appeals process decision has been closed — Option D (self re-evaluation) was selected. "
         f"The main engineering tickets for the appeals pipeline have been created in Asana; subtasks now need to be broken down by engineering. "
         f"Both approval and denial email templates have been finalized and an Asana ticket created for implementation. "
-        f"The false negative rate has dropped to 2.6% in Mar 2026 and 1.9% in Feb 2026, "
-        f"down from the 60.0% peak in Nov 2025."
+        f"The false negative rate has dropped to 2.1% in Mar 2026, "
+        f"down from the 58.9% peak in Nov 2025."
     )
 
     constraint_para = (
@@ -916,6 +916,11 @@ def main():
                 p = item.get("Priority", "")
                 p_color = {"High": "#ef4444", "Medium": "#f59e0b", "Low": "#3b82f6"}.get(p, "#6b7280")
                 st.markdown(f'<div style="font-size:12px;padding:4px 0;border-bottom:1px solid #f0f0f0"><span style="color:{p_color};font-weight:600;font-size:10px;margin-right:4px">{p.upper()}</span> {name}</div>', unsafe_allow_html=True)
+            if signoffs_deferred:
+                st.markdown('<div style="font-size:11px;color:#6b7280;margin-top:8px;font-weight:600">DEFERRED</div>', unsafe_allow_html=True)
+                for item in signoffs_deferred:
+                    name = item.get("Task Name", "Untitled")
+                    st.markdown(f'<div style="font-size:12px;padding:4px 0;border-bottom:1px solid #f0f0f0;color:#9ca3af">{name}</div>', unsafe_allow_html=True)
     with p4:
         with st.expander(f"Tickets to Create — {tickets_rem} active, {len(tickets_deferred)} deferred"):
             if tickets_rem == 0:
@@ -925,6 +930,11 @@ def main():
                 p = item.get("Priority", "")
                 p_color = {"High": "#ef4444", "Medium": "#f59e0b", "Low": "#3b82f6"}.get(p, "#6b7280")
                 st.markdown(f'<div style="font-size:12px;padding:4px 0;border-bottom:1px solid #f0f0f0"><span style="color:{p_color};font-weight:600;font-size:10px;margin-right:4px">{p.upper()}</span> {name}</div>', unsafe_allow_html=True)
+            if tickets_deferred:
+                st.markdown('<div style="font-size:11px;color:#6b7280;margin-top:8px;font-weight:600">DEFERRED</div>', unsafe_allow_html=True)
+                for item in tickets_deferred:
+                    name = item.get("Task Name", "Untitled")
+                    st.markdown(f'<div style="font-size:12px;padding:4px 0;border-bottom:1px solid #f0f0f0;color:#9ca3af">{name}</div>', unsafe_allow_html=True)
 
     # =====================================================
     # FRAUD BASELINE METRICS
@@ -1071,17 +1081,18 @@ def main():
     # =====================================================
     # EMAIL SENDER ENABLEMENT TIME
     # =====================================================
-    st.markdown('<div class="section-header">Email Sender Enablement Time <span style="font-size:9px;background:rgba(139,163,196,0.15);color:#374151;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">FIXED SNAPSHOT &bull; OCT 2025 - MAR 2026</span></div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-header">Email Sender Enablement Time <span style="font-size:9px;background:rgba(139,163,196,0.15);color:#374151;padding:2px 7px;border-radius:3px;font-weight:700;margin-left:6px">FIXED SNAPSHOT &bull; OCT 2025 - APR 2026</span></div>', unsafe_allow_html=True)
 
     # Monthly snapshot cards
-    et_months = st.columns(6)
+    et_months = st.columns(7)
     month_data = [
-        ("Oct 2025", "75.6h", "~3.2d", 435, 275, 160, "#ef4444", "435.0h", "~18.1d", "0.1h", "6 min", "3554.4h", "~148.1d"),
-        ("Nov 2025", "251.4h", "~10.5d", 382, 260, 122, "#ef4444", "440.0h", "~18.3d", "0.2h", "12 min", "2943.9h", "~122.7d"),
-        ("Dec 2025", "161.4h", "~6.7d", 336, 157, 179, "#f59e0b", "391.8h", "~16.3d", "0.9h", "54 min", "2256.4h", "~94.0d"),
-        ("Jan 2026", "73.9h", "~3.1d", 363, 177, 186, "#f59e0b", "310.2h", "~12.9d", "0.1h", "6 min", "1678.9h", "~70.0d"),
-        ("Feb 2026", "71.2h", "~3.0d", 411, 211, 200, "#60a5fa", "158.4h", "~6.6d", "0.2h", "12 min", "1133.9h", "~47.2d"),
-        ("Mar 2026", "13.4h", "~0.6d", 240, 116, 124, "#22c55e", "52.2h", "~2.2d", "0.2h", "12 min", "443.8h", "~18.5d"),
+        ("Oct 2025", "81.3h", "~3.4d", 439, 277, 162, "#ef4444", "459.4h", "~19.1d", "0.1h", "6 min", "3900.8h", "~162.5d"),
+        ("Nov 2025", "258.3h", "~10.8d", 385, 263, 122, "#ef4444", "483.2h", "~20.1d", "0.2h", "12 min", "3553.9h", "~148.1d"),
+        ("Dec 2025", "165.5h", "~6.9d", 337, 159, 178, "#f59e0b", "429.2h", "~17.9d", "0.9h", "54 min", "2665.1h", "~111.0d"),
+        ("Jan 2026", "116.8h", "~4.9d", 381, 194, 187, "#f59e0b", "433.6h", "~18.1d", "0.1h", "6 min", "2068.2h", "~86.2d"),
+        ("Feb 2026", "85.5h", "~3.6d", 429, 227, 202, "#60a5fa", "219.5h", "~9.1d", "0.2h", "12 min", "1361.4h", "~56.7d"),
+        ("Mar 2026", "24.8h", "~1.0d", 369, 194, 175, "#22c55e", "103.3h", "~4.3d", "0.2h", "12 min", "863.6h", "~36.0d"),
+        ("Apr 2026*", "3.0h", "~0.1d", 80, 36, 44, "#22c55e", "11.6h", "~0.5d", "0.2h", "12 min", "119.8h", "~5.0d"),
     ]
     for col, (month, median, days, total, enabled, not_en, color, avg, avg_d, mn, mn_min, mx, mx_d) in zip(et_months, month_data):
         en_pct = round(enabled / total * 100, 1)
