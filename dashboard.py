@@ -287,10 +287,10 @@ def enablement_time_chart():
     ), secondary_y=False)
     fig.add_trace(go.Scatter(
         x=months, y=median_hrs, name="Median Enablement (hrs)",
-        mode="lines+markers+text", line=dict(color="#c2410c", width=4),
-        marker=dict(size=12, color="#c2410c", line=dict(width=2, color="white")),
-        text=[f"{v:.0f}h" for v in median_hrs], textposition="top center",
-        textfont=dict(size=13, color="#9a3412", family="Inter, sans-serif"),
+        mode="lines+markers+text", line=dict(color="#7f1d1d", width=4),
+        marker=dict(size=14, color="#7f1d1d", line=dict(width=2, color="white")),
+        text=[f"<b>{v:.0f}h</b>" for v in median_hrs], textposition="top center",
+        textfont=dict(size=14, color="#111827", family="Inter, sans-serif"),
     ), secondary_y=True)
     fig.update_layout(
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
@@ -305,8 +305,8 @@ def enablement_time_chart():
                      title_font=dict(size=12, color="#1e3a8a"),
                      tickfont=dict(size=11, color="#1e3a8a"), secondary_y=False)
     fig.update_yaxes(title_text="Median Hours", showgrid=False,
-                     title_font=dict(size=12, color="#9a3412"),
-                     tickfont=dict(size=11, color="#9a3412"), secondary_y=True)
+                     title_font=dict(size=12, color="#7f1d1d"),
+                     tickfont=dict(size=11, color="#7f1d1d"), secondary_y=True)
     return fig
 
 def enabled_vs_not_enabled_chart():
