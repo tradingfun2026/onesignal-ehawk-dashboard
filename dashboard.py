@@ -281,30 +281,32 @@ def enablement_time_chart():
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_trace(go.Bar(
         x=months, y=apps_count, name="Apps Enabled",
-        marker_color="#1e40af", opacity=0.6,
+        marker_color="#1e3a8a", opacity=0.85,
+        text=[str(a) for a in apps_count], textposition="inside",
+        textfont=dict(size=12, color="white", family="Inter, sans-serif"),
     ), secondary_y=False)
     fig.add_trace(go.Scatter(
         x=months, y=median_hrs, name="Median Enablement (hrs)",
-        mode="lines+markers+text", line=dict(color="#f97316", width=3),
-        marker=dict(size=8, color="#f97316"),
+        mode="lines+markers+text", line=dict(color="#c2410c", width=4),
+        marker=dict(size=12, color="#c2410c", line=dict(width=2, color="white")),
         text=[f"{v:.0f}h" for v in median_hrs], textposition="top center",
-        textfont=dict(size=11, color="#fb923c"),
+        textfont=dict(size=13, color="#9a3412", family="Inter, sans-serif"),
     ), secondary_y=True)
     fig.update_layout(
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
         font=dict(family="Inter, sans-serif", color="#111827", size=13),
-        margin=dict(l=0, r=0, t=10, b=0),
+        margin=dict(l=0, r=0, t=20, b=0),
         height=400, showlegend=True,
-        legend=dict(orientation="h", y=1.12, x=0, font=dict(size=11, color="#111827"),
+        legend=dict(orientation="h", y=1.12, x=0, font=dict(size=12, color="#111827"),
                     bgcolor="rgba(0,0,0,0)"),
         xaxis=dict(tickfont=dict(size=12, color="#111827")),
     )
-    fig.update_yaxes(title_text="Apps", showgrid=True, gridcolor="#1a2744",
-                     title_font=dict(size=11, color="#111827"),
-                     tickfont=dict(color="#111827"), secondary_y=False)
+    fig.update_yaxes(title_text="Apps", showgrid=True, gridcolor="#e5e7eb",
+                     title_font=dict(size=12, color="#1e3a8a"),
+                     tickfont=dict(size=11, color="#1e3a8a"), secondary_y=False)
     fig.update_yaxes(title_text="Median Hours", showgrid=False,
-                     title_font=dict(size=11, color="#fb923c"),
-                     tickfont=dict(color="#fb923c"), secondary_y=True)
+                     title_font=dict(size=12, color="#9a3412"),
+                     tickfont=dict(size=11, color="#9a3412"), secondary_y=True)
     return fig
 
 def enabled_vs_not_enabled_chart():
@@ -1131,7 +1133,7 @@ def main():
             </div>""", unsafe_allow_html=True)
 
     # Chart - full width for visibility
-    st.markdown("**Median Enablement Time Trend (Oct 2025 - Mar 2026)**")
+    st.markdown("**Median Enablement Time Trend (Oct 2025 - Apr 2026)**")
     st.plotly_chart(enablement_time_chart(), use_container_width=True, config={"displayModeBar": False})
 
     # Recommendations from baseline
